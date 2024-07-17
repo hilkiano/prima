@@ -1,0 +1,49 @@
+{
+  "Language": {
+    "id": "ID",
+    "en": "EN",
+    "desc": "Select desired language"
+  },
+  "Button": {
+    "google": "Google",
+    "submit": "Submit",
+    "yes": "Yes",
+    "no": "No",
+    "reset": "Reset",
+    "cancel": "Cancel"
+  },
+  "Alert": {
+    "Notification": {
+      "critical_title": "We have a critical error!",
+      "alert_title": "Something wrong happened!",
+      "info_title": "New message for you!"
+    }
+  },
+  "Navbar": {
+    "Common": {
+      "menu_title": "Menu"
+    },
+    "Menu": {
+      "dashboard": "Dashboard",
+      "outlets": "Outlets",
+      "products": "Products",
+      "customers": "Customers",
+      "reports": "Reports",
+      "settings": "Settings"
+    },
+    "Submenu": {
+      "products_overview": "Overview",
+      "products_add": "Add product",
+      "products_discounts": "Discounts",
+      "settings_main": "Main settings",
+      "settings_users": "Users",
+      "settings_groups": "Groups",
+      "settings_membership": "Membership status"
+    },
+    "Avatar": {
+      "menu_profile": "Profile",
+      "menu_logout": "Logout",
+      "menu_logout_modal_body": "Your current session will be ended and any unsaved work will be lose. \nAre you sure?"
+    }
+  }
+}

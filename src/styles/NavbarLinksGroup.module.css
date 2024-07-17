@@ -1,0 +1,81 @@
+.control {
+  font-weight: 500;
+  display: block;
+  width: 100%;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
+  color: var(--mantine-color-text);
+  font-size: var(--mantine-font-size-sm);
+  border-top-right-radius: var(--mantine-radius-lg);
+  border-bottom-right-radius: var(--mantine-radius-lg);
+
+  @mixin hover {
+    background-color: light-dark(
+      var(--mantine-color-gray-0),
+      var(--mantine-color-dark-7)
+    );
+    color: light-dark(var(--mantine-color-black), var(--mantine-color-dark-0));
+  }
+
+  &[data-active="true"] {
+    &,
+    &:hover {
+      background-color: var(--mantine-primary-color-light);
+      color: var(--mantine-primary-color-light-color);
+
+      .linkIcon {
+        color: var(--mantine-primary-color-light-color);
+      }
+    }
+  }
+
+  /* md max-width */
+  @media (max-width: 62em) {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+}
+
+.link {
+  font-weight: 500;
+  display: block;
+  text-decoration: none;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
+  padding-left: var(--mantine-spacing-md);
+  margin-left: var(--mantine-spacing-xl);
+  font-size: var(--mantine-font-size-sm);
+  color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
+  border-left: 1px solid
+    light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  border-top-right-radius: var(--mantine-radius-md);
+  border-bottom-right-radius: var(--mantine-radius-md);
+
+  @mixin hover {
+    background-color: light-dark(
+      var(--mantine-color-gray-0),
+      var(--mantine-color-dark-7)
+    );
+    color: light-dark(var(--mantine-color-black), var(--mantine-color-dark-0));
+  }
+
+  &[data-active="true"] {
+    &,
+    &:hover {
+      background-color: var(--mantine-primary-color-light);
+      color: var(--mantine-primary-color-light-color);
+
+      .linkIcon {
+        color: var(--mantine-primary-color-light-color);
+      }
+    }
+  }
+
+  /* md max-width */
+  @media (max-width: 62em) {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+}
+
+.chevron {
+  transition: transform 200ms ease;
+}

@@ -1,0 +1,13 @@
+{
+  "Public": {
+    "Login": {
+      "head": "Halaman Login",
+      "subhead": "Mohon otentikasi diri Anda dengan...",
+      "divider": "Atau melanjutkan dengan",
+      "email_label": "Email",
+      "password_label": "Kata sandi",
+      "email_min_validation": "Email harus diisi.",
+      "password_min_validation": "Kata sandi harus diisi."
+    }
+  }
+}

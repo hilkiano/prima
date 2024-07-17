@@ -1,0 +1,20 @@
+.active {
+  transition: transform 50ms ease-in-out;
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+/* MODAL */
+.modalContent {
+  @apply rounded-2xl p-2;
+}
+
+.modalTitle {
+  @apply text-2xl font-semibold;
+}
+
+.modalClose {
+  @apply hover:bg-transparent;
+}

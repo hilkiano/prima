@@ -1,0 +1,50 @@
+import { showError } from "@/lib/errorHandler";
+
+type TLogin = {
+  email: string;
+  password: string;
+};
+
+export async function handleLogin(messageBag: GlobalMessage, payload: TLogin) {
+  const response = await fetch("/api/auth/login", {
+    method: "post",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  })
+    .then((res) => res.json())
+    .then((res: JsonResponse<string>) => {
+      if (!res.status && res.statusCode !== 422) {
+        const err = res as unknown;
+        showError(messageBag.alert, err as JsonResponse<null>);
+      }
+      return res;
+    })
+    .catch((err) => {
+      throw new Error(err.message, err);
+    });
+
+  return response;
+}
+
+export async function handleLogout(messageBag: GlobalMessage) {
+  const response = await fetch("/api/auth/logout", {
+    method: "post",
+    credentials: "include",
+  })
+    .then((res) => res.json())
+    .then((res: JsonResponse<string>) => {
+      if (!res.status && res.statusCode !== 422) {
+        const err = res as unknown;
+        showError(messageBag.alert, err as JsonResponse<null>);
+      }
+      return res;
+    })
+    .catch((err) => {
+      throw new Error(err.message, err);
+    });
+
+  return response;
+}

@@ -1,0 +1,49 @@
+{
+  "Language": {
+    "id": "ID",
+    "en": "EN",
+    "desc": "Pilih bahasa yang diinginkan"
+  },
+  "Button": {
+    "google": "Google",
+    "submit": "Kirim",
+    "yes": "Ya",
+    "no": "Tidak",
+    "reset": "Atur Ulang",
+    "cancel": "Batalkan"
+  },
+  "Alert": {
+    "Notification": {
+      "critical_title": "Telah terjadi kesalahan kritis!",
+      "alert_title": "Ada yang tidak beres terjadi!",
+      "info_title": "Pesan baru untuk Anda!"
+    }
+  },
+  "Navbar": {
+    "Common": {
+      "menu_title": "Menu"
+    },
+    "Menu": {
+      "dashboard": "Dasbor",
+      "outlets": "Gerai",
+      "products": "Produk",
+      "customers": "Pelanggan",
+      "reports": "Laporan",
+      "settings": "Pengaturan"
+    },
+    "Submenu": {
+      "products_overview": "Tinjauan umum",
+      "products_add": "Tambahkan produk",
+      "products_discounts": "Diskon produk",
+      "settings_main": "Pengaturan umum",
+      "settings_users": "Pengguna",
+      "settings_groups": "Grup",
+      "settings_membership": "Status langganan"
+    },
+    "Avatar": {
+      "menu_profile": "Profil",
+      "menu_logout": "Keluar",
+      "menu_logout_modal_body": "Sesi Anda saat ini akan berakhir dan pekerjaan yang belum disimpan akan hilang. \nApa kamu yakin?"
+    }
+  }
+}

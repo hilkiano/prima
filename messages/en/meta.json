@@ -1,0 +1,52 @@
+{
+    "Meta": {
+        "Login": {
+            "title": "Login",
+            "description": "Login with your account to use the application."
+        },
+        "Dashboard": {
+            "title": "Dashboard",
+            "description": "Welcome to Prima."
+        },
+        "Outlets": {
+            "title": "Outlets",
+            "description": "Welcome to Prima."
+        },
+        "Products": {
+            "title": "Products Overview",
+            "description": "Welcome to Prima."
+        },
+        "Products_Add": {
+            "title": "Add Product",
+            "description": "Welcome to Prima."
+        },
+        "Products_Discounts": {
+            "title": "Products Discount",
+            "description": "Welcome to Prima."
+        },
+        "Customers": {
+            "title": "Customers",
+            "description": "Welcome to Prima."
+        },
+        "Reports": {
+            "title": "Reports",
+            "description": "Welcome to Prima."
+        },
+        "Settings": {
+            "title": "Main Settings",
+            "description": "Welcome to Prima."
+        },
+        "Settings_Users": {
+            "title": "Users",
+            "description": "Welcome to Prima."
+        },
+        "Settings_Groups": {
+            "title": "Groups",
+            "description": "Welcome to Prima."
+        },
+        "Settings_Membership": {
+            "title": "Membership Status",
+            "description": "Welcome to Prima."
+        }
+    }
+}

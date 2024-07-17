@@ -1,0 +1,13 @@
+{
+  "Public": {
+    "Login": {
+      "head": "Login Page",
+      "subhead": "Please authenticate yourself with...",
+      "divider": "Or continue with",
+      "email_label": "Email",
+      "password_label": "Password",
+      "email_min_validation": "Email must be filled.",
+      "password_min_validation": "Password must be filled."
+    }
+  }
+}

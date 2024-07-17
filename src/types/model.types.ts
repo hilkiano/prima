@@ -1,0 +1,22 @@
+type User = {
+  id: string;
+  username: string;
+  password?: string;
+  email: string;
+  avatar_url: string;
+  display_name: string;
+  phone_number: string;
+  address: string;
+  last_login: Date;
+  socialite_user: any;
+  company_id: string;
+  outlet_id: string;
+  group_id: string;
+  configs: any;
+  created_at: Date;
+  updated_at: Date;
+  deleted_at: Date;
+  created_by: string;
+  updated_by: string;
+  deleted_by: string;
+};
