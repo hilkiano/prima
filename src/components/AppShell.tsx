@@ -79,13 +79,13 @@ const AppShell = React.forwardRef<HTMLDivElement, TAppShell & AppShellProps>(
           collapsed: { mobile: !opened },
         }}
         classNames={{
-          header: "bg-white dark:bg-stone-800",
-          main: "bg-white dark:bg-stone-800 !ml-3",
-          navbar: "bg-white/50 dark:bg-stone-800/75 !p-0",
+          header: "bg-white dark:bg-slate-900",
+          main: "bg-white dark:bg-slate-900",
+          navbar: "bg-white/50 dark:bg-slate-900/75 !p-0",
         }}
         {...props}
       >
-        <MAppShell.Header className="flex justify-between items-center px-3">
+        <MAppShell.Header className="flex justify-between items-center">
           <Group h="100%" px="md">
             {hasAuth ? (
               <Burger
@@ -98,11 +98,11 @@ const AppShell = React.forwardRef<HTMLDivElement, TAppShell & AppShellProps>(
               <></>
             )}
           </Group>
-          <div className="flex gap-3 items-center">
+          <div className="flex gap-3 items-center pr-3">
             <LocaleToggle className="w-[60px]" locale={locale} />
             <ThemeToggle size="lg" />
             {hasAuth ? (
-              <Menu withArrow width={200}>
+              <Menu width={200}>
                 <Menu.Target>
                   <Avatar
                     src={userData?.avatar_url}
@@ -116,6 +116,7 @@ const AppShell = React.forwardRef<HTMLDivElement, TAppShell & AppShellProps>(
                   <Menu.Divider />
                   <Menu.Item
                     color="red"
+                    data-color="red"
                     leftSection={<i className="ti ti-logout-2"></i>}
                     onClick={open}
                   >

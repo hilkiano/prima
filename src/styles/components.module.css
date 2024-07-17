@@ -6,9 +6,62 @@
   }
 }
 
+/* BUTTON */
+.buttonRoot {
+  @apply transition-colors dark:data-[variant=default]:bg-slate-900 dark:data-[variant=default]:hover:bg-slate-950 dark:data-[variant=default]:border-slate-700 dark:data-[variant=filled]:disabled:bg-slate-700 data-[variant=filled]:disabled:bg-slate-300 dark:data-[variant=transparent]:text-slate-100 data-[variant=transparent]:text-slate-800;
+}
+
+/* SELECT */
+.selectInput {
+  @apply font-sans dark:bg-slate-800;
+}
+
+.selectDropdown {
+  @apply dark:bg-slate-900 dark:border-slate-700 border-slate-300;
+}
+
+.selectOption {
+  @apply font-sans dark:hover:bg-slate-800;
+}
+
+/* TEXT INPUT */
+.textInputInput {
+  @apply dark:bg-slate-800 dark:data-[variant=default]:border-slate-700 dark:data-[error=true]:border-[#E03131] font-sans;
+}
+
+.textInputError {
+  @apply font-bold;
+}
+
+/* PASSWORD INPUT */
+.passwordInputInput {
+  @apply dark:bg-slate-800 dark:data-[variant=default]:border-slate-700 dark:data-[error=true]:border-[#E03131] font-sans;
+}
+
+.passwordInputError {
+  @apply font-bold;
+}
+
+/* MENU */
+.menuDropdown {
+  @apply dark:bg-slate-900 dark:border-slate-700 border-slate-300;
+}
+
+.menuItem {
+  @apply dark:hover:bg-slate-800 dark:data-[color=red]:hover:bg-red-500 dark:data-[color=red]:hover:bg-opacity-15;
+}
+
+.menuDivider {
+  @apply dark:border-t-slate-800;
+}
+
 /* MODAL */
+.modalHeader {
+  @apply dark:bg-slate-800;
+}
+
 .modalContent {
-  @apply rounded-2xl p-2;
+  @apply dark:bg-slate-800 rounded-2xl p-2;
 }
 
 .modalTitle {

@@ -27,7 +27,6 @@ const LoginForm = React.forwardRef<any, TLoginForm>(() => {
           name="email"
           render={({ field: { onChange, value } }) => (
             <TextInput
-              variant="filled"
               label={t("email_label")}
               error={form.formState.errors.email?.message}
               autoComplete="off"
