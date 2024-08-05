@@ -10,12 +10,17 @@ import {
   Modal,
   Button,
   Menu,
+  Textarea,
+  Checkbox,
+  Code,
+  ScrollArea,
 } from "@mantine/core";
 import classes from "@/styles/components.module.css";
 import { IconSquareRoundedXFilled } from "@tabler/icons-react";
 
 export const theme = createTheme({
   activeClassName: classes.active,
+  defaultGradient: { from: "blue", to: "cyan", deg: 145 },
   colors: {
     slate: [
       "#f8fafc",
@@ -37,18 +42,32 @@ export const theme = createTheme({
         input: classes.selectInput,
         dropdown: classes.selectDropdown,
         option: classes.selectOption,
+        error: classes.textInputError,
       },
       defaultProps: {
         checkIconPosition: "right",
         withScrollArea: false,
+        variant: "filled",
       },
     }),
     Button: Button.extend({
       classNames: {
         root: classes.buttonRoot,
       },
+      defaultProps: {
+        radius: "xl",
+      },
     }),
     TextInput: TextInput.extend({
+      classNames: {
+        input: classes.textInputInput,
+        error: classes.textInputError,
+      },
+      defaultProps: {
+        variant: "filled",
+      },
+    }),
+    Textarea: Textarea.extend({
       classNames: {
         input: classes.textInputInput,
         error: classes.textInputError,
@@ -114,6 +133,25 @@ export const theme = createTheme({
         header: classes.modalHeader,
         title: classes.modalTitle,
         close: classes.modalClose,
+      },
+    }),
+    Checkbox: Checkbox.extend({
+      classNames: {
+        input: classes.checkboxInput,
+        error: classes.textInputError,
+      },
+      defaultProps: {
+        radius: "xl",
+      },
+    }),
+    Code: Code.extend({
+      classNames: {
+        root: classes.codeRoot,
+      },
+    }),
+    ScrollArea: ScrollArea.extend({
+      classNames: {
+        scrollbar: classes.scrollAreaScrollBar,
       },
     }),
   },

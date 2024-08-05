@@ -9,8 +9,18 @@ import {
 } from "react";
 
 type UserContextType = {
-  userData: User | null;
-  setUserData: Dispatch<SetStateAction<User | null>>;
+  userData: {
+    user: User;
+    privileges: string[] | null;
+    subscriptions: Subscription[] | null;
+  } | null;
+  setUserData: Dispatch<
+    SetStateAction<{
+      user: User;
+      privileges: string[] | null;
+      subscriptions: Subscription[] | null;
+    } | null>
+  >;
 };
 
 export const UserContext = createContext<UserContextType | null>(null);
@@ -20,7 +30,11 @@ export default function UserProvider({
   value,
 }: {
   children: React.ReactNode;
-  value: User | null;
+  value: {
+    user: User;
+    privileges: string[] | null;
+    subscriptions: Subscription[] | null;
+  } | null;
 }) {
   const [userData, setUserData] = useState(value);
 

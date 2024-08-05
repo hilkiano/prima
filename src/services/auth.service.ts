@@ -1,7 +1,7 @@
 import { showError } from "@/lib/errorHandler";
 
 type TLogin = {
-  email: string;
+  username: string;
   password: string;
 };
 
@@ -15,13 +15,21 @@ export async function handleLogin(messageBag: GlobalMessage, payload: TLogin) {
     body: JSON.stringify(payload),
   })
     .then((res) => res.json())
-    .then((res: JsonResponse<string>) => {
-      if (!res.status && res.statusCode !== 422) {
-        const err = res as unknown;
-        showError(messageBag.alert, err as JsonResponse<null>);
+    .then(
+      (
+        res: JsonResponse<{
+          user: User;
+          privileges: string[] | null;
+          subscriptions: Subscription[] | null;
+        }>
+      ) => {
+        if (!res.status && res.code !== 422) {
+          const err = res as unknown;
+          showError(messageBag.alert, err as JsonResponse<null>);
+        }
+        return res;
       }
-      return res;
-    })
+    )
     .catch((err) => {
       throw new Error(err.message, err);
     });
@@ -36,7 +44,7 @@ export async function handleLogout(messageBag: GlobalMessage) {
   })
     .then((res) => res.json())
     .then((res: JsonResponse<string>) => {
-      if (!res.status && res.statusCode !== 422) {
+      if (!res.status && res.code !== 422) {
         const err = res as unknown;
         showError(messageBag.alert, err as JsonResponse<null>);
       }

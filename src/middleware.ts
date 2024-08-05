@@ -1,11 +1,15 @@
 import createMiddleware from "next-intl/middleware";
 import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
 const locales = ["en", "id"];
 const publicPages = ["/login"];
 
-const intlMiddleware = (request: NextRequest, result?: any) => {
+const intlMiddleware = (
+  request: NextRequest,
+  result?: JsonResponse<Authenticated>
+) => {
   const url = new URL(request.url);
   const origin = url.origin;
   const pathname = url.pathname;
@@ -22,8 +26,14 @@ const intlMiddleware = (request: NextRequest, result?: any) => {
   response.headers.set("x-origin", origin);
   response.headers.set("x-pathname", pathname);
 
+  const userInfo = {
+    user: result?.data.user,
+    privileges: result?.data.privileges,
+    subscriptions: result?.data.subscriptions,
+  };
+
   if (result) {
-    response.headers.set("x-userdata", JSON.stringify(result.user));
+    response.headers.set("x-userdata", JSON.stringify(userInfo));
   }
 
   return response;
@@ -42,7 +52,7 @@ const authMiddleware = async (request: NextRequest) => {
     credentials: "include",
   })
     .then((res) => res.json())
-    .then((res) => {
+    .then((res: JsonResponse<Authenticated>) => {
       if (!res.status) {
         if (res.code === 401) {
           const url = new URL(`/login`, request.url);
@@ -51,11 +61,14 @@ const authMiddleware = async (request: NextRequest) => {
           throw new Error(res.message, { cause: res });
         }
       } else {
-        return intlMiddleware(request, res.data);
+        if (!res.data.user.company_id && !request.url.includes("onboarding")) {
+          return NextResponse.redirect(new URL("/onboarding", request.url));
+        }
+
+        return intlMiddleware(request, res);
       }
     })
     .catch((err: Error) => {
-      console.error(err);
       return NextResponse.json({
         error: "Backend error. Please check system log.",
         cause: err,
@@ -74,8 +87,8 @@ export default async function middleware(request: NextRequest) {
   if (isPublicPage) {
     const cookieStore = cookies();
     const jwt = cookieStore.get("jwt");
-    if (jwt && request.nextUrl.pathname === "/login") {
-      const url = new URL(`/`, request.url);
+    if (jwt) {
+      const url = new URL(`/dashboard`, request.url);
       return NextResponse.redirect(url);
     } else {
       return intlMiddleware(request);

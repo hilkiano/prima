@@ -3,6 +3,7 @@
 import { usePathname, useRouter } from "@/lib/navigation";
 import { Select, SelectProps, Tooltip } from "@mantine/core";
 import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import React, { useTransition } from "react";
 
 type TLocaleToggle = {
@@ -17,9 +18,12 @@ const LocaleToggle = React.forwardRef<
   const pathname = usePathname();
   const router = useRouter();
   const t = useTranslations("Language");
+  const searchParams = useSearchParams();
   function onSelectChange(value: string) {
     startTransition(() => {
-      router.replace(pathname, { locale: value });
+      router.replace(`${pathname}?${searchParams.toString()}`, {
+        locale: value,
+      });
     });
   }
 

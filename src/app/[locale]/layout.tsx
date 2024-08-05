@@ -74,13 +74,15 @@ export default function RootLayout({
 
 function getInitialValue() {
   const headersList = headers();
-  let userData: User | null = null;
+  let userData: {
+    user: User;
+    privileges: string[];
+    subscriptions: Subscription[];
+  } | null = null;
 
   if (headersList.has("x-userdata")) {
     const userHeaderData = headersList.get("x-userdata");
-    const parsedUserData: User = JSON.parse(
-      userHeaderData ? userHeaderData : ""
-    );
+    const parsedUserData = JSON.parse(userHeaderData ? userHeaderData : "");
     userData = parsedUserData;
   }
 

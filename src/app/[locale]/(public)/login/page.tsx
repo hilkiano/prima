@@ -5,15 +5,12 @@ import {
 } from "next-intl";
 import pick from "lodash/pick";
 import { Center, Divider } from "@mantine/core";
-import SocialButton from "@/components/SocialButton";
 import LoginForm from "./components/LoginForm";
 import Image from "next/image";
-import { Link } from "@/lib/navigation";
 import SocialButtonContainer from "./components/SocialButtonContainer";
 
 export default function LoginPage() {
   const messages = useMessages();
-  const tButton = useTranslations("Button");
   const t = useTranslations("Public.Login");
 
   return (

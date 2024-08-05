@@ -6,7 +6,7 @@ export async function POST(request: Request) {
   const cookieStore = cookies();
   const lang = cookieStore.get("NEXT_LOCALE");
   const response = await axios
-    .post(`${process.env.NEXT_PUBLIC_API_URL}auth/login`, res, {
+    .post(`${process.env.NEXT_PUBLIC_API_URL}validate`, res, {
       headers: {
         "x-app-locale": lang ? lang.value : "id",
       },

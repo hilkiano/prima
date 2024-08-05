@@ -1,17 +1,17 @@
 import AppShell from "@/components/AppShell";
 import { NextIntlClientProvider, useMessages } from "next-intl";
-import React from "react";
 import pick from "lodash/pick";
+import ErrorPage from "@/components/ErrorPage";
 
-export default function Template({ children }: { children: React.ReactNode }) {
+export default function NotFound() {
   const messages = useMessages();
 
   return (
     <NextIntlClientProvider
-      messages={pick(messages, ["Language", "Navbar", "Button"])}
+      messages={pick(messages, ["Language", "Navbar", "Button", "Error"])}
     >
-      <AppShell withBorder={false} collapsible={false} hasAuth withMenu>
-        {children}
+      <AppShell withBorder={false} collapsible={false}>
+        <ErrorPage type="404" />
       </AppShell>
     </NextIntlClientProvider>
   );

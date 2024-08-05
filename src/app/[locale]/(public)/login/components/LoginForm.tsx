@@ -24,11 +24,11 @@ const LoginForm = React.forwardRef<any, TLoginForm>(() => {
       <div className="flex flex-col gap-2">
         <Controller
           control={form.control}
-          name="email"
+          name="username"
           render={({ field: { onChange, value } }) => (
             <TextInput
               label={t("email_label")}
-              error={form.formState.errors.email?.message}
+              error={form.formState.errors.username?.message}
               autoComplete="off"
               value={value}
               onChange={onChange}
@@ -63,7 +63,6 @@ const LoginForm = React.forwardRef<any, TLoginForm>(() => {
         </Anchor>
         <Button
           loading={mutation.isPending}
-          radius="xl"
           leftSection={<i className="ti ti-send-2"></i>}
           type="submit"
         >

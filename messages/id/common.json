@@ -10,7 +10,12 @@
     "yes": "Ya",
     "no": "Tidak",
     "reset": "Atur Ulang",
-    "cancel": "Batalkan"
+    "cancel": "Batalkan",
+    "go_to_dashboard": "Pergi ke Dasbor",
+    "get_started": "Ayo mulai",
+    "next": "Berikutnya",
+    "previous": "Sebelumnya",
+    "done": "Selesai"
   },
   "Alert": {
     "Notification": {
@@ -45,5 +50,16 @@
       "menu_logout": "Keluar",
       "menu_logout_modal_body": "Sesi Anda saat ini akan berakhir dan pekerjaan yang belum disimpan akan hilang. \nApa kamu yakin?"
     }
+  },
+  "Error": {
+    "404_head": "404 Tidak Ditemukan",
+    "404_body": "Halaman yang Anda cari tidak ada."
+  },
+  "Form": {
+    "validation_required": "Harap isi bagian ini.",
+    "validation_email": "Email ini tidak valid.",
+    "validation_phone_number": "Nomor telepon ini tidak valid.",
+    "validation_tnc_agreement": "Anda perlu setuju dengan syarat dan ketentuan kami sebelum menggunakan aplikasi ini.",
+    "validation_company_exist": "Perusahaan dengan nama seperti ini sudah terdaftar."
   }
 }

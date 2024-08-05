@@ -10,7 +10,12 @@
     "yes": "Yes",
     "no": "No",
     "reset": "Reset",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "go_to_dashboard": "Go to Dashboard",
+    "get_started": "Get started",
+    "next": "Next",
+    "previous": "Previous",
+    "done": "Done"
   },
   "Alert": {
     "Notification": {
@@ -45,5 +50,16 @@
       "menu_logout": "Logout",
       "menu_logout_modal_body": "Your current session will be ended and any unsaved work will be lose. \nAre you sure?"
     }
+  },
+  "Error": {
+    "404_head": "404 Not Found",
+    "404_body": "The page you are looking for is not exist."
+  },
+  "Form": {
+    "validation_required": "Please fill this field.",
+    "validation_email": "This email is not valid.",
+    "validation_phone_number": "This phone number is not valid.",
+    "validation_tnc_agreement": "You are required to agree with our terms and conditions before using this application.",
+    "validation_company_exist": "The company with a name like this is already registered."
   }
 }

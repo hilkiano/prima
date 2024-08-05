@@ -11,6 +11,7 @@ import { Link, usePathname } from "@/lib/navigation";
 import { IconChevronRight } from "@tabler/icons-react";
 import classes from "../styles/NavbarLinksGroup.module.css";
 import { useTranslations } from "next-intl";
+import { useUserContext } from "@/lib/userProvider";
 
 export function NavbarLink({
   icon,
@@ -24,10 +25,16 @@ export function NavbarLink({
   const hasLinks = Array.isArray(links);
   // TODO: Create navbar state and save into database per user each time they open a sidebar.
   const [opened, setOpened] = useState(initiallyOpened || false);
-  {
-    /* TODO: Add privilege per submenu item */
-  }
-  const items = (hasLinks ? links : []).map((link) => (
+  const { userData } = useUserContext();
+
+  const filteredLinks = links
+    ? links.filter(
+        (link) =>
+          !link.privilege || userData?.privileges?.includes(link.privilege!)
+      )
+    : [];
+
+  const items = (hasLinks ? filteredLinks : []).map((link) => (
     <Link
       data-active={pathname === link.link}
       className={classes.link}

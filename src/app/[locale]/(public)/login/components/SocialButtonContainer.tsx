@@ -9,7 +9,6 @@ function SocialButtonContainer() {
     <>
       <SocialButton
         variant="default"
-        radius="xl"
         component={Link}
         href={`${process.env.NEXT_PUBLIC_WEB_URL}auth/google`}
         type="google"

@@ -10,7 +10,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
     <NextIntlClientProvider
       messages={pick(messages, ["Language", "Navbar", "Button"])}
     >
-      <AppShell withBorder={false} collapsible={false} hasAuth withMenu>
+      <AppShell withBorder={false} collapsible={false} hasAuth>
         {children}
       </AppShell>
     </NextIntlClientProvider>

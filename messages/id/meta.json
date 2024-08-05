@@ -47,6 +47,10 @@
         "Settings_Membership": {
             "title": "Status Langganan",
             "description": "Selamat datang di Prima."
+        },
+        "Onboarding": {
+            "title": "Selamat datang di Prima",
+            "description": "Selamat datang di Prima."
         }
     }
 }

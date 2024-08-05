@@ -8,7 +8,7 @@
 
 /* BUTTON */
 .buttonRoot {
-  @apply transition-colors dark:data-[variant=default]:bg-slate-900 dark:data-[variant=default]:hover:bg-slate-950 dark:data-[variant=default]:border-slate-700 dark:data-[variant=filled]:disabled:bg-slate-700 data-[variant=filled]:disabled:bg-slate-300 dark:data-[variant=transparent]:text-slate-100 data-[variant=transparent]:text-slate-800;
+  @apply transition-colors dark:data-[variant=default]:bg-slate-900 dark:data-[variant=default]:hover:bg-slate-950 dark:data-[variant=default]:border-slate-700 dark:data-[variant=filled]:disabled:bg-slate-700 data-[variant=filled]:disabled:bg-slate-300 dark:data-[variant=transparent]:text-slate-100 data-[variant=transparent]:text-slate-800 border-2;
 }
 
 /* SELECT */
@@ -70,4 +70,19 @@
 
 .modalClose {
   @apply hover:bg-transparent;
+}
+
+/* CHECKBOX */
+.checkboxInput {
+  @apply dark:bg-slate-800 dark:checked:bg-blue-500 border-2;
+}
+
+/* CODE */
+.codeRoot {
+  @apply dark:bg-slate-950;
+}
+
+/* SCROLL AREA */
+.scrollAreaScrollBar {
+  @apply bg-transparent;
 }

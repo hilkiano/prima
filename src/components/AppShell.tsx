@@ -24,7 +24,6 @@ import { handleLogout } from "@/services/auth.service";
 import { useGlobalMessageContext } from "@/lib/globalMessageProvider";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "@/lib/navigation";
-import { modals } from "@mantine/modals";
 
 type TAppShell = {
   children: React.ReactNode;
@@ -32,6 +31,7 @@ type TAppShell = {
   withTheme?: boolean;
   withLocale?: boolean;
   hasAuth?: boolean;
+  withMenu?: boolean;
 };
 
 const AppShell = React.forwardRef<HTMLDivElement, TAppShell & AppShellProps>(
@@ -42,6 +42,7 @@ const AppShell = React.forwardRef<HTMLDivElement, TAppShell & AppShellProps>(
       withTheme = true,
       withLocale = true,
       hasAuth = false,
+      withMenu = false,
       ...props
     },
     ref
@@ -60,21 +61,28 @@ const AppShell = React.forwardRef<HTMLDivElement, TAppShell & AppShellProps>(
 
     const mutation = useMutation({
       mutationFn: handleLogout,
-      onSuccess: () => {
-        router.push("/login");
+      onSuccess: (res) => {
+        if (res.status) {
+          router.push("/login");
+        }
       },
     });
+
+    const filteredMenus = menus.filter(
+      (menu) =>
+        !menu.privilege || userData?.privileges?.includes(menu.privilege!)
+    );
 
     return (
       <MAppShell
         header={{
           height: 60,
           collapsed: collapsible ? !pinned : false,
-          offset: hasAuth ? true : false,
+          offset: hasAuth && withMenu ? true : false,
         }}
         padding="md"
         navbar={{
-          width: hasAuth ? 280 : 0,
+          width: hasAuth && withMenu ? 280 : 0,
           breakpoint: "md",
           collapsed: { mobile: !opened },
         }}
@@ -87,7 +95,7 @@ const AppShell = React.forwardRef<HTMLDivElement, TAppShell & AppShellProps>(
       >
         <MAppShell.Header className="flex justify-between items-center">
           <Group h="100%" px="md">
-            {hasAuth ? (
+            {hasAuth && withMenu ? (
               <Burger
                 opened={opened}
                 onClick={toggle}
@@ -105,8 +113,8 @@ const AppShell = React.forwardRef<HTMLDivElement, TAppShell & AppShellProps>(
               <Menu width={200}>
                 <Menu.Target>
                   <Avatar
-                    src={userData?.avatar_url}
-                    alt={userData?.display_name}
+                    src={userData?.user.avatar_url}
+                    alt={userData?.user.display_name}
                   />
                 </Menu.Target>
                 <Menu.Dropdown>
@@ -152,11 +160,11 @@ const AppShell = React.forwardRef<HTMLDivElement, TAppShell & AppShellProps>(
             </div>
           </Modal>
         </MAppShell.Header>
-        {hasAuth ? (
+        {hasAuth && withMenu ? (
           <MAppShell.Navbar p="md">
             <ScrollArea>
               {/* TODO: Add privilege per menu item */}
-              {menus.map((item) => (
+              {filteredMenus.map((item) => (
                 <NavbarLink {...item} key={item.label} />
               ))}
             </ScrollArea>

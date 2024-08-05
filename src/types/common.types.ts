@@ -3,7 +3,37 @@ type JsonResponse<T> = {
   data: T;
   message: string;
   trace: string;
-  statusCode: number;
+  code: number;
+};
+
+type Authenticated = {
+  user: User;
+  privileges: string[];
+  subscriptions: Subscription[];
+  refreshed_token?: string;
+  token_expired_at: string;
+};
+
+type Onboarding = {
+  personal_info?: PersonalInfo;
+  company_info?: CompanyInfo;
+  tnc?: boolean;
+};
+
+type PersonalInfo = {
+  given_name: string;
+  family_name: string;
+  gender: string;
+  email: string;
+  phone_number: string;
+  address: string;
+};
+
+type CompanyInfo = {
+  name: string;
+  email: string;
+  phone_number: string;
+  address: string;
 };
 
 type GlobalMessage = {
@@ -25,5 +55,6 @@ type NavbarLinks = {
   label: string;
   initiallyOpened?: boolean;
   link?: string;
-  links?: { label: string; link: string }[];
+  links?: { label: string; link: string; privilege?: string }[];
+  privilege?: string;
 };

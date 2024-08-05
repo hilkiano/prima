@@ -47,6 +47,10 @@
         "Settings_Membership": {
             "title": "Membership Status",
             "description": "Welcome to Prima."
+        },
+        "Onboarding": {
+            "title": "Welcome to Prima",
+            "description": "Welcome to Prima."
         }
     }
 }
