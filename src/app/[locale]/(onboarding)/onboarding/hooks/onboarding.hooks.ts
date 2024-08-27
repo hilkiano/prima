@@ -30,16 +30,34 @@ export default function useOnboarding() {
         tnc: false,
       },
     });
-  const { userData } = useUserContext();
+  const { userData, setUserData } = useUserContext();
 
   const mutation = useMutation({
     mutationFn: (data: Omit<Onboarding, "tnc"> & { user_id: string }) =>
       handleNewSubscription(message, data),
-    onSuccess: (res: JsonResponse<boolean>) => {
+    onSuccess: () => {
       removeOnboardingData();
+      updateUserData();
       handleStep(3);
     },
   });
+
+  const updateUserData = async () => {
+    await fetch(`/api/auth/me`, {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((res: JsonResponse<Authenticated>) => {
+        setUserData(res.data);
+      })
+      .catch((err: Error) => {
+        throw new Error(err.message, err);
+      });
+  };
 
   const saveOnboardingData = (
     type: "personal_info" | "company_info" | "tnc",

@@ -21,6 +21,9 @@ export async function handleLogin(messageBag: GlobalMessage, payload: TLogin) {
           user: User;
           privileges: string[] | null;
           subscriptions: Subscription[] | null;
+          company: Company | null;
+          outlet: Outlet | null;
+          token_expired_at: string | null;
         }>
       ) => {
         if (!res.status && res.code !== 422) {

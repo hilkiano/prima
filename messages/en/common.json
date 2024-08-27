@@ -61,5 +61,13 @@
     "validation_phone_number": "This phone number is not valid.",
     "validation_tnc_agreement": "You are required to agree with our terms and conditions before using this application.",
     "validation_company_exist": "The company with a name like this is already registered."
+  },
+  "DataTable": {
+    "search": "Search...",
+    "column_visibility_toggle": "Toggle Column Visibility",
+    "toggle_all": "Toggle All"
+  },
+  "Paginator": {
+    "paginator": "Total"
   }
 }

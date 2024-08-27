@@ -61,5 +61,13 @@
     "validation_phone_number": "Nomor telepon ini tidak valid.",
     "validation_tnc_agreement": "Anda perlu setuju dengan syarat dan ketentuan kami sebelum menggunakan aplikasi ini.",
     "validation_company_exist": "Perusahaan dengan nama seperti ini sudah terdaftar."
+  },
+  "DataTable": {
+    "search": "Cari...",
+    "column_visibility_toggle": "Ubah Visibilitas Kolom",
+    "toggle_all": "Ubah Semua"
+  },
+  "Paginator": {
+    "paginator": "Total"
   }
 }

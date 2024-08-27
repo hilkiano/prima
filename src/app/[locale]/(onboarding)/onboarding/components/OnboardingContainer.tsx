@@ -28,9 +28,9 @@ const OnboardingContainer = React.forwardRef<
       case "personal-info":
         return (
           <div className="flex flex-col w-full max-w-[900px] mt-14 gap-4">
-            <h1>{t("header")}</h1>
-            <div className="flex gap-2">
-              <OnboardingStepper className="shrink-0 w-[300px]" />
+            <h1 className="font-medium text-xl md:text-2xl">{t("header")}</h1>
+            <div className="flex flex-col md:flex-row gap-6 md:gap-2">
+              <OnboardingStepper className="shrink-0 w-full md:w-[300px]" />
               <OnboardingPersonalInfo className="w-full" />
             </div>
           </div>
@@ -39,8 +39,8 @@ const OnboardingContainer = React.forwardRef<
         return (
           <div className="flex flex-col w-full max-w-[900px] mt-14 gap-4">
             <h1>{t("header")}</h1>
-            <div className="flex gap-2">
-              <OnboardingStepper className="shrink-0 w-[300px]" />
+            <div className="flex flex-col md:flex-row gap-6 md:gap-2">
+              <OnboardingStepper className="shrink-0 w-full md:w-[300px]" />
               <OnboardingCompanyInfo className="w-full" />
             </div>
           </div>
@@ -49,8 +49,8 @@ const OnboardingContainer = React.forwardRef<
         return (
           <div className="flex flex-col w-full max-w-[900px] mt-14 gap-4">
             <h1>{t("header")}</h1>
-            <div className="flex gap-2">
-              <OnboardingStepper className="shrink-0 w-[300px]" />
+            <div className="flex flex-col md:flex-row gap-6 md:gap-2">
+              <OnboardingStepper className="shrink-0 w-full md:w-[300px]" />
               <OnboardingTnc className="w-full" />
             </div>
           </div>

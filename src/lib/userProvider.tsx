@@ -13,12 +13,18 @@ type UserContextType = {
     user: User;
     privileges: string[] | null;
     subscriptions: Subscription[] | null;
+    company: Company | null;
+    outlet: Outlet | null;
+    token_expired_at: string | null;
   } | null;
   setUserData: Dispatch<
     SetStateAction<{
       user: User;
       privileges: string[] | null;
       subscriptions: Subscription[] | null;
+      company: Company | null;
+      outlet: Outlet | null;
+      token_expired_at: string | null;
     } | null>
   >;
 };
@@ -34,6 +40,9 @@ export default function UserProvider({
     user: User;
     privileges: string[] | null;
     subscriptions: Subscription[] | null;
+    company: Company | null;
+    outlet: Outlet | null;
+    token_expired_at: string | null;
   } | null;
 }) {
   const [userData, setUserData] = useState(value);

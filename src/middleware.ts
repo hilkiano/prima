@@ -1,6 +1,5 @@
 import createMiddleware from "next-intl/middleware";
 import { cookies } from "next/headers";
-import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
 const locales = ["en", "id"];
@@ -30,6 +29,9 @@ const intlMiddleware = (
     user: result?.data.user,
     privileges: result?.data.privileges,
     subscriptions: result?.data.subscriptions,
+    company: result?.data.company,
+    outlet: result?.data.outlet,
+    token_expired_at: result?.data.token_expired_at,
   };
 
   if (result) {

@@ -17,7 +17,7 @@
 }
 
 .selectDropdown {
-  @apply dark:bg-slate-900 dark:border-slate-700 border-slate-300;
+  @apply dark:bg-slate-900 dark:border-slate-700 border-slate-300 border-2;
 }
 
 .selectOption {
@@ -26,7 +26,7 @@
 
 /* TEXT INPUT */
 .textInputInput {
-  @apply dark:bg-slate-800 dark:data-[variant=default]:border-slate-700 dark:data-[error=true]:border-[#E03131] font-sans;
+  @apply dark:bg-slate-800 dark:data-[variant=default]:border-slate-700 dark:data-[error=true]:border-[#E03131] border-2 font-sans;
 }
 
 .textInputError {
@@ -35,7 +35,7 @@
 
 /* PASSWORD INPUT */
 .passwordInputInput {
-  @apply dark:bg-slate-800 dark:data-[variant=default]:border-slate-700 dark:data-[error=true]:border-[#E03131] font-sans;
+  @apply dark:bg-slate-800 dark:data-[variant=default]:border-slate-700 dark:data-[error=true]:border-[#E03131] border-2 font-sans;
 }
 
 .passwordInputError {
@@ -44,7 +44,7 @@
 
 /* MENU */
 .menuDropdown {
-  @apply dark:bg-slate-900 dark:border-slate-700 border-slate-300;
+  @apply dark:bg-slate-900 dark:border-slate-700 border-slate-200 border-2 rounded-lg;
 }
 
 .menuItem {
@@ -85,4 +85,18 @@
 /* SCROLL AREA */
 .scrollAreaScrollBar {
   @apply bg-transparent;
+}
+
+/* PAGINATION CONTROL */
+.paginationControl {
+  @apply transition-colors border-2 dark:[&:not([data-active])]:bg-slate-700;
+}
+
+/* TABLE */
+.tableThead {
+  @apply [&>tr]:border-b-4 [&>tr]:border-slate-200 [&>tr]:dark:border-slate-600 dark:bg-slate-700 bg-slate-100 uppercase;
+}
+
+.tableTbody {
+  @apply bg-slate-200 dark:bg-slate-700 bg-opacity-20 dark:bg-opacity-20 [&>tr]:border-slate-200 [&>tr]:dark:border-slate-700;
 }

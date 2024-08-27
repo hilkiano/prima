@@ -78,6 +78,9 @@ function getInitialValue() {
     user: User;
     privileges: string[];
     subscriptions: Subscription[];
+    company: Company;
+    outlet: Outlet;
+    token_expired_at: string;
   } | null = null;
 
   if (headersList.has("x-userdata")) {

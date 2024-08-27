@@ -53,7 +53,7 @@ const OnboardingPersonalInfo = React.forwardRef<
         })}
         className="flex flex-col gap-4"
       >
-        <div className="flex gap-3">
+        <div className="flex flex-col sm:flex-row gap-3">
           <Controller
             name="given_name"
             control={form.control}
@@ -89,7 +89,7 @@ const OnboardingPersonalInfo = React.forwardRef<
           control={form.control}
           render={({ field: { onChange, value } }) => (
             <Select
-              className="w-[250px]"
+              className="w-full sm:w-[250px]"
               label={t("label_gender")}
               error={form.formState.errors.gender?.message}
               data={genderOptions}
@@ -104,7 +104,7 @@ const OnboardingPersonalInfo = React.forwardRef<
           control={form.control}
           render={({ field: { onChange, value } }) => (
             <TextInput
-              className="w-[300px]"
+              className="w-full sm:w-[300px]"
               label={t("label_email")}
               error={form.formState.errors.email?.message}
               autoComplete="off"
@@ -120,12 +120,13 @@ const OnboardingPersonalInfo = React.forwardRef<
           render={({ field: { onChange, value } }) => (
             <TextInput
               leftSection={<p className="text-sm">+62</p>}
-              className="w-[300px]"
+              className="w-full sm:w-[300px]"
               label={t("label_phone_number")}
               error={form.formState.errors.phone_number?.message}
               autoComplete="off"
               value={value}
               onChange={onChange}
+              required
             />
           )}
         />
@@ -142,6 +143,7 @@ const OnboardingPersonalInfo = React.forwardRef<
               autosize
               minRows={2}
               maxRows={4}
+              required
             />
           )}
         />

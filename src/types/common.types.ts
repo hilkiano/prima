@@ -10,6 +10,8 @@ type Authenticated = {
   user: User;
   privileges: string[];
   subscriptions: Subscription[];
+  company: Company;
+  outlet: Outlet;
   refreshed_token?: string;
   token_expired_at: string;
 };
@@ -57,4 +59,13 @@ type NavbarLinks = {
   link?: string;
   links?: { label: string; link: string; privilege?: string }[];
   privilege?: string;
+};
+
+type ListResult<T> = {
+  total: number;
+  prev_page: string;
+  next_page: string;
+  rows: T;
+  page_count: number;
+  page: number;
 };

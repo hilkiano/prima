@@ -1,7 +1,6 @@
 "use client";
 
 import { Link } from "@/lib/navigation";
-import { useUserContext } from "@/lib/userProvider";
 import { Box, BoxProps, Button, Text, useMantineTheme } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useTranslations } from "next-intl";

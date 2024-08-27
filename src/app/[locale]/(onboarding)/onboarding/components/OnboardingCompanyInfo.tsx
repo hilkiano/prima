@@ -59,7 +59,7 @@ const OnboardingCompanyInfo = React.forwardRef<
           control={form.control}
           render={({ field: { onChange, value } }) => (
             <TextInput
-              className="w-[300px]"
+              className="w-full sm:w-[300px]"
               label={t("label_email")}
               error={form.formState.errors.email?.message}
               autoComplete="off"
@@ -75,12 +75,13 @@ const OnboardingCompanyInfo = React.forwardRef<
           render={({ field: { onChange, value } }) => (
             <TextInput
               leftSection={<p className="text-sm">+62</p>}
-              className="w-[300px]"
+              className="w-full sm:w-[300px]"
               label={t("label_phone_number")}
               error={form.formState.errors.phone_number?.message}
               autoComplete="off"
               value={value}
               onChange={onChange}
+              required
             />
           )}
         />
@@ -97,6 +98,7 @@ const OnboardingCompanyInfo = React.forwardRef<
               autosize
               minRows={2}
               maxRows={4}
+              required
             />
           )}
         />

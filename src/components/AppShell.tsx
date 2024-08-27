@@ -12,6 +12,7 @@ import {
   useMantineTheme,
   Modal,
   Button,
+  Box,
 } from "@mantine/core";
 import { useDisclosure, useHeadroom, useMediaQuery } from "@mantine/hooks";
 import ThemeToggle from "./ThemeToggle";
@@ -115,6 +116,7 @@ const AppShell = React.forwardRef<HTMLDivElement, TAppShell & AppShellProps>(
                   <Avatar
                     src={userData?.user.avatar_url}
                     alt={userData?.user.display_name}
+                    className="cursor-pointer"
                   />
                 </Menu.Target>
                 <Menu.Dropdown>

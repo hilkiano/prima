@@ -36,6 +36,9 @@ export default function useLoginPage() {
         user: User;
         privileges: string[] | null;
         subscriptions: Subscription[] | null;
+        company: Company | null;
+        outlet: Outlet | null;
+        token_expired_at: string | null;
       }>
     ) => {
       if (res.code === 200) {
@@ -43,6 +46,9 @@ export default function useLoginPage() {
           user: res.data.user,
           privileges: res.data.privileges,
           subscriptions: res.data.subscriptions,
+          company: res.data.company,
+          outlet: res.data.outlet,
+          token_expired_at: res.data.token_expired_at,
         });
         router.push("/dashboard");
       }

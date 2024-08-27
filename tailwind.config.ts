@@ -9,6 +9,13 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    screens: {
+      xs: "36em",
+      sm: "48em",
+      md: "64em",
+      lg: "74em",
+      xl: "90em",
+    },
     extend: {
       fontFamily: {
         sans: ["var(--font-outfit)", ...defaultTheme.fontFamily.sans],

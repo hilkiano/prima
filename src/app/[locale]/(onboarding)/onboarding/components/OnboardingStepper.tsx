@@ -1,4 +1,10 @@
-import { Box, BoxProps, Stepper, StepperProps } from "@mantine/core";
+import {
+  Box,
+  BoxProps,
+  Stepper,
+  StepperProps,
+  useMantineTheme,
+} from "@mantine/core";
 import React from "react";
 import useOnboarding, { OnboardingOptions } from "../hooks/onboarding.hooks";
 import { useTranslations } from "next-intl";
@@ -9,6 +15,7 @@ import {
   IconUser,
 } from "@tabler/icons-react";
 import { useSearchParams } from "next/navigation";
+import { useMediaQuery } from "@mantine/hooks";
 
 type TOnboardingStepper = {};
 
@@ -18,6 +25,8 @@ const OnboardingStepper = React.forwardRef<
 >(({ ...props }, ref) => {
   const { handleStep } = useOnboarding();
   const t = useTranslations("Onboarding.Stepper");
+  const theme = useMantineTheme();
+  const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.md})`);
 
   const searchParams = useSearchParams();
   const optionParam = searchParams.get("option") as OnboardingOptions | null;
@@ -46,19 +55,22 @@ const OnboardingStepper = React.forwardRef<
       <Stepper
         active={getActiveStep(optionParam)}
         onStepClick={(number) => handleStep(number)}
-        orientation="vertical"
+        orientation={isMobile ? "horizontal" : "vertical"}
         allowNextStepsSelect={false}
         completedIcon={<IconCheck stroke={3} />}
       >
         <Stepper.Step
           icon={<IconUser stroke={3} />}
-          label={t("personal_info")}
+          label={isMobile ? "" : t("personal_info")}
         />
         <Stepper.Step
           icon={<IconBuilding stroke={3} />}
-          label={t("company_info")}
+          label={isMobile ? "" : t("company_info")}
         />
-        <Stepper.Step icon={<IconScript stroke={3} />} label={t("tnc")} />
+        <Stepper.Step
+          icon={<IconScript stroke={3} />}
+          label={isMobile ? "" : t("tnc")}
+        />
       </Stepper>
     </Box>
   );

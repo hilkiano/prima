@@ -39,19 +39,22 @@ export default function useOnboardingPersonalInfo() {
     gender: z.enum(values, {
       required_error: tForm("validation_required"),
     }),
-    address: z.string(),
+    address: z.string().min(1, tForm("validation_required")),
     email: z
       .string()
       .min(1, tForm("validation_required"))
       .email(tForm("validation_email")),
-    phone_number: z.string().refine(
-      (val) => {
-        return val === "" || isMobilePhone(val);
-      },
-      {
-        message: tForm("validation_phone_number"),
-      }
-    ),
+    phone_number: z
+      .string()
+      .min(1, tForm("validation_required"))
+      .refine(
+        (val) => {
+          return val === "" || isMobilePhone(val);
+        },
+        {
+          message: tForm("validation_phone_number"),
+        }
+      ),
   });
 
   const form = useForm<z.infer<typeof schema>>({

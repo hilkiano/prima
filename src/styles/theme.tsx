@@ -14,6 +14,8 @@ import {
   Checkbox,
   Code,
   ScrollArea,
+  Pagination,
+  Table,
 } from "@mantine/core";
 import classes from "@/styles/components.module.css";
 import { IconSquareRoundedXFilled } from "@tabler/icons-react";
@@ -152,6 +154,34 @@ export const theme = createTheme({
     ScrollArea: ScrollArea.extend({
       classNames: {
         scrollbar: classes.scrollAreaScrollBar,
+      },
+    }),
+    Pagination: Pagination.extend({
+      defaultProps: {
+        size: "md",
+        radius: "xl",
+      },
+      classNames: {
+        control: classes.paginationControl,
+      },
+    }),
+    Table: Table.extend({
+      defaultProps: {
+        horizontalSpacing: 8,
+        verticalSpacing: 12,
+      },
+      classNames: {
+        thead: classes.tableThead,
+        tbody: classes.tableTbody,
+      },
+    }),
+    PaginationRoot: Pagination.Root.extend({
+      defaultProps: {
+        size: "md",
+        radius: "xl",
+      },
+      classNames: {
+        control: classes.paginationControl,
       },
     }),
   },
