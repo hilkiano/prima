@@ -1,5 +1,6 @@
 "use client";
 
+import { GlobalMessage } from "@/types/common.types";
 import {
   createContext,
   useContext,

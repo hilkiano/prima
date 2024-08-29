@@ -15,7 +15,8 @@
     "get_started": "Ayo mulai",
     "next": "Berikutnya",
     "previous": "Sebelumnya",
-    "done": "Selesai"
+    "done": "Selesai",
+    "apply_filter": "Terapkan filter"
   },
   "Alert": {
     "Notification": {
@@ -53,21 +54,44 @@
   },
   "Error": {
     "404_head": "404 Tidak Ditemukan",
-    "404_body": "Halaman yang Anda cari tidak ada."
+    "404_body": "Halaman yang Anda cari tidak ada.",
+    "general_error": "Terjadi sebuah kesalahan."
   },
   "Form": {
     "validation_required": "Harap isi bagian ini.",
     "validation_email": "Email ini tidak valid.",
     "validation_phone_number": "Nomor telepon ini tidak valid.",
     "validation_tnc_agreement": "Anda perlu setuju dengan syarat dan ketentuan kami sebelum menggunakan aplikasi ini.",
-    "validation_company_exist": "Perusahaan dengan nama seperti ini sudah terdaftar."
+    "validation_company_exist": "Perusahaan dengan nama seperti ini sudah terdaftar.",
+    "validation_max_char": "Jumlah karakter maksimal yang diperbolehkan adalah {max}."
   },
   "DataTable": {
     "search": "Cari...",
     "column_visibility_toggle": "Ubah Visibilitas Kolom",
-    "toggle_all": "Ubah Semua"
+    "toggle_all": "Ubah Semua",
+    "additional_filter": "Filter tambahan",
+    "show_deleted_label": "Tampilkan item yang dihapus",
+    "menu_tooltip": "Tampilkan menu",
+    "menu_view": "Lihat",
+    "menu_update": "Perbarui",
+    "menu_delete": "Hapus",
+    "menu_restore": "Pulihkan"
   },
   "Paginator": {
     "paginator": "Total"
+  },
+  "Privileges": {
+    "data_create_group": "Akses untuk membuat grup baru",
+    "data_update_group": "Akses untuk memperbarui grup yang sudah ada",
+    "data_delete_group": "Akses untuk menghapus atau memulihkan grup",
+    "page_customers": "Akses untuk melihat halaman Pelanggan",
+    "page_outlets": "Akses untuk melihat halaman Gerai",
+    "page_products_add_product": "Akses untuk melihat halaman Produk > Tambahkan produk",
+    "page_products_discount": "Akses untuk melihat halaman Produk > Diskon produk",
+    "page_products_overview": "Akses untuk melihat halaman Produk > Tinjauan umum",
+    "page_reports": "Akses untuk melihat halaman Laporan",
+    "page_settings_groups": "Akses untuk melihat halaman Pengaturan > Grup",
+    "page_settings_membership_status": "Akses untuk melihat halaman Pengaturan > Status langganan",
+    "page_settings_users": "Akses untuk melihat halaman Pengaturan > Pengguna"
   }
 }

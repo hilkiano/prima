@@ -4,11 +4,7 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import pick from "lodash/pick";
-import {
-  NextIntlClientProvider,
-  useMessages,
-  useTranslations,
-} from "next-intl";
+import { NextIntlClientProvider, useMessages } from "next-intl";
 import GroupDataTable from "./components/GroupDataTable";
 import GroupHead from "./components/GroupHead";
 
@@ -27,11 +23,19 @@ function SettingsGroupsPageContent({ query }: TSettingsGroupsPage) {
 
   return (
     <NextIntlClientProvider
-      messages={pick(messages, ["Button", "DataTable", "Paginator", "Groups"])}
+      messages={pick(messages, [
+        "Button",
+        "DataTable",
+        "Paginator",
+        "Groups",
+        "Form",
+        "Error",
+        "Privileges",
+      ])}
     >
       <HydrationBoundary state={dehydrate(query)}>
         <GroupHead className="mb-4 md:mb-6" />
-        <GroupDataTable />
+        <GroupDataTable className="mb-12" />
       </HydrationBoundary>
     </NextIntlClientProvider>
   );

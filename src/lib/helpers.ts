@@ -10,6 +10,7 @@ type TListQueryParams = {
   globalFilter: string;
   globalFilterColumns: string;
   columnFilters: ColumnFiltersState;
+  withTrashed: boolean;
 };
 
 export const generateListQueryParams = (props: TListQueryParams) => {
@@ -24,6 +25,7 @@ export const generateListQueryParams = (props: TListQueryParams) => {
     params.global_filter = props.globalFilter;
     params.global_filter_columns = props.globalFilterColumns;
   }
+  params.with_trashed = props.withTrashed;
   params.page = (props.pagination.pageIndex + 1).toString();
   params.limit = props.pagination.pageSize.toString();
   if (props.columnFilters.length > 0) {

@@ -1,3 +1,4 @@
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -19,4 +20,8 @@
   @mixin dark {
     display: block;
   }
+}
+
+.mantine-Switch-input:checked ~ .mantine-Switch-track {
+  @apply dark:bg-blue-500;
 }

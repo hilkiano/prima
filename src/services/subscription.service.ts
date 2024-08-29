@@ -1,4 +1,5 @@
 import { showError } from "@/lib/errorHandler";
+import { GlobalMessage, JsonResponse, Onboarding } from "@/types/common.types";
 
 export async function handleNewSubscription(
   messageBag: GlobalMessage,

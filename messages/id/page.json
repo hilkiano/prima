@@ -69,6 +69,13 @@
       "privileges": "Hak Akses",
       "created_at": "Dibuat Pada",
       "updated_at": "Diperbarui Pada"
+    },
+    "Form": {
+      "title_add": "Tambahkan grup baru",
+      "title_update": "Perbarui grup: {name}",
+      "privilege_page_title": "Akses halaman",
+      "privilege_data_title": "Akses data",
+      "privilege_selected": "Dipilih: {selected}/{total}"
     }
   }
 }

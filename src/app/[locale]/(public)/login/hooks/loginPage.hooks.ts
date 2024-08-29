@@ -9,6 +9,7 @@ import { handleLogin } from "@/services/auth.service";
 import { useGlobalMessageContext } from "@/lib/globalMessageProvider";
 import { useRouter } from "@/lib/navigation";
 import { useUserContext } from "@/lib/userProvider";
+import { JsonResponse } from "@/types/common.types";
 
 export default function useLoginPage() {
   const t = useTranslations("Public.Login");

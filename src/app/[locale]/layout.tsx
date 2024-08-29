@@ -15,6 +15,7 @@ import GlobalMessageProvider from "@/lib/globalMessageProvider";
 import { useTranslations } from "next-intl";
 import { headers } from "next/headers";
 import UserProvider from "@/lib/userProvider";
+import { GlobalMessage } from "@/types/common.types";
 
 export const metadata: Metadata = {
   title: "Prima",

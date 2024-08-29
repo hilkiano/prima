@@ -1,6 +1,7 @@
 import createMiddleware from "next-intl/middleware";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
+import { Authenticated, JsonResponse } from "./types/common.types";
 
 const locales = ["en", "id"];
 const publicPages = ["/login"];

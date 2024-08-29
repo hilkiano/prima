@@ -69,6 +69,13 @@
       "privileges": "Privileges",
       "created_at": "Created At",
       "updated_at": "Updated At"
+    },
+    "Form": {
+      "title_add": "Add new group",
+      "title_update": "Update group: {name}",
+      "privilege_page_title": "Page access",
+      "privilege_data_title": "Data access",
+      "privilege_selected": "Selected: {selected}/{total}"
     }
   }
 }

@@ -3,6 +3,7 @@ import { NextIntlClientProvider, useMessages } from "next-intl";
 import pick from "lodash/pick";
 import UserCard from "./components/UserCard";
 import { headers } from "next/headers";
+import { Authenticated } from "@/types/common.types";
 
 export default function DashboardPage() {
   let userData: Authenticated | null = null;

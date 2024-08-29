@@ -15,7 +15,8 @@
     "get_started": "Get started",
     "next": "Next",
     "previous": "Previous",
-    "done": "Done"
+    "done": "Done",
+    "apply_filter": "Apply filter"
   },
   "Alert": {
     "Notification": {
@@ -53,21 +54,44 @@
   },
   "Error": {
     "404_head": "404 Not Found",
-    "404_body": "The page you are looking for is not exist."
+    "404_body": "The page you are looking for is not exist.",
+    "general_error": "An error occurred."
   },
   "Form": {
     "validation_required": "Please fill this field.",
     "validation_email": "This email is not valid.",
     "validation_phone_number": "This phone number is not valid.",
     "validation_tnc_agreement": "You are required to agree with our terms and conditions before using this application.",
-    "validation_company_exist": "The company with a name like this is already registered."
+    "validation_company_exist": "The company with a name like this is already registered.",
+    "validation_max_char": "Maximum characters allowed is {max}."
   },
   "DataTable": {
     "search": "Search...",
     "column_visibility_toggle": "Toggle Column Visibility",
-    "toggle_all": "Toggle All"
+    "toggle_all": "Toggle All",
+    "additional_filter": "Additional filters",
+    "show_deleted_label": "Show deleted items",
+    "menu_tooltip": "Show menu",
+    "menu_view": "View",
+    "menu_update": "Update",
+    "menu_delete": "Delete",
+    "menu_restore": "Restore"
   },
   "Paginator": {
     "paginator": "Total"
+  },
+  "Privileges": {
+    "data_create_group": "Access to create a new group",
+    "data_update_group": "Access to update an existing group",
+    "data_delete_group": "Access to delete or restore a group",
+    "page_customers": "Access to view Customers page",
+    "page_outlets": "Access to view Outlets page",
+    "page_products_add_product": "Access to view Products > Add product page",
+    "page_products_discount": "Access to view Products > Discount page",
+    "page_products_overview": "Access to view Products > Overview page",
+    "page_reports": "Access to view Reports page",
+    "page_settings_groups": "Access to view Settings > Groups page",
+    "page_settings_membership_status": "Access to view Settings > Membership status page",
+    "page_settings_users": "Access to view Settings > Users page"
   }
 }

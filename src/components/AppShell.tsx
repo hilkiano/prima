@@ -88,7 +88,6 @@ const AppShell = React.forwardRef<HTMLDivElement, TAppShell & AppShellProps>(
           collapsed: { mobile: !opened },
         }}
         classNames={{
-          header: "bg-white dark:bg-slate-900",
           main: "bg-white dark:bg-slate-900",
           navbar: "bg-white/50 dark:bg-slate-900/75 !p-0",
         }}
@@ -165,7 +164,6 @@ const AppShell = React.forwardRef<HTMLDivElement, TAppShell & AppShellProps>(
         {hasAuth && withMenu ? (
           <MAppShell.Navbar p="md">
             <ScrollArea>
-              {/* TODO: Add privilege per menu item */}
               {filteredMenus.map((item) => (
                 <NavbarLink {...item} key={item.label} />
               ))}

@@ -16,6 +16,9 @@ import {
   ScrollArea,
   Pagination,
   Table,
+  Skeleton,
+  Accordion,
+  Switch,
 } from "@mantine/core";
 import classes from "@/styles/components.module.css";
 import { IconSquareRoundedXFilled } from "@tabler/icons-react";
@@ -109,6 +112,9 @@ export const theme = createTheme({
           },
         },
       },
+      classNames: {
+        header: classes.headerAppShell,
+      },
     }),
     Modal: Modal.extend({
       defaultProps: {
@@ -182,6 +188,25 @@ export const theme = createTheme({
       },
       classNames: {
         control: classes.paginationControl,
+      },
+    }),
+    Skeleton: Skeleton.extend({
+      defaultProps: {
+        animate: false,
+      },
+      classNames: {
+        root: classes.skeletonRoot,
+      },
+    }),
+    Accordion: Accordion.extend({
+      classNames: {
+        item: classes.accordionItem,
+        label: classes.accordionLabel,
+      },
+    }),
+    Switch: Switch.extend({
+      classNames: {
+        track: classes.switchTrack,
       },
     }),
   },

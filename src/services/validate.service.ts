@@ -1,4 +1,5 @@
 import { showError } from "@/lib/errorHandler";
+import { GlobalMessage, JsonResponse } from "@/types/common.types";
 
 export type TValidate = {
   model: string;

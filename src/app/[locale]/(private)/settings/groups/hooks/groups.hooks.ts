@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getList } from "@/services/list.service";
 import { useGlobalMessageContext } from "@/lib/globalMessageProvider";
 import { generateListQueryParams } from "@/lib/helpers";
+import { DataTableState, JsonResponse, ListResult } from "@/types/common.types";
 
 export default function useGroups() {
   const { message } = useGlobalMessageContext();
@@ -24,6 +25,7 @@ export default function useGroups() {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+  const [withTrashed, setWithTrashed] = React.useState<boolean>(true);
 
   const query = useQuery<JsonResponse<ListResult<Group>>>({
     queryFn: async () => {
@@ -35,12 +37,13 @@ export default function useGroups() {
           globalFilterColumns: globalFilterColumns,
           pagination: pagination,
           columnFilters: columnFilters,
+          withTrashed: withTrashed,
         }),
       });
     },
     queryKey: [
       "groupList",
-      { sorting, globalFilter, pagination, columnFilters },
+      { sorting, globalFilter, pagination, columnFilters, withTrashed },
     ],
   });
 
@@ -55,5 +58,7 @@ export default function useGroups() {
     setPagination,
     columnFilters,
     setColumnFilters,
+    withTrashed,
+    setWithTrashed,
   };
 }

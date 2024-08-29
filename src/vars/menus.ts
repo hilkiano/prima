@@ -1,3 +1,5 @@
+import { NavbarLinks } from "@/types/common.types";
+
 export const menus: NavbarLinks[] = [
   { label: "Menu.dashboard", icon: "dashboard", link: "/dashboard" },
   {

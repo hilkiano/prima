@@ -12,6 +12,7 @@ import { IconChevronRight } from "@tabler/icons-react";
 import classes from "../styles/NavbarLinksGroup.module.css";
 import { useTranslations } from "next-intl";
 import { useUserContext } from "@/lib/userProvider";
+import { NavbarLinks } from "@/types/common.types";
 
 export function NavbarLink({
   icon,

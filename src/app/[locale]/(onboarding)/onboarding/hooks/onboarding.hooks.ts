@@ -9,6 +9,13 @@ import { useMutation } from "@tanstack/react-query";
 import { handleNewSubscription } from "@/services/subscription.service";
 import { useGlobalMessageContext } from "@/lib/globalMessageProvider";
 import { useUserContext } from "@/lib/userProvider";
+import {
+  Authenticated,
+  CompanyInfo,
+  JsonResponse,
+  Onboarding,
+  PersonalInfo,
+} from "@/types/common.types";
 
 export type OnboardingOptions =
   | "personal-info"

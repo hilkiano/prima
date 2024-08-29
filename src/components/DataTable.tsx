@@ -11,15 +11,12 @@ import {
   TextInput,
   useMantineColorScheme,
 } from "@mantine/core";
-import { UseQueryResult } from "@tanstack/react-query";
 import {
   Column,
   ColumnDef,
   ColumnPinningState,
-  ColumnSort,
   flexRender,
   getCoreRowModel,
-  PaginationState,
   Table,
   useReactTable,
   VisibilityState,
@@ -29,6 +26,7 @@ import Paginator from "./Paginator";
 import {
   IconArrowsSort,
   IconCaretDownFilled,
+  IconFilterFilled,
   IconSearch,
   IconSortAscending,
   IconSortDescending,
@@ -36,17 +34,19 @@ import {
 import { useTranslations } from "next-intl";
 
 type TDataTable = {
-  query: UseQueryResult<JsonResponse<ListResult<any>>, Error>;
+  tableState: any;
   columns: ColumnDef<any, any>[];
-  sorting?: ColumnSort[];
-  setSorting?: React.Dispatch<React.SetStateAction<ColumnSort[]>>;
-  globalFilter?: string;
-  setGlobalFilter?: React.Dispatch<React.SetStateAction<string>>;
-  pagination: PaginationState;
-  setPagination: React.Dispatch<React.SetStateAction<PaginationState>>;
   visibilityState?: VisibilityState;
+  additionalFilterComponent?: React.ReactNode;
+  openAdditionalFilter?: () => void;
   minWidth: number;
-};
+} & (
+  | {
+      additionalFilterComponent: React.ReactNode;
+      openAdditionalFilter: () => void;
+    }
+  | { additionalFilterComponent?: undefined; openAdditionalFilter?: undefined }
+);
 
 const getCommonPinningStyles = (
   column: Column<any>,
@@ -67,7 +67,7 @@ const getCommonPinningStyles = (
     left: isPinned === "left" ? `${column.getStart("left")}px` : undefined,
     right: isPinned === "right" ? `${column.getAfter("right")}px` : undefined,
     opacity: isPinned ? 0.95 : 1,
-    position: isPinned ? "absolute" : "relative",
+    position: isPinned ? "sticky" : "relative",
     width: column.getSize(),
     zIndex: isPinned ? 1 : 0,
   };
@@ -184,23 +184,22 @@ const DataTableColumnToggle = (table: Table<any>) => {
 const DataTable = React.forwardRef<HTMLDivElement, TDataTable & TableProps>(
   (
     {
-      query,
+      tableState,
       columns,
       minWidth,
-      sorting,
-      setSorting,
-      globalFilter,
-      setGlobalFilter,
-      pagination,
-      setPagination,
       visibilityState,
+      additionalFilterComponent,
+      openAdditionalFilter,
       ...props
     },
     ref
   ) => {
     const t = useTranslations("DataTable");
     const { colorScheme } = useMantineColorScheme();
-    const data = React.useMemo(() => query.data?.data.rows ?? [], [query]);
+    const data = React.useMemo(
+      () => tableState.query.data?.data.rows ?? [],
+      [tableState.query]
+    );
     const [columnVisibility, setColumnVisibility] =
       React.useState<VisibilityState>(visibilityState ?? {});
     const [columnPinning, setColumnPinning] =
@@ -212,28 +211,48 @@ const DataTable = React.forwardRef<HTMLDivElement, TDataTable & TableProps>(
       data,
       columns,
       state: {
-        sorting: sorting,
-        globalFilter: globalFilter,
-        pagination: pagination,
+        sorting: tableState.sorting,
+        globalFilter: tableState.globalFilter,
+        pagination: tableState.pagination,
         columnVisibility,
         columnPinning,
       },
       getCoreRowModel: getCoreRowModel(),
-      onSortingChange: setSorting,
-      onGlobalFilterChange: setGlobalFilter,
-      onPaginationChange: setPagination,
+      onSortingChange: tableState.setSorting,
+      onGlobalFilterChange: tableState.setGlobalFilter,
+      onPaginationChange: tableState.setPagination,
       onColumnVisibilityChange: setColumnVisibility,
       onColumnPinningChange: setColumnPinning,
       manualSorting: true,
       manualFiltering: true,
       manualPagination: true,
-      pageCount: query.data ? query.data.data.page_count : 1,
+      pageCount: tableState.query.data
+        ? tableState.query.data.data.page_count
+        : 1,
     });
 
     return (
       <Box className="flex flex-col gap-4">
         <div className="flex gap-4 flex-col xs:flex-row justify-between items-start xs:items-center">
-          {DataTableColumnToggle(table)}
+          <div className="flex flex-col xs:flex-row gap-4 w-full items-center">
+            {DataTableColumnToggle(table)}
+            {additionalFilterComponent ? (
+              <>
+                {additionalFilterComponent}
+                <Button
+                  variant="filled"
+                  leftSection={<IconFilterFilled size={14} />}
+                  className="w-full xs:w-auto"
+                  onClick={() => openAdditionalFilter()}
+                >
+                  {t("additional_filter")}
+                </Button>
+              </>
+            ) : (
+              <></>
+            )}
+          </div>
+
           <TextInput
             radius="xl"
             className="w-full xs:w-[300px]"
@@ -243,7 +262,7 @@ const DataTable = React.forwardRef<HTMLDivElement, TDataTable & TableProps>(
               table.setPageIndex(0);
               table.setGlobalFilter(e.target.value);
             }}
-            disabled={query.isLoading}
+            disabled={tableState.query.isLoading}
           />
         </div>
 
@@ -259,40 +278,49 @@ const DataTable = React.forwardRef<HTMLDivElement, TDataTable & TableProps>(
           >
             {DataTableHeader(table, colorScheme)}
             <MantineTable.Tbody>
-              {table.getRowModel().rows.map((row) => (
-                <MantineTable.Tr
-                  className="dark:hover:bg-slate-700 dark:hover:bg-opacity-20"
-                  key={row.id}
-                >
-                  {row.getVisibleCells().map((cell) => {
-                    const { column } = cell;
-                    const isPinned = column.getIsPinned();
-
-                    return (
-                      <MantineTable.Td
-                        key={cell.id}
-                        style={{
-                          ...getCommonPinningStyles(column, colorScheme),
-                        }}
-                        className={`${
-                          isPinned ? "bg-slate-50 dark:bg-slate-800" : ""
-                        }`}
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </MantineTable.Td>
-                    );
-                  })}
-                </MantineTable.Tr>
-              ))}
+              {table.getRowModel().rows.map((row) => {
+                return (
+                  <MantineTable.Tr
+                    className={`dark:hover:bg-slate-700 dark:hover:bg-opacity-20 ${
+                      row.original.deleted_at
+                        ? "text-red-500 font-semibold"
+                        : "font-semibold"
+                    }`}
+                    key={row.id}
+                  >
+                    {row.getVisibleCells().map((cell) => {
+                      const { column } = cell;
+                      const isPinned = column.getIsPinned();
+                      return (
+                        <MantineTable.Td
+                          key={cell.id}
+                          style={{
+                            ...getCommonPinningStyles(column, colorScheme),
+                          }}
+                          className={`${
+                            isPinned ? "bg-slate-50 dark:bg-slate-800" : ""
+                          }`}
+                        >
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </MantineTable.Td>
+                      );
+                    })}
+                  </MantineTable.Tr>
+                );
+              })}
             </MantineTable.Tbody>
           </MantineTable>
         </MantineTable.ScrollContainer>
         <Paginator
-          activePage={query.data ? query.data.data.page : 1}
-          totalData={query.data ? query.data.data.total : 0}
+          activePage={
+            tableState.query.data ? tableState.query.data.data.page : 1
+          }
+          totalData={
+            tableState.query.data ? tableState.query.data.data.total : 0
+          }
           table={table}
         />
       </Box>

@@ -133,3 +133,11 @@ type Group = {
   updated_by: string;
   deleted_by: string;
 };
+
+type Privilege = {
+  id: string;
+  desc_i18n: string;
+  type: string;
+  created_at: Date;
+  updated_at: Date;
+};
