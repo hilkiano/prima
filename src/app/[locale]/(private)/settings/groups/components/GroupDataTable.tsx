@@ -66,19 +66,32 @@ const GroupDataTable = React.forwardRef<HTMLDivElement, BoxProps>(
 
     const columnHelper = createColumnHelper<Group & { action: any }>();
 
-    const updateGroup = (data: Group) => {
-      formState.query.refetch();
-      formState.setData(data);
-      formOpen();
-    };
+    const columns = React.useMemo(() => {
+      const updateGroup = (data: Group) => {
+        formState.query.refetch();
+        formState.setData(data);
+        formOpen();
+      };
 
-    const deleteGroup = (data: Group) => {
-      const userCount = data.users_count ?? 0;
-      if (userCount > 0) {
-        setData(data);
-        confirmOpen();
-      } else {
-        formState.mutationDelete.mutate({
+      const deleteGroup = (data: Group) => {
+        const userCount = data.users_count ?? 0;
+        if (userCount > 0) {
+          setData(data);
+          confirmOpen();
+        } else {
+          formState.mutationDelete.mutate({
+            class: "Group",
+            payload: {
+              payload: {
+                id: data.id,
+              },
+            },
+          });
+        }
+      };
+
+      const restoreGroup = (data: Group) => {
+        formState.mutationRestore.mutate({
           class: "Group",
           payload: {
             payload: {
@@ -86,22 +99,9 @@ const GroupDataTable = React.forwardRef<HTMLDivElement, BoxProps>(
             },
           },
         });
-      }
-    };
+      };
 
-    const restoreGroup = (data: Group) => {
-      formState.mutationRestore.mutate({
-        class: "Group",
-        payload: {
-          payload: {
-            id: data.id,
-          },
-        },
-      });
-    };
-
-    const columns = React.useMemo(
-      () => [
+      return [
         columnHelper.accessor("id", {
           id: "id",
           cell: (info) => (
@@ -126,7 +126,7 @@ const GroupDataTable = React.forwardRef<HTMLDivElement, BoxProps>(
           id: "description",
           cell: (info) =>
             info.getValue() ? (
-              <span className="line-clamp-1">{info.getValue()}</span>
+              <span className="line-clamp-3">{info.getValue()}</span>
             ) : (
               "-"
             ),
@@ -142,8 +142,8 @@ const GroupDataTable = React.forwardRef<HTMLDivElement, BoxProps>(
             const countPrivileges = info.getValue().length;
             return (
               <div className="flex gap-2 items-center">
-                <ThemeIcon radius="xl" size="sm">
-                  <IconKey size={12} className="opacity-60" />
+                <ThemeIcon radius="xl" size="md">
+                  <IconKey size={16} stroke={3} className="opacity-60" />
                 </ThemeIcon>
                 {new Intl.NumberFormat(locale).format(countPrivileges)}
               </div>
@@ -160,8 +160,8 @@ const GroupDataTable = React.forwardRef<HTMLDivElement, BoxProps>(
           cell: (info) => {
             return (
               <div className="flex gap-2 items-center">
-                <ThemeIcon radius="xl" size="sm">
-                  <IconUser size={12} className="opacity-60" />
+                <ThemeIcon radius="xl" size="md">
+                  <IconUser size={16} stroke={4} className="opacity-60" />
                 </ThemeIcon>
                 {new Intl.NumberFormat(locale).format(
                   info.row.original.users_count
@@ -261,9 +261,17 @@ const GroupDataTable = React.forwardRef<HTMLDivElement, BoxProps>(
           enableGlobalFilter: false,
           enableHiding: false,
         }),
-      ],
-      [columnHelper, locale, t]
-    );
+      ];
+    }, [
+      columnHelper,
+      locale,
+      t,
+      tTable,
+      userData,
+      confirmOpen,
+      formOpen,
+      formState,
+    ]);
 
     const defaultVisibility: VisibilityState = {};
 

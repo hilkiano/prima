@@ -111,7 +111,7 @@ export default function useGroupsForm({
       form.setValue("description", data.description ?? "");
       form.setValue("privileges", data.privileges);
     }
-  }, [data]);
+  }, [data, form]);
 
   return {
     mutationCreate,
