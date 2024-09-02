@@ -67,14 +67,6 @@ const UserCard = React.forwardRef<HTMLDivElement, TUserCard & BoxProps>(
                 : "-"}
             </span>
           </p>
-          <p className="m-0 text-sm italic font-light leading-none">
-            {t("UserCard.session_expired")}{" "}
-            <span className="font-semibold">
-              {token_expired_at
-                ? dayjs(new Date()).locale(locale).to(token_expired_at)
-                : "-"}
-            </span>
-          </p>
         </div>
       </Box>
     );

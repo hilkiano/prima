@@ -16,6 +16,7 @@ import GroupForm from "./GroupForm";
 import { useQueryClient } from "@tanstack/react-query";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { TGroupFormState } from "@/types/page.types";
+import { useUserContext } from "@/lib/userProvider";
 
 const GroupHead = React.forwardRef<HTMLDivElement, BoxProps>(
   ({ ...props }, ref) => {
@@ -24,6 +25,7 @@ const GroupHead = React.forwardRef<HTMLDivElement, BoxProps>(
     const formState: TGroupFormState = useGroupsForm({ closeCallback: close });
     const theme = useMantineTheme();
     const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`);
+    const { userData } = useUserContext();
 
     const queryClient = useQueryClient();
 
@@ -50,6 +52,7 @@ const GroupHead = React.forwardRef<HTMLDivElement, BoxProps>(
                 formState.query.refetch();
                 open();
               }}
+              disabled={!userData?.privileges?.includes("DATA_CREATE_GROUP")}
             >
               {t("Body.create_btn")}
             </Button>

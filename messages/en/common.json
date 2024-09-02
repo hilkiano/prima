@@ -75,7 +75,8 @@
     "menu_view": "View",
     "menu_update": "Update",
     "menu_delete": "Delete",
-    "menu_restore": "Restore"
+    "menu_restore": "Restore",
+    "confirmation_title": "Confirm your action"
   },
   "Paginator": {
     "paginator": "Total"

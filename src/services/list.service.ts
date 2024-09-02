@@ -18,6 +18,7 @@ export async function getList(messageBag: GlobalMessage, params: TList) {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
+    credentials: "include",
   })
     .then((res) => res.json())
     .then((res: JsonResponse<any>) => {

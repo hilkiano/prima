@@ -10,7 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getList } from "@/services/list.service";
 import { useGlobalMessageContext } from "@/lib/globalMessageProvider";
 import { generateListQueryParams } from "@/lib/helpers";
-import { DataTableState, JsonResponse, ListResult } from "@/types/common.types";
+import { JsonResponse, ListResult } from "@/types/common.types";
 
 export default function useGroups() {
   const { message } = useGlobalMessageContext();
@@ -31,6 +31,7 @@ export default function useGroups() {
     queryFn: async () => {
       return getList(message, {
         model: "Group",
+        relation_count: "users",
         ...generateListQueryParams({
           sorting: sorting,
           globalFilter: globalFilter,

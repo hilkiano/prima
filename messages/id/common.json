@@ -75,7 +75,8 @@
     "menu_view": "Lihat",
     "menu_update": "Perbarui",
     "menu_delete": "Hapus",
-    "menu_restore": "Pulihkan"
+    "menu_restore": "Pulihkan",
+    "confirmation_title": "Konfirmasi tindakan Anda"
   },
   "Paginator": {
     "paginator": "Total"

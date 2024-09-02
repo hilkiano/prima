@@ -101,7 +101,7 @@ export const theme = createTheme({
         withCloseButton: false,
       },
       classNames: {
-        root: "!bg-black",
+        root: classes.notificationRoot,
       },
     }),
     AppShell: AppShell.extend({

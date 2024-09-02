@@ -17,10 +17,11 @@ export async function GET(request: NextRequest) {
           "x-app-locale": lang ? lang.value : "id",
           "x-token": jwt ? jwt.value : null,
         },
+        withCredentials: true,
       }
     )
     .then((res) => res)
     .catch((res) => res.response);
 
-  return Response.json(response.data);
+  return Response.json(response.data, { headers: response.headers });
 }

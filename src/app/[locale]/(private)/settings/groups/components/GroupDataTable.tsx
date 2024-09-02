@@ -4,6 +4,7 @@ import {
   ActionIcon,
   Box,
   BoxProps,
+  Button,
   Menu,
   Modal,
   ThemeIcon,
@@ -24,6 +25,7 @@ import {
   IconPencil,
   IconRestore,
   IconTrash,
+  IconUser,
 } from "@tabler/icons-react";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import GroupDataTableAdditionalFilter from "./GroupDataTableAdditionalFilter";
@@ -32,37 +34,70 @@ import { TGroupFormState } from "@/types/page.types";
 import useGroupsForm from "../hooks/groups.form.hooks";
 import GroupForm from "./GroupForm";
 import { useQueryClient } from "@tanstack/react-query";
+import ConfirmationDialog from "@/components/ConfirmationDialog";
+import { useUserContext } from "@/lib/userProvider";
 
 const GroupDataTable = React.forwardRef<HTMLDivElement, BoxProps>(
   ({ ...props }, ref) => {
     const locale = useLocale();
     const tTable = useTranslations("DataTable");
+    const tButton = useTranslations("Button");
     const t = useTranslations("Groups");
     const [opened, { open, close }] = useDisclosure(false);
     const [formOpened, { open: formOpen, close: formClose }] =
       useDisclosure(false);
+    const [confirmOpened, { open: confirmOpen, close: confirmClose }] =
+      useDisclosure(false, {
+        onClose: () => {
+          setTimeout(() => setData(null), 250);
+        },
+      });
     const tableState: DataTableState = useGroups();
+    const [data, setData] = React.useState<Group | null>(null);
     const formState: TGroupFormState = useGroupsForm({
       closeCallback: () => {
-        setData(null);
         formClose();
       },
     });
     const theme = useMantineTheme();
     const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`);
     const queryClient = useQueryClient();
-    const [data, setData] = React.useState<Group | null>(null);
+    const { userData } = useUserContext();
 
     const columnHelper = createColumnHelper<Group & { action: any }>();
 
     const updateGroup = (data: Group) => {
-      formState.form.setValue("id", data.id);
-      formState.form.setValue("name", data.name);
-      formState.form.setValue("description", data.description ?? "");
-      formState.form.setValue("privileges", data.privileges);
       formState.query.refetch();
-      setData(data);
+      formState.setData(data);
       formOpen();
+    };
+
+    const deleteGroup = (data: Group) => {
+      const userCount = data.users_count ?? 0;
+      if (userCount > 0) {
+        setData(data);
+        confirmOpen();
+      } else {
+        formState.mutationDelete.mutate({
+          class: "Group",
+          payload: {
+            payload: {
+              id: data.id,
+            },
+          },
+        });
+      }
+    };
+
+    const restoreGroup = (data: Group) => {
+      formState.mutationRestore.mutate({
+        class: "Group",
+        payload: {
+          payload: {
+            id: data.id,
+          },
+        },
+      });
     };
 
     const columns = React.useMemo(
@@ -91,7 +126,7 @@ const GroupDataTable = React.forwardRef<HTMLDivElement, BoxProps>(
           id: "description",
           cell: (info) =>
             info.getValue() ? (
-              <span className="line-clamp-3">{info.getValue()}</span>
+              <span className="line-clamp-1">{info.getValue()}</span>
             ) : (
               "-"
             ),
@@ -119,6 +154,28 @@ const GroupDataTable = React.forwardRef<HTMLDivElement, BoxProps>(
           enableSorting: false,
           enableGlobalFilter: false,
           enableHiding: false,
+        }),
+        columnHelper.accessor("users_count", {
+          id: "users_count",
+          cell: (info) => {
+            return (
+              <div className="flex gap-2 items-center">
+                <ThemeIcon radius="xl" size="sm">
+                  <IconUser size={12} className="opacity-60" />
+                </ThemeIcon>
+                {new Intl.NumberFormat(locale).format(
+                  info.row.original.users_count
+                    ? info.row.original.users_count
+                    : 0
+                )}
+              </div>
+            );
+          },
+          header: () => <span>{t("Columns.users_count")}</span>,
+          size: 100,
+          enableSorting: false,
+          enableGlobalFilter: false,
+          enableHiding: true,
         }),
         columnHelper.accessor("created_at", {
           id: "created_at",
@@ -164,17 +221,32 @@ const GroupDataTable = React.forwardRef<HTMLDivElement, BoxProps>(
                     </Menu.Item>
                     <Menu.Item
                       onClick={() => updateGroup(info.row.original)}
-                      disabled={!!info.row.original.deleted_at}
+                      disabled={
+                        !!info.row.original.deleted_at ||
+                        !userData?.privileges?.includes("DATA_UPDATE_GROUP")
+                      }
                       leftSection={<IconPencil size={20} />}
                     >
                       {tTable("menu_update")}
                     </Menu.Item>
                     {!info.row.original.deleted_at ? (
-                      <Menu.Item leftSection={<IconTrash size={20} />}>
+                      <Menu.Item
+                        onClick={() => deleteGroup(info.row.original)}
+                        leftSection={<IconTrash size={20} />}
+                        disabled={
+                          !userData?.privileges?.includes("DATA_DELETE_GROUP")
+                        }
+                      >
                         {tTable("menu_delete")}
                       </Menu.Item>
                     ) : (
-                      <Menu.Item leftSection={<IconRestore size={20} />}>
+                      <Menu.Item
+                        onClick={() => restoreGroup(info.row.original)}
+                        leftSection={<IconRestore size={20} />}
+                        disabled={
+                          !userData?.privileges?.includes("DATA_DELETE_GROUP")
+                        }
+                      >
                         {tTable("menu_restore")}
                       </Menu.Item>
                     )}
@@ -220,23 +292,60 @@ const GroupDataTable = React.forwardRef<HTMLDivElement, BoxProps>(
             />
           }
           openAdditionalFilter={open}
-          minWidth={1300}
+          minWidth={1400}
         />
         <Modal
           opened={formOpened}
           onClose={() => {
             formClose();
-            formState.form.reset();
+            setTimeout(() => formState.form.reset(), 250);
             queryClient.invalidateQueries({ queryKey: ["privilegeList"] });
           }}
-          title={t("Form.title_update", {
-            name: data ? data.name : "",
-          })}
+          title={
+            <span className="line-clamp-1">
+              {t("Form.title_update", {
+                name: data ? data.name : "",
+              })}
+            </span>
+          }
           size="lg"
           fullScreen={isMobile}
         >
           <GroupForm formState={formState} />
         </Modal>
+        <ConfirmationDialog
+          opened={confirmOpened}
+          onClose={confirmClose}
+          title={tTable("confirmation_title")}
+          content={t("Body.confirmation_body", {
+            group_name: data?.name,
+            users: data?.users_count ? data.users_count : 0,
+          })}
+          size="lg"
+          centered
+          positiveBtn={
+            <Button
+              onClick={() => {
+                formState.mutationDelete.mutate({
+                  class: "Group",
+                  payload: {
+                    payload: {
+                      id: data ? data.id : "",
+                    },
+                  },
+                });
+                confirmClose();
+              }}
+            >
+              {tButton("yes")}
+            </Button>
+          }
+          negativeBtn={
+            <Button variant="transparent" onClick={confirmClose}>
+              {tButton("no")}
+            </Button>
+          }
+        />
       </Box>
     );
   }

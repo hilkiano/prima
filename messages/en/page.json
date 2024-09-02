@@ -60,7 +60,8 @@
     "Body": {
       "header": "Groups",
       "body": "List below contains all groups available on your system. You may create a new group or update an existing group.",
-      "create_btn": "Create a group"
+      "create_btn": "Create a group",
+      "confirmation_body": "Group {group_name} has {users, plural, =0 {no users yet} =1 {one user} other {# users}}. Your action will revoke all access for all users who belong to this group."
     },
     "Columns": {
       "id": "ID",
@@ -68,7 +69,8 @@
       "description": "Description",
       "privileges": "Privileges",
       "created_at": "Created At",
-      "updated_at": "Updated At"
+      "updated_at": "Updated At",
+      "users_count": "Users"
     },
     "Form": {
       "title_add": "Add new group",

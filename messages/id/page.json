@@ -60,7 +60,8 @@
     "Body": {
       "header": "Grup",
       "body": "Daftar di bawah ini berisi semua grup yang tersedia di sistem Anda. Anda dapat membuat grup baru atau memperbarui grup yang sudah ada.",
-      "create_btn": "Buat grup"
+      "create_btn": "Buat grup",
+      "confirmation_body": "Grup {group_name} {users, plural, =0 {tidak memiliki pengguna} =1 {memiliki satu pengguna} other {memiliki # pengguna}}. Tindakan Anda akan mencabut semua akses untuk semua pengguna yang termasuk dalam grup ini."
     },
     "Columns": {
       "id": "ID",
@@ -68,7 +69,8 @@
       "description": "Deskripsi",
       "privileges": "Hak Akses",
       "created_at": "Dibuat Pada",
-      "updated_at": "Diperbarui Pada"
+      "updated_at": "Diperbarui Pada",
+      "users_count": "Pengguna"
     },
     "Form": {
       "title_add": "Tambahkan grup baru",

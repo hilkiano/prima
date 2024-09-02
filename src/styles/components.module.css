@@ -8,7 +8,7 @@
 
 /* BUTTON */
 .buttonRoot {
-  @apply transition-colors dark:data-[variant=default]:bg-slate-900 dark:data-[variant=default]:hover:bg-slate-950 dark:data-[variant=default]:border-slate-700 dark:data-[variant=filled]:disabled:bg-slate-700 data-[variant=filled]:disabled:bg-slate-300 dark:data-[variant=transparent]:text-slate-100 data-[variant=transparent]:text-slate-800 border-2;
+  @apply transition-colors dark:data-[variant=default]:bg-slate-900 dark:data-[variant=default]:hover:bg-slate-950 dark:data-[variant=default]:border-slate-700 dark:data-[variant=filled]:disabled:bg-slate-800 data-[variant=filled]:disabled:bg-slate-300 dark:data-[variant=gradient]:disabled:bg-slate-800 data-[variant=gradient]:disabled:bg-slate-300 dark:data-[variant=transparent]:text-slate-100 data-[variant=transparent]:text-slate-800 border-2;
 }
 
 /* SELECT */
@@ -117,10 +117,15 @@
 
 /* SWITCH */
 .switchTrack {
-  @apply dark:bg-slate-900/50 dark:checked:bg-blue-500 border-2;
+  @apply dark:bg-slate-900/50 dark:checked:bg-blue-500 border-2 flex-shrink-0;
 }
 
 /* APPSHELL */
 .headerAppShell {
   @apply bg-transparent dark:bg-transparent bg-gradient-to-b from-60% from-white dark:from-slate-900 backdrop-blur-lg;
+}
+
+/* NOTIFICATION */
+.notificationRoot {
+  @apply dark:bg-slate-700/70 bg-slate-50/70 backdrop-blur-lg;
 }

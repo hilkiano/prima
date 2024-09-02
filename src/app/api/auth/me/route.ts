@@ -15,5 +15,5 @@ export async function GET() {
     .then((res) => res)
     .catch((res) => res.response);
 
-  return Response.json(response.data);
+  return Response.json(response.data, { headers: response.headers });
 }

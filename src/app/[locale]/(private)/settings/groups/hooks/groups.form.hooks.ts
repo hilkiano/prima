@@ -1,7 +1,13 @@
 "use client";
 
+import React from "react";
 import { useGlobalMessageContext } from "@/lib/globalMessageProvider";
-import { create, update } from "@/services/crud.service";
+import {
+  createFn,
+  updateFn,
+  deleteFn,
+  restoreFn,
+} from "@/services/crud.service";
 import { getList } from "@/services/list.service";
 import { JsonResponse, ListResult } from "@/types/common.types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,6 +35,7 @@ export default function useGroupsForm({
     description: z.string(),
     privileges: z.string().array().min(1, tForm("validation_required")),
   });
+  const [data, setData] = React.useState<Group | null>(null);
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
@@ -46,7 +53,7 @@ export default function useGroupsForm({
     mutationFn: (data: {
       class: "Group";
       payload: { payload: Partial<Group> };
-    }) => create(message, data),
+    }) => createFn(message, data),
     onSuccess: (res) => {
       queryClient.invalidateQueries({ queryKey: ["groupList"] });
       form.reset();
@@ -58,11 +65,31 @@ export default function useGroupsForm({
     mutationFn: (data: {
       class: "Group";
       payload: { payload: Partial<Group> };
-    }) => update(message, data),
+    }) => updateFn(message, data),
     onSuccess: (res) => {
       queryClient.invalidateQueries({ queryKey: ["groupList"] });
       form.reset();
       closeCallback();
+    },
+  });
+
+  const mutationDelete = useMutation({
+    mutationFn: (data: {
+      class: "Group";
+      payload: { payload: Partial<Group> };
+    }) => deleteFn(message, data),
+    onSuccess: (res) => {
+      queryClient.invalidateQueries({ queryKey: ["groupList"] });
+    },
+  });
+
+  const mutationRestore = useMutation({
+    mutationFn: (data: {
+      class: "Group";
+      payload: { payload: Partial<Group> };
+    }) => restoreFn(message, data),
+    onSuccess: (res) => {
+      queryClient.invalidateQueries({ queryKey: ["groupList"] });
     },
   });
 
@@ -77,10 +104,23 @@ export default function useGroupsForm({
     enabled: false,
   });
 
+  React.useEffect(() => {
+    if (data) {
+      form.setValue("id", data.id);
+      form.setValue("name", data.name);
+      form.setValue("description", data.description ?? "");
+      form.setValue("privileges", data.privileges);
+    }
+  }, [data]);
+
   return {
     mutationCreate,
     mutationUpdate,
+    mutationDelete,
+    mutationRestore,
     query,
     form,
+    data,
+    setData,
   };
 }

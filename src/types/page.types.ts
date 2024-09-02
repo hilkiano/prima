@@ -25,6 +25,28 @@ export type TGroupFormState = {
     },
     unknown
   >;
+  mutationDelete: UseMutationResult<
+    JsonResponse<null>,
+    Error,
+    {
+      class: "Group";
+      payload: {
+        payload: Partial<Group>;
+      };
+    },
+    unknown
+  >;
+  mutationRestore: UseMutationResult<
+    JsonResponse<null>,
+    Error,
+    {
+      class: "Group";
+      payload: {
+        payload: Partial<Group>;
+      };
+    },
+    unknown
+  >;
   query: UseQueryResult<JsonResponse<ListResult<Privilege[]>>, Error>;
   form: UseFormReturn<
     {
@@ -36,4 +58,6 @@ export type TGroupFormState = {
     any,
     undefined
   >;
+  data: Group | null;
+  setData: React.Dispatch<React.SetStateAction<Group | null>>;
 };

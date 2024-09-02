@@ -132,6 +132,8 @@ type Group = {
   created_by: string;
   updated_by: string;
   deleted_by: string;
+  users?: User[];
+  users_count?: number;
 };
 
 type Privilege = {
