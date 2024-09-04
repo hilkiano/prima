@@ -1,3 +1,5 @@
+import { getMessageBag } from "@/lib/helpers";
+import { GlobalMessage } from "@/types/common.types";
 import axios from "axios";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
@@ -21,7 +23,15 @@ export async function PUT(request: NextRequest) {
     .then((res) => res)
     .catch((res) => res.response);
 
-  return Response.json(response.data, { headers: response.headers });
+  const messageBag: GlobalMessage = await getMessageBag(
+    lang ? lang.value : "id",
+    "Alert"
+  );
+
+  return Response.json(
+    { ...response.data, i18n: messageBag },
+    { headers: response.headers }
+  );
 }
 
 export async function PATCH(request: NextRequest) {
@@ -43,7 +53,15 @@ export async function PATCH(request: NextRequest) {
     .then((res) => res)
     .catch((res) => res.response);
 
-  return Response.json(response.data, { headers: response.headers });
+  const messageBag: GlobalMessage = await getMessageBag(
+    lang ? lang.value : "id",
+    "Alert"
+  );
+
+  return Response.json(
+    { ...response.data, i18n: messageBag },
+    { headers: response.headers }
+  );
 }
 
 export async function DELETE(request: NextRequest) {
@@ -62,7 +80,15 @@ export async function DELETE(request: NextRequest) {
     .then((res) => res)
     .catch((res) => res.response);
 
-  return Response.json(response.data, { headers: response.headers });
+  const messageBag: GlobalMessage = await getMessageBag(
+    lang ? lang.value : "id",
+    "Alert"
+  );
+
+  return Response.json(
+    { ...response.data, i18n: messageBag },
+    { headers: response.headers }
+  );
 }
 
 export async function POST(request: NextRequest) {
@@ -84,5 +110,13 @@ export async function POST(request: NextRequest) {
     .then((res) => res)
     .catch((res) => res.response);
 
-  return Response.json(response.data, { headers: response.headers });
+  const messageBag: GlobalMessage = await getMessageBag(
+    lang ? lang.value : "id",
+    "Alert"
+  );
+
+  return Response.json(
+    { ...response.data, i18n: messageBag },
+    { headers: response.headers }
+  );
 }

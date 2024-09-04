@@ -1,8 +1,11 @@
+import { GlobalMessage } from "@/types/common.types";
 import {
   ColumnFiltersState,
   ColumnSort,
   PaginationState,
 } from "@tanstack/react-table";
+import { getTranslations } from "next-intl/server";
+import { cookies } from "next/headers";
 
 type TListQueryParams = {
   sorting: ColumnSort[];
@@ -34,3 +37,23 @@ export const generateListQueryParams = (props: TListQueryParams) => {
 
   return params;
 };
+
+export async function getMessageBag(
+  locale: string,
+  namespace: string
+): Promise<GlobalMessage> {
+  const t = await getTranslations({
+    locale,
+    namespace,
+  });
+
+  return {
+    alert: {
+      notification_message_bag: {
+        critical_title: t("Notification.critical_title"),
+        alert_title: t("Notification.alert_title"),
+        info_title: t("Notification.info_title"),
+      },
+    },
+  };
+}

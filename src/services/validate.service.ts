@@ -1,5 +1,5 @@
 import { showError } from "@/lib/errorHandler";
-import { GlobalMessage, JsonResponse } from "@/types/common.types";
+import { JsonResponse } from "@/types/common.types";
 
 export type TValidate = {
   model: string;
@@ -9,10 +9,7 @@ export type TValidate = {
   case_sensitive?: boolean;
 };
 
-export async function handleValidate(
-  messageBag: GlobalMessage,
-  payload: TValidate
-) {
+export async function handleValidate(payload: TValidate) {
   const response = await fetch("/api/validate", {
     method: "post",
     headers: {
@@ -25,7 +22,7 @@ export async function handleValidate(
     .then((res: JsonResponse<boolean>) => {
       if (!res.status && res.code !== 422) {
         const err = res as unknown;
-        showError(messageBag.alert, err as JsonResponse<null>);
+        showError(res.i18n.alert, err as JsonResponse<null>);
       }
       return res;
     })

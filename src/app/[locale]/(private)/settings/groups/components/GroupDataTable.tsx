@@ -44,8 +44,14 @@ const GroupDataTable = React.forwardRef<HTMLDivElement, BoxProps>(
     const tButton = useTranslations("Button");
     const t = useTranslations("Groups");
     const [opened, { open, close }] = useDisclosure(false);
-    const [formOpened, { open: formOpen, close: formClose }] =
-      useDisclosure(false);
+    const [formOpened, { open: formOpen, close: formClose }] = useDisclosure(
+      false,
+      {
+        onClose: () => {
+          setTimeout(() => setData(null), 250);
+        },
+      }
+    );
     const [confirmOpened, { open: confirmOpen, close: confirmClose }] =
       useDisclosure(false, {
         onClose: () => {
@@ -70,6 +76,7 @@ const GroupDataTable = React.forwardRef<HTMLDivElement, BoxProps>(
       const updateGroup = (data: Group) => {
         formState.query.refetch();
         formState.setData(data);
+        setData(data);
         formOpen();
       };
 

@@ -63,7 +63,10 @@
     "validation_phone_number": "This phone number is not valid.",
     "validation_tnc_agreement": "You are required to agree with our terms and conditions before using this application.",
     "validation_company_exist": "The company with a name like this is already registered.",
-    "validation_max_char": "Maximum characters allowed is {max}."
+    "validation_max_char": "Maximum characters allowed is {max}.",
+    "phone_code_label": "Code",
+    "phone_code_search_placeholder": "Search by country",
+    "phone_code_nothing_found": "Nothing found"
   },
   "DataTable": {
     "search": "Search...",

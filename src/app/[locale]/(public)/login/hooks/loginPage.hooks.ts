@@ -6,14 +6,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { handleLogin } from "@/services/auth.service";
-import { useGlobalMessageContext } from "@/lib/globalMessageProvider";
 import { useRouter } from "@/lib/navigation";
 import { useUserContext } from "@/lib/userProvider";
 import { JsonResponse } from "@/types/common.types";
 
 export default function useLoginPage() {
   const t = useTranslations("Public.Login");
-  const { message } = useGlobalMessageContext();
   const router = useRouter();
   const { setUserData } = useUserContext();
 
@@ -31,7 +29,7 @@ export default function useLoginPage() {
   });
 
   const mutation = useMutation({
-    mutationFn: (data: z.infer<typeof schema>) => handleLogin(message, data),
+    mutationFn: (data: z.infer<typeof schema>) => handleLogin(data),
     onSuccess: (
       res: JsonResponse<{
         user: User;

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import {
   AppShell as MAppShell,
   AppShellProps,
@@ -12,7 +12,6 @@ import {
   useMantineTheme,
   Modal,
   Button,
-  Box,
 } from "@mantine/core";
 import { useDisclosure, useHeadroom, useMediaQuery } from "@mantine/hooks";
 import ThemeToggle from "./ThemeToggle";
@@ -22,7 +21,6 @@ import { menus } from "@/vars/menus";
 import { NavbarLink } from "./NavbarLink";
 import { useUserContext } from "@/lib/userProvider";
 import { handleLogout } from "@/services/auth.service";
-import { useGlobalMessageContext } from "@/lib/globalMessageProvider";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "@/lib/navigation";
 
@@ -53,7 +51,6 @@ const AppShell = React.forwardRef<HTMLDivElement, TAppShell & AppShellProps>(
     const [modalOpened, { open, close }] = useDisclosure();
     const pinned = useHeadroom({ fixedAt: 120 });
     const locale = useLocale();
-    const { message } = useGlobalMessageContext();
     const router = useRouter();
     const tButton = useTranslations("Button");
     const theme = useMantineTheme();
@@ -153,7 +150,7 @@ const AppShell = React.forwardRef<HTMLDivElement, TAppShell & AppShellProps>(
               <Button
                 variant="filled"
                 color="red"
-                onClick={() => mutation.mutate(message)}
+                onClick={() => mutation.mutate()}
                 loading={mutation.isPending}
               >
                 {tButton("yes")}

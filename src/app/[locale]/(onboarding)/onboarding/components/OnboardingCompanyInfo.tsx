@@ -1,9 +1,17 @@
-import { Box, BoxProps, Button, Textarea, TextInput } from "@mantine/core";
+import {
+  Box,
+  BoxProps,
+  Button,
+  Input,
+  Textarea,
+  TextInput,
+} from "@mantine/core";
 import React from "react";
 import { Controller } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import useOnboarding from "../hooks/onboarding.hooks";
 import useOnboardingCompanyInfo from "../hooks/onboarding.company_info.hooks";
+import PhoneCodeSelector from "@/components/PhoneCodeSelector";
 
 type TOnboardingCompanyInfo = {};
 
@@ -25,6 +33,12 @@ const OnboardingCompanyInfo = React.forwardRef<
       form.setValue("phone_number", onboardingData.company_info.phone_number);
       form.setValue("email", onboardingData.company_info.email);
       form.setValue("address", onboardingData.company_info.address);
+      form.setValue(
+        "phone_code",
+        onboardingData.company_info.phone_code
+          ? onboardingData.company_info.phone_code
+          : ""
+      );
     }
   }, [form, onboardingData]);
 
@@ -33,7 +47,13 @@ const OnboardingCompanyInfo = React.forwardRef<
       <form
         noValidate
         onSubmit={form.handleSubmit((data) => {
-          saveOnboardingData("company_info", data);
+          saveOnboardingData("company_info", {
+            name: data.name,
+            email: data.email,
+            address: data.address,
+            phone_code: data.phone_code,
+            phone_number: data.phone_number,
+          });
           handleStep(2);
         })}
         className="flex flex-col gap-4"
@@ -69,22 +89,36 @@ const OnboardingCompanyInfo = React.forwardRef<
             />
           )}
         />
-        <Controller
-          name="phone_number"
-          control={form.control}
-          render={({ field: { onChange, value } }) => (
-            <TextInput
-              leftSection={<p className="text-sm">+62</p>}
-              className="w-full sm:w-[300px]"
-              label={t("label_phone_number")}
-              error={form.formState.errors.phone_number?.message}
-              autoComplete="off"
-              value={value}
-              onChange={onChange}
-              required
+        <div className="flex flex-col">
+          <Input.Label required>{t("label_phone_number")}</Input.Label>
+          <div className="flex flex-row gap-2">
+            <Controller
+              name="phone_code"
+              control={form.control}
+              render={({ field: { onChange, value } }) => (
+                <PhoneCodeSelector
+                  onChange={onChange}
+                  fieldValue={value}
+                  errorString={form.formState.errors.phone_code?.message}
+                />
+              )}
             />
-          )}
-        />
+            <Controller
+              name="phone_number"
+              control={form.control}
+              render={({ field: { onChange, value } }) => (
+                <TextInput
+                  className="w-full sm:w-[300px]"
+                  error={form.formState.errors.phone_number?.message}
+                  autoComplete="off"
+                  value={value}
+                  onChange={onChange}
+                  required
+                />
+              )}
+            />
+          </div>
+        </div>
         <Controller
           name="address"
           control={form.control}

@@ -143,3 +143,13 @@ type Privilege = {
   created_at: Date;
   updated_at: Date;
 };
+
+type PhoneCode = {
+  id: number;
+  country: string;
+  dial_code: string;
+  emoji: string;
+  code: string;
+  created_at: Date;
+  updated_at: Date;
+};

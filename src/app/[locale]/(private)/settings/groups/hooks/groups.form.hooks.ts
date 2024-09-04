@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { useGlobalMessageContext } from "@/lib/globalMessageProvider";
 import {
   createFn,
   updateFn,
@@ -21,7 +20,6 @@ export default function useGroupsForm({
 }: {
   closeCallback: () => void;
 }) {
-  const { message } = useGlobalMessageContext();
   const tForm = useTranslations("Form");
   const schema = z.object({
     id: z
@@ -53,7 +51,7 @@ export default function useGroupsForm({
     mutationFn: (data: {
       class: "Group";
       payload: { payload: Partial<Group> };
-    }) => createFn(message, data),
+    }) => createFn(data),
     onSuccess: (res) => {
       queryClient.invalidateQueries({ queryKey: ["groupList"] });
       form.reset();
@@ -65,7 +63,7 @@ export default function useGroupsForm({
     mutationFn: (data: {
       class: "Group";
       payload: { payload: Partial<Group> };
-    }) => updateFn(message, data),
+    }) => updateFn(data),
     onSuccess: (res) => {
       queryClient.invalidateQueries({ queryKey: ["groupList"] });
       form.reset();
@@ -77,7 +75,7 @@ export default function useGroupsForm({
     mutationFn: (data: {
       class: "Group";
       payload: { payload: Partial<Group> };
-    }) => deleteFn(message, data),
+    }) => deleteFn(data),
     onSuccess: (res) => {
       queryClient.invalidateQueries({ queryKey: ["groupList"] });
     },
@@ -87,7 +85,7 @@ export default function useGroupsForm({
     mutationFn: (data: {
       class: "Group";
       payload: { payload: Partial<Group> };
-    }) => restoreFn(message, data),
+    }) => restoreFn(data),
     onSuccess: (res) => {
       queryClient.invalidateQueries({ queryKey: ["groupList"] });
     },
@@ -95,7 +93,7 @@ export default function useGroupsForm({
 
   const query = useQuery<JsonResponse<ListResult<Privilege[]>>>({
     queryFn: async () => {
-      return getList(message, {
+      return getList({
         model: "Privilege",
         limit: "99999",
       });

@@ -270,12 +270,7 @@ const DataTable = React.forwardRef<HTMLDivElement, TDataTable & TableProps>(
           className="relative overflow-x-auto shadow-md rounded-md [&>div]:pb-0"
           minWidth={minWidth ? minWidth : 1000}
         >
-          <MantineTable
-            layout="fixed"
-            className={`w-[${minWidth ? minWidth : 1000}px]`}
-            {...props}
-            highlightOnHover
-          >
+          <MantineTable layout="fixed" {...props} highlightOnHover>
             {DataTableHeader(table, colorScheme)}
             <MantineTable.Tbody>
               {table.getRowModel().rows.map((row) => {

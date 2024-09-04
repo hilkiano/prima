@@ -13,7 +13,7 @@
 
 /* SELECT */
 .selectInput {
-  @apply font-sans dark:bg-slate-800;
+  @apply font-sans dark:bg-slate-800 border-2;
 }
 
 .selectDropdown {
@@ -57,7 +57,7 @@
 
 /* MODAL */
 .modalHeader {
-  @apply bg-transparent rounded-md backdrop-blur-md;
+  @apply bg-slate-300 dark:bg-slate-800 rounded-xl mb-4;
 }
 
 .modalContent {
@@ -128,4 +128,9 @@
 /* NOTIFICATION */
 .notificationRoot {
   @apply dark:bg-slate-700/70 bg-slate-50/70 backdrop-blur-lg;
+}
+
+/* COMBOBOX */
+.comboBoxSearch {
+  @apply font-sans dark:bg-slate-950/80 bg-slate-50;
 }

@@ -21,6 +21,7 @@ import {
 } from "@tabler/icons-react";
 import { TGroupFormState } from "@/types/page.types";
 import { JsonResponse, ListResult } from "@/types/common.types";
+import { useUserContext } from "@/lib/userProvider";
 
 type TGroupForm = {
   formState: TGroupFormState;
@@ -136,6 +137,7 @@ const GroupForm = React.forwardRef<HTMLDivElement, TGroupForm>(
     const tError = useTranslations("Error");
     const tButton = useTranslations("Button");
     const t = useTranslations("Groups");
+    const { userData } = useUserContext();
 
     return (
       <form
@@ -162,6 +164,8 @@ const GroupForm = React.forwardRef<HTMLDivElement, TGroupForm>(
                   name: data.name,
                   description: data.description,
                   privileges: data.privileges,
+                  company_id: userData?.user.company_id,
+                  outlet_id: userData?.user.outlet_id,
                 },
               },
             });

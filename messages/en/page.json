@@ -32,6 +32,7 @@
       "label_last_name": "Last Name",
       "label_gender": "Gender",
       "label_email": "Email",
+      "label_phone_code": "Code",
       "label_phone_number": "Phone Number",
       "label_address": "Address",
       "option_gender_male": "Male",
@@ -41,6 +42,7 @@
     "CompanyInfo": {
       "label_name": "Company Name",
       "label_email": "Email",
+      "label_phone_code": "Code",
       "label_phone_number": "Phone Number",
       "label_address": "Address"
     },

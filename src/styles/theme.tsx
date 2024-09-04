@@ -19,6 +19,8 @@ import {
   Skeleton,
   Accordion,
   Switch,
+  Combobox,
+  InputBase,
 } from "@mantine/core";
 import classes from "@/styles/components.module.css";
 import { IconSquareRoundedXFilled } from "@tabler/icons-react";
@@ -207,6 +209,22 @@ export const theme = createTheme({
     Switch: Switch.extend({
       classNames: {
         track: classes.switchTrack,
+      },
+    }),
+    Combobox: Combobox.extend({
+      classNames: {
+        dropdown: classes.selectDropdown,
+        option: classes.selectOption,
+        search: classes.comboBoxSearch,
+      },
+      defaultProps: {
+        variant: "filled",
+      },
+    }),
+    InputBase: InputBase.extend({
+      classNames: {
+        input: classes.textInputInput,
+        error: classes.textInputError,
       },
     }),
   },

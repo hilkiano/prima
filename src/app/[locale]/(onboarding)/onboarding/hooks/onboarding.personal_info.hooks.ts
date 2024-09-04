@@ -33,29 +33,42 @@ export default function useOnboardingPersonalInfo() {
     ...genderOptions.slice(1).map((p) => p.value),
   ];
 
-  const schema = z.object({
-    family_name: z.string().min(1, tForm("validation_required")),
-    given_name: z.string(),
-    gender: z.enum(values, {
-      required_error: tForm("validation_required"),
-    }),
-    address: z.string().min(1, tForm("validation_required")),
-    email: z
-      .string()
-      .min(1, tForm("validation_required"))
-      .email(tForm("validation_email")),
-    phone_number: z
-      .string()
-      .min(1, tForm("validation_required"))
-      .refine(
-        (val) => {
-          return val === "" || isMobilePhone(val);
-        },
-        {
-          message: tForm("validation_phone_number"),
+  const schema = z
+    .object({
+      family_name: z.string().min(1, tForm("validation_required")),
+      given_name: z.string(),
+      gender: z.enum(values, {
+        required_error: tForm("validation_required"),
+      }),
+      address: z.string().min(1, tForm("validation_required")),
+      email: z
+        .string()
+        .min(1, tForm("validation_required"))
+        .email(tForm("validation_email")),
+      phone_code: z.string(),
+      phone_number: z
+        .string()
+        .min(1, tForm("validation_required"))
+        .refine(
+          (val) => {
+            return val === "" || isMobilePhone(val);
+          },
+          {
+            message: tForm("validation_phone_number"),
+          }
+        ),
+    })
+    .refine(
+      (data) => {
+        if (data.phone_number !== "") {
+          return data.phone_code !== "";
         }
-      ),
-  });
+      },
+      {
+        message: tForm("validation_required"),
+        path: ["phone_code"],
+      }
+    );
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
@@ -67,6 +80,7 @@ export default function useOnboardingPersonalInfo() {
       gender: undefined,
       address: "",
       email: userData?.user.email,
+      phone_code: "",
       phone_number: "",
     },
   });

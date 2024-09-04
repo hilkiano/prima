@@ -11,10 +11,7 @@ type TUpdate<T> = {
   payload: Partial<T>;
 };
 
-export async function createFn<T>(
-  messageBag: GlobalMessage,
-  requestData: TCreate<T>
-) {
+export async function createFn<T>(requestData: TCreate<T>) {
   const response = await fetch(`/api/crud`, {
     method: "PUT",
     body: JSON.stringify(requestData),
@@ -27,7 +24,7 @@ export async function createFn<T>(
     .then((res: JsonResponse<T>) => {
       if (!res.status) {
         const err = res as unknown;
-        showError(messageBag.alert, err as JsonResponse<null>);
+        showError(res.i18n.alert, err as JsonResponse<null>);
       }
       return res;
     })
@@ -38,10 +35,7 @@ export async function createFn<T>(
   return response;
 }
 
-export async function updateFn<T>(
-  messageBag: GlobalMessage,
-  requestData: TUpdate<T>
-) {
+export async function updateFn<T>(requestData: TUpdate<T>) {
   const response = await fetch(`/api/crud`, {
     method: "PATCH",
     body: JSON.stringify(requestData),
@@ -54,7 +48,7 @@ export async function updateFn<T>(
     .then((res: JsonResponse<null>) => {
       if (!res.status) {
         const err = res as unknown;
-        showError(messageBag.alert, err as JsonResponse<null>);
+        showError(res.i18n.alert, err as JsonResponse<null>);
       }
       return res;
     })
@@ -65,10 +59,7 @@ export async function updateFn<T>(
   return response;
 }
 
-export async function deleteFn<T>(
-  messageBag: GlobalMessage,
-  requestData: TUpdate<T>
-) {
+export async function deleteFn<T>(requestData: TUpdate<T>) {
   const response = await fetch(`/api/crud`, {
     method: "DELETE",
     body: JSON.stringify(requestData),
@@ -81,7 +72,7 @@ export async function deleteFn<T>(
     .then((res: JsonResponse<null>) => {
       if (!res.status) {
         const err = res as unknown;
-        showError(messageBag.alert, err as JsonResponse<null>);
+        showError(res.i18n.alert, err as JsonResponse<null>);
       }
       return res;
     })
@@ -92,10 +83,7 @@ export async function deleteFn<T>(
   return response;
 }
 
-export async function restoreFn<T>(
-  messageBag: GlobalMessage,
-  requestData: TUpdate<T>
-) {
+export async function restoreFn<T>(requestData: TUpdate<T>) {
   const response = await fetch(`/api/crud`, {
     method: "POST",
     body: JSON.stringify(requestData),
@@ -108,7 +96,7 @@ export async function restoreFn<T>(
     .then((res: JsonResponse<null>) => {
       if (!res.status) {
         const err = res as unknown;
-        showError(messageBag.alert, err as JsonResponse<null>);
+        showError(res.i18n.alert, err as JsonResponse<null>);
       }
       return res;
     })

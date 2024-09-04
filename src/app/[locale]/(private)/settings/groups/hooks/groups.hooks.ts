@@ -8,12 +8,10 @@ import {
 } from "@tanstack/react-table";
 import { useQuery } from "@tanstack/react-query";
 import { getList } from "@/services/list.service";
-import { useGlobalMessageContext } from "@/lib/globalMessageProvider";
 import { generateListQueryParams } from "@/lib/helpers";
 import { JsonResponse, ListResult } from "@/types/common.types";
 
 export default function useGroups() {
-  const { message } = useGlobalMessageContext();
   const [sorting, setSorting] = React.useState<ColumnSort[]>([]);
   const [globalFilter, setGlobalFilter] = React.useState<string>("");
   const [globalFilterColumns, setGlobalFilterColumns] =
@@ -29,7 +27,7 @@ export default function useGroups() {
 
   const query = useQuery<JsonResponse<ListResult<Group>>>({
     queryFn: async () => {
-      return getList(message, {
+      return getList({
         model: "Group",
         relation_count: "users",
         ...generateListQueryParams({

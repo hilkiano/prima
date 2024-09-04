@@ -11,6 +11,7 @@ export type JsonResponse<T> = {
   message: string;
   trace: string;
   code: number;
+  i18n: GlobalMessage;
 };
 
 export type Authenticated = {
@@ -34,6 +35,7 @@ export type PersonalInfo = {
   family_name: string;
   gender: string;
   email: string;
+  phone_code?: string;
   phone_number: string;
   address: string;
 };
@@ -41,6 +43,7 @@ export type PersonalInfo = {
 export type CompanyInfo = {
   name: string;
   email: string;
+  phone_code?: string;
   phone_number: string;
   address: string;
 };

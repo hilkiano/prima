@@ -2,6 +2,7 @@ import {
   Box,
   BoxProps,
   Button,
+  Input,
   Select,
   Textarea,
   TextInput,
@@ -11,6 +12,7 @@ import useOnboardingPersonalInfo from "../hooks/onboarding.personal_info.hooks";
 import { Controller } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import useOnboarding from "../hooks/onboarding.hooks";
+import PhoneCodeSelector from "@/components/PhoneCodeSelector";
 
 type TOnboardingPersonalInfo = {};
 
@@ -37,6 +39,12 @@ const OnboardingPersonalInfo = React.forwardRef<
           | "female"
           | "not_answered"
       );
+      form.setValue(
+        "phone_code",
+        onboardingData.personal_info.phone_code
+          ? onboardingData.personal_info.phone_code
+          : ""
+      );
       form.setValue("phone_number", onboardingData.personal_info.phone_number);
       form.setValue("email", onboardingData.personal_info.email);
       form.setValue("address", onboardingData.personal_info.address);
@@ -48,7 +56,15 @@ const OnboardingPersonalInfo = React.forwardRef<
       <form
         noValidate
         onSubmit={form.handleSubmit((data) => {
-          saveOnboardingData("personal_info", data);
+          saveOnboardingData("personal_info", {
+            given_name: data.given_name,
+            family_name: data.family_name,
+            gender: data.gender,
+            email: data.email,
+            phone_code: data.phone_code,
+            phone_number: data.phone_number,
+            address: data.address,
+          });
           handleStep(1);
         })}
         className="flex flex-col gap-4"
@@ -96,6 +112,7 @@ const OnboardingPersonalInfo = React.forwardRef<
               value={value}
               onChange={onChange}
               required
+              allowDeselect={false}
             />
           )}
         />
@@ -114,22 +131,36 @@ const OnboardingPersonalInfo = React.forwardRef<
             />
           )}
         />
-        <Controller
-          name="phone_number"
-          control={form.control}
-          render={({ field: { onChange, value } }) => (
-            <TextInput
-              leftSection={<p className="text-sm">+62</p>}
-              className="w-full sm:w-[300px]"
-              label={t("label_phone_number")}
-              error={form.formState.errors.phone_number?.message}
-              autoComplete="off"
-              value={value}
-              onChange={onChange}
-              required
+        <div className="flex flex-col">
+          <Input.Label required>{t("label_phone_number")}</Input.Label>
+          <div className="flex flex-row gap-2">
+            <Controller
+              name="phone_code"
+              control={form.control}
+              render={({ field: { onChange, value } }) => (
+                <PhoneCodeSelector
+                  onChange={onChange}
+                  fieldValue={value}
+                  errorString={form.formState.errors.phone_code?.message}
+                />
+              )}
             />
-          )}
-        />
+            <Controller
+              name="phone_number"
+              control={form.control}
+              render={({ field: { onChange, value } }) => (
+                <TextInput
+                  className="w-full sm:w-[300px]"
+                  error={form.formState.errors.phone_number?.message}
+                  autoComplete="off"
+                  value={value}
+                  onChange={onChange}
+                  required
+                />
+              )}
+            />
+          </div>
+        </div>
         <Controller
           name="address"
           control={form.control}

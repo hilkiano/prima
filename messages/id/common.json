@@ -63,7 +63,10 @@
     "validation_phone_number": "Nomor telepon ini tidak valid.",
     "validation_tnc_agreement": "Anda perlu setuju dengan syarat dan ketentuan kami sebelum menggunakan aplikasi ini.",
     "validation_company_exist": "Perusahaan dengan nama seperti ini sudah terdaftar.",
-    "validation_max_char": "Jumlah karakter maksimal yang diperbolehkan adalah {max}."
+    "validation_max_char": "Jumlah karakter maksimal yang diperbolehkan adalah {max}.",
+    "phone_code_label": "Kode",
+    "phone_code_search_placeholder": "Cari berdasarkan negara",
+    "phone_code_nothing_found": "Tidak menemukan apapun"
   },
   "DataTable": {
     "search": "Cari...",

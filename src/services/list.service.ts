@@ -1,5 +1,5 @@
 import { showError } from "@/lib/errorHandler";
-import { GlobalMessage, JsonResponse } from "@/types/common.types";
+import { JsonResponse } from "@/types/common.types";
 
 type TList = {
   model: string;
@@ -10,7 +10,7 @@ type TList = {
   relations?: string;
 };
 
-export async function getList(messageBag: GlobalMessage, params: TList) {
+export async function getList(params: TList) {
   const queryParams = new URLSearchParams(params).toString();
   const response = await fetch(`/api/list?${queryParams}`, {
     method: "get",
@@ -22,9 +22,9 @@ export async function getList(messageBag: GlobalMessage, params: TList) {
   })
     .then((res) => res.json())
     .then((res: JsonResponse<any>) => {
-      if (!res.status && res.code !== 422) {
+      if (!res.status) {
         const err = res as unknown;
-        showError(messageBag.alert, err as JsonResponse<null>);
+        showError(res.i18n.alert, err as JsonResponse<null>);
       }
       return res;
     })

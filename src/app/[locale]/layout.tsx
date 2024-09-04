@@ -11,11 +11,9 @@ import "@/styles/layout.css";
 import { outfitFont } from "@/styles/fonts";
 
 import QueryProvider from "@/lib/queryProvider";
-import GlobalMessageProvider from "@/lib/globalMessageProvider";
 import { useTranslations } from "next-intl";
 import { headers } from "next/headers";
 import UserProvider from "@/lib/userProvider";
-import { GlobalMessage } from "@/types/common.types";
 
 export const metadata: Metadata = {
   title: "Prima",
@@ -34,15 +32,6 @@ export default function RootLayout({
 }>) {
   const t = useTranslations("Alert");
   const { userData } = getInitialValue();
-  const messageBag: GlobalMessage = {
-    alert: {
-      notification_message_bag: {
-        critical_title: t("Notification.critical_title"),
-        alert_title: t("Notification.alert_title"),
-        info_title: t("Notification.info_title"),
-      },
-    },
-  };
 
   return (
     <html lang={locale}>
@@ -60,12 +49,10 @@ export default function RootLayout({
       <body className={`${outfitFont.variable} font-sans antialiased`}>
         <UserProvider value={userData}>
           <QueryProvider>
-            <GlobalMessageProvider value={messageBag}>
-              <MantineProvider theme={theme}>
-                <Notifications />
-                <ModalsProvider>{children}</ModalsProvider>
-              </MantineProvider>
-            </GlobalMessageProvider>
+            <MantineProvider theme={theme}>
+              <Notifications />
+              <ModalsProvider>{children}</ModalsProvider>
+            </MantineProvider>
           </QueryProvider>
         </UserProvider>
       </body>

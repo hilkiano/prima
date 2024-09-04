@@ -32,6 +32,7 @@
       "label_last_name": "Nama Akhir",
       "label_gender": "Jenis Kelamin",
       "label_email": "Email",
+      "label_phone_code": "Kode",
       "label_phone_number": "Nomor Telepon",
       "label_address": "Alamat",
       "option_gender_male": "Laki-laki",
@@ -41,6 +42,7 @@
     "CompanyInfo": {
       "label_name": "Nama Perusahaan",
       "label_email": "Email",
+      "label_phone_code": "Kode",
       "label_phone_number": "Nomor Telepon",
       "label_address": "Alamat"
     },
