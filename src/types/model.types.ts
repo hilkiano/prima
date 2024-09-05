@@ -54,6 +54,51 @@ type SocialiteUser = {
   approvedScopes: Array<string>;
 };
 
+type IPGeolocation = {
+  ip: string;
+  isp: string;
+  city: string;
+  is_eu: boolean;
+  zipcode: string;
+  currency: {
+    code: string;
+    name: string;
+    symbol: string;
+  };
+  district: string;
+  latitude: string;
+  languages: string;
+  longitude: string;
+  time_zone: {
+    name: string;
+    is_dst: boolean;
+    offset: number;
+    dst_end: string;
+    dst_start: string;
+    dst_exists: boolean;
+    dst_savings: number;
+    current_time: Date;
+    offset_with_dst: string;
+    current_time_unix: number;
+  };
+  geoname_id: string;
+  state_code: string;
+  state_prov: string;
+  country_tld: string;
+  calling_code: string;
+  country_flag: string;
+  country_name: string;
+  organization: string;
+  country_code2: string;
+  country_code3: string;
+  country_emoji: string;
+  continent_code: string;
+  continent_name: string;
+  connection_type: string;
+  country_capital: string;
+  country_name_official: string;
+};
+
 type Owner = {
   id: string;
   user_id: string;

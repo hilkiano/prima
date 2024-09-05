@@ -26,16 +26,22 @@ const intlMiddleware = (
   response.headers.set("x-origin", origin);
   response.headers.set("x-pathname", pathname);
 
-  const userInfo = {
-    user: result?.data.user,
-    privileges: result?.data.privileges,
-    subscriptions: result?.data.subscriptions,
-    company: result?.data.company,
-    outlet: result?.data.outlet,
-    token_expired_at: result?.data.token_expired_at,
-  };
-
   if (result) {
+    const userInfo: Authenticated = {
+      user: result.data.user,
+      privileges: result.data.privileges,
+      subscriptions: result.data.subscriptions,
+      company: result.data.company,
+      outlet: result.data.outlet,
+      token_expired_at: result.data.token_expired_at,
+      geolocation: {
+        ...result.data.geolocation,
+        country_emoji: encodeURIComponent(
+          result.data.geolocation.country_emoji
+        ),
+      },
+    };
+
     response.headers.set("x-userdata", JSON.stringify(userInfo));
   }
 

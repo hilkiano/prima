@@ -80,7 +80,7 @@ export default function useOnboardingPersonalInfo() {
       gender: undefined,
       address: "",
       email: userData?.user.email,
-      phone_code: "",
+      phone_code: userData?.geolocation.calling_code ?? "",
       phone_number: "",
     },
   });

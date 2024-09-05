@@ -12,13 +12,13 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import React from "react";
-import ReactCountryFlag from "react-country-flag";
 
 type Item = {
   code: string;
   value: string;
   label: string;
   country: string;
+  emoji: string;
 };
 
 type TPhoneCodeSelector = {
@@ -53,6 +53,8 @@ const PhoneCodeSelector = React.forwardRef<
       });
     },
     queryKey: ["phoneCodeList"],
+    refetchOnReconnect: false,
+    refetchOnMount: false,
   });
   const selectedOption = phoneCodeOptions.find((item) => item.value === value);
 
@@ -70,7 +72,7 @@ const PhoneCodeSelector = React.forwardRef<
       return (
         <Combobox.Option value={opt.value} key={idx}>
           <Group>
-            <ReactCountryFlag countryCode={opt.code} svg />
+            <span role="img">{opt.emoji}</span>
             <div>
               <Text fz="sm" fw={500}>
                 {opt.label}
@@ -93,6 +95,7 @@ const PhoneCodeSelector = React.forwardRef<
           label: row.dial_code,
           code: row.code,
           country: row.country,
+          emoji: row.emoji,
         });
       });
 
@@ -126,7 +129,7 @@ const PhoneCodeSelector = React.forwardRef<
         >
           {selectedOption ? (
             <Group>
-              <ReactCountryFlag countryCode={selectedOption.code} svg />
+              <span role="img">{selectedOption.emoji}</span>
               <Text fz="sm" fw={500}>
                 {selectedOption.label}
               </Text>

@@ -4,8 +4,33 @@ import OnboardingFinish from "./components/OnboardingFinish";
 import { Center } from "@mantine/core";
 import { headers } from "next/headers";
 import OnboardingContainer from "./components/OnboardingContainer";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
+import { getList } from "@/services/list.service";
 
-export default function OnboardingPage() {
+export default async function OnboardingPage() {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ["phoneCodeList"],
+    queryFn: () =>
+      getList({
+        model: "PhoneCode",
+        limit: "99999",
+      }),
+  });
+
+  return <OnboardingPageContent queryClient={queryClient} />;
+}
+
+type TOnboardingPage = {
+  queryClient: QueryClient;
+};
+
+function OnboardingPageContent({ queryClient }: TOnboardingPage) {
   const messages = useMessages();
   const headersList = headers();
   let userData = null;
@@ -22,7 +47,9 @@ export default function OnboardingPage() {
           <OnboardingFinish className="flex flex-col items-center text-center max-w-[600px]" />
         </Center>
       ) : (
-        <OnboardingContainer className="flex justify-center w-full" />
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <OnboardingContainer className="flex justify-center w-full" />
+        </HydrationBoundary>
       )}
     </NextIntlClientProvider>
   );

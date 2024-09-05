@@ -1,5 +1,6 @@
 "use client";
 
+import { Authenticated } from "@/types/common.types";
 import {
   createContext,
   useContext,
@@ -9,24 +10,8 @@ import {
 } from "react";
 
 type UserContextType = {
-  userData: {
-    user: User;
-    privileges: string[] | null;
-    subscriptions: Subscription[] | null;
-    company: Company | null;
-    outlet: Outlet | null;
-    token_expired_at: string | null;
-  } | null;
-  setUserData: Dispatch<
-    SetStateAction<{
-      user: User;
-      privileges: string[] | null;
-      subscriptions: Subscription[] | null;
-      company: Company | null;
-      outlet: Outlet | null;
-      token_expired_at: string | null;
-    } | null>
-  >;
+  userData: Authenticated | null;
+  setUserData: Dispatch<SetStateAction<Authenticated | null>>;
 };
 
 export const UserContext = createContext<UserContextType | null>(null);
@@ -36,14 +21,7 @@ export default function UserProvider({
   value,
 }: {
   children: React.ReactNode;
-  value: {
-    user: User;
-    privileges: string[] | null;
-    subscriptions: Subscription[] | null;
-    company: Company | null;
-    outlet: Outlet | null;
-    token_expired_at: string | null;
-  } | null;
+  value: Authenticated | null;
 }) {
   const [userData, setUserData] = useState(value);
 

@@ -22,6 +22,7 @@ export type Authenticated = {
   outlet: Outlet;
   refreshed_token?: string;
   token_expired_at: string;
+  geolocation: IPGeolocation;
 };
 
 export type Onboarding = {

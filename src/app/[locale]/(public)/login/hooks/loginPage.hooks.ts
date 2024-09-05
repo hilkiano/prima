@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 import { handleLogin } from "@/services/auth.service";
 import { useRouter } from "@/lib/navigation";
 import { useUserContext } from "@/lib/userProvider";
-import { JsonResponse } from "@/types/common.types";
+import { Authenticated, JsonResponse } from "@/types/common.types";
 
 export default function useLoginPage() {
   const t = useTranslations("Public.Login");
@@ -30,16 +30,7 @@ export default function useLoginPage() {
 
   const mutation = useMutation({
     mutationFn: (data: z.infer<typeof schema>) => handleLogin(data),
-    onSuccess: (
-      res: JsonResponse<{
-        user: User;
-        privileges: string[] | null;
-        subscriptions: Subscription[] | null;
-        company: Company | null;
-        outlet: Outlet | null;
-        token_expired_at: string | null;
-      }>
-    ) => {
+    onSuccess: (res: JsonResponse<Authenticated>) => {
       if (res.code === 200) {
         setUserData({
           user: res.data.user,
@@ -48,6 +39,7 @@ export default function useLoginPage() {
           company: res.data.company,
           outlet: res.data.outlet,
           token_expired_at: res.data.token_expired_at,
+          geolocation: res.data.geolocation,
         });
         router.push("/dashboard");
       }

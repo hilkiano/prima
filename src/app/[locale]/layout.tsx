@@ -14,6 +14,7 @@ import QueryProvider from "@/lib/queryProvider";
 import { useTranslations } from "next-intl";
 import { headers } from "next/headers";
 import UserProvider from "@/lib/userProvider";
+import { Authenticated } from "@/types/common.types";
 
 export const metadata: Metadata = {
   title: "Prima",
@@ -62,14 +63,7 @@ export default function RootLayout({
 
 function getInitialValue() {
   const headersList = headers();
-  let userData: {
-    user: User;
-    privileges: string[];
-    subscriptions: Subscription[];
-    company: Company;
-    outlet: Outlet;
-    token_expired_at: string;
-  } | null = null;
+  let userData: Authenticated | null = null;
 
   if (headersList.has("x-userdata")) {
     const userHeaderData = headersList.get("x-userdata");

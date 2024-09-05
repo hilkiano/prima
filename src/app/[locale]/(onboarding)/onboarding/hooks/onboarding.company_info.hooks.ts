@@ -6,10 +6,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import isMobilePhone from "validator/es/lib/isMobilePhone";
 import { handleValidate } from "@/services/validate.service";
+import { useUserContext } from "@/lib/userProvider";
 
 export default function useOnboardingCompanyInfo() {
   const tForm = useTranslations("Form");
   const t = useTranslations("Onboarding.CompanyInfo");
+
+  const { userData } = useUserContext();
 
   const isCompanyExist = async (val: string) => {
     try {
@@ -68,7 +71,7 @@ export default function useOnboardingCompanyInfo() {
       address: "",
       email: "",
       phone_number: "",
-      phone_code: "",
+      phone_code: userData?.geolocation.calling_code ?? "",
     },
     mode: "onBlur",
     reValidateMode: "onBlur",

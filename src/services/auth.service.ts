@@ -1,5 +1,9 @@
 import { showError } from "@/lib/errorHandler";
-import { GlobalMessage, JsonResponse } from "@/types/common.types";
+import {
+  Authenticated,
+  GlobalMessage,
+  JsonResponse,
+} from "@/types/common.types";
 
 type TLogin = {
   username: string;
@@ -16,24 +20,13 @@ export async function handleLogin(payload: TLogin) {
     body: JSON.stringify(payload),
   })
     .then((res) => res.json())
-    .then(
-      (
-        res: JsonResponse<{
-          user: User;
-          privileges: string[] | null;
-          subscriptions: Subscription[] | null;
-          company: Company | null;
-          outlet: Outlet | null;
-          token_expired_at: string | null;
-        }>
-      ) => {
-        if (!res.status && res.code !== 422) {
-          const err = res as unknown;
-          showError(res.i18n.alert, err as JsonResponse<null>);
-        }
-        return res;
+    .then((res: JsonResponse<Authenticated>) => {
+      if (!res.status && res.code !== 422) {
+        const err = res as unknown;
+        showError(res.i18n.alert, err as JsonResponse<null>);
       }
-    )
+      return res;
+    })
     .catch((err) => {
       throw new Error(err.message, err);
     });
