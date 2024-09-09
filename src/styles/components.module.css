@@ -108,7 +108,7 @@
 
 /* ACCORDION */
 .accordionItem {
-  @apply dark:bg-slate-800 dark:data-[active=true]:border-slate-700;
+  @apply dark:bg-slate-950/50 bg-slate-100 dark:data-[active=true]:border-slate-700;
 }
 
 .accordionLabel {

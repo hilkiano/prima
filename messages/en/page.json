@@ -79,7 +79,27 @@
       "title_update": "Update group: {name}",
       "privilege_page_title": "Page access",
       "privilege_data_title": "Data access",
+      "privilege_setting_title": "Setting access",
       "privilege_selected": "Selected: {selected}/{total}"
+    }
+  },
+  "Settings": {
+    "Sidebar": {
+      "title": "Categories",
+      "profile": "My profile",
+      "company": "Company settings",
+      "outlet": "Outlet settings"
+    },
+    "Profile": {
+      "basic_information": "Basic information",
+      "basic_information_desc": "Change your basic information such as username, display name, address, etc.",
+      "basic_security": "Security",
+      "basic_security_desc": "Create a password for your account.",
+      "label_username": "Username",
+      "label_display_name": "Display name",
+      "label_address": "Address",
+      "label_phone_code": "Code",
+      "label_phone_number": "Phone Number"
     }
   }
 }

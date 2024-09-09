@@ -22,7 +22,7 @@ import { NavbarLink } from "./NavbarLink";
 import { useUserContext } from "@/lib/userProvider";
 import { handleLogout } from "@/services/auth.service";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "@/lib/navigation";
+import { Link, useRouter } from "@/lib/navigation";
 
 type TAppShell = {
   children: React.ReactNode;
@@ -116,7 +116,11 @@ const AppShell = React.forwardRef<HTMLDivElement, TAppShell & AppShellProps>(
                   />
                 </Menu.Target>
                 <Menu.Dropdown>
-                  <Menu.Item leftSection={<i className="ti ti-user"></i>}>
+                  <Menu.Item
+                    component={Link}
+                    href="/settings?submenu=profile"
+                    leftSection={<i className="ti ti-user"></i>}
+                  >
                     {t("Avatar.menu_profile")}
                   </Menu.Item>
                   <Menu.Divider />

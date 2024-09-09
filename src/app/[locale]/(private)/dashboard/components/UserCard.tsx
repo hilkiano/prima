@@ -40,7 +40,9 @@ const UserCard = React.forwardRef<HTMLDivElement, TUserCard & BoxProps>(
             <div className="flex gap-2 mt-1">
               <i className="ti ti-phone text-sm"></i>
               <p className="m-0 text-sm font-light leading-none">
-                {user?.phone_number ? `${user.phone_number}` : "-"}
+                {user?.phone_number
+                  ? `${user.phone_code} ${user.phone_number}`
+                  : "-"}
               </p>
             </div>
 

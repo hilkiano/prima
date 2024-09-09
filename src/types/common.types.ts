@@ -55,6 +55,7 @@ export type GlobalMessage = {
 
 export type AlertMessage = {
   notification_message_bag: NotificationMessage;
+  saved: string;
 };
 
 export type NotificationMessage = {

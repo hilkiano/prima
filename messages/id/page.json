@@ -79,7 +79,27 @@
       "title_update": "Perbarui grup: {name}",
       "privilege_page_title": "Akses halaman",
       "privilege_data_title": "Akses data",
+      "privilege_setting_title": "Akses pengaturan",
       "privilege_selected": "Dipilih: {selected}/{total}"
+    }
+  },
+  "Settings": {
+    "Sidebar": {
+      "title": "Kategori",
+      "profile": "Profil saya",
+      "company": "Pengaturan perusahaan",
+      "outlet": "Pengaturan gerai"
+    },
+    "Profile": {
+      "basic_information": "Informasi dasar",
+      "basic_information_desc": "Ubah informasi dasar seperti nama pengguna, nama tampilan, alamat, dll.",
+      "basic_security": "Keamanan",
+      "basic_security_desc": "Buat kata sandi untuk akun Anda.",
+      "label_username": "Nama pengguna",
+      "label_display_name": "Nama tampilan",
+      "label_address": "Alamat",
+      "label_phone_code": "Kode",
+      "label_phone_number": "Nomor Telepon"
     }
   }
 }

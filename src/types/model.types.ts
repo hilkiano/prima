@@ -5,6 +5,7 @@ type User = {
   email: string;
   avatar_url: string;
   display_name: string;
+  phone_code: string;
   phone_number: string;
   address: string;
   last_login: Date;
@@ -105,6 +106,7 @@ type Owner = {
   given_name: string;
   family_name: string;
   email: string;
+  phone_code: string;
   phone_number: string;
   gender: string;
   address: string;
@@ -138,6 +140,7 @@ type Company = {
   owner_id: string;
   name: string;
   email: string;
+  phone_code: string;
   phone_number: string;
   address: string;
   created_at: Date;
@@ -153,6 +156,7 @@ type Outlet = {
   company_id: string;
   name: string;
   email: string;
+  phone_code: string;
   phone_number: string;
   address: string;
   is_main_outlet: boolean;

@@ -1,4 +1,8 @@
-import { GlobalMessage } from "@/types/common.types";
+import {
+  Authenticated,
+  GlobalMessage,
+  JsonResponse,
+} from "@/types/common.types";
 import {
   ColumnFiltersState,
   ColumnSort,
@@ -6,6 +10,7 @@ import {
 } from "@tanstack/react-table";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
+import { useUserContext } from "./userProvider";
 
 type TListQueryParams = {
   sorting: ColumnSort[];
@@ -54,6 +59,7 @@ export async function getMessageBag(
         alert_title: t("Notification.alert_title"),
         info_title: t("Notification.info_title"),
       },
+      saved: t("saved"),
     },
   };
 }

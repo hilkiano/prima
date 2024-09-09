@@ -15,7 +15,9 @@ export type TGroupFormState = {
     unknown
   >;
   mutationUpdate: UseMutationResult<
-    JsonResponse<null>,
+    JsonResponse<{
+      payload: Partial<Group>;
+    }>,
     Error,
     {
       class: "Group";

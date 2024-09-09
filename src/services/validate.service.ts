@@ -7,6 +7,7 @@ export type TValidate = {
   value: string;
   strict?: boolean;
   case_sensitive?: boolean;
+  except?: string;
 };
 
 export async function handleValidate(payload: TValidate) {

@@ -92,18 +92,16 @@ export default function useOnboarding() {
               name: onboardingData.company_info.name,
               address: onboardingData.company_info.address,
               email: onboardingData.company_info.email,
-              phone_number:
-                onboardingData.company_info.phone_code +
-                onboardingData.company_info.phone_number,
+              phone_code: onboardingData.company_info.phone_code,
+              phone_number: onboardingData.company_info.phone_number,
             },
             personal_info: {
               given_name: onboardingData.personal_info.given_name,
               family_name: onboardingData.personal_info.family_name,
               gender: onboardingData.personal_info.gender,
               email: onboardingData.personal_info.email,
-              phone_number:
-                onboardingData.personal_info.phone_code +
-                onboardingData.personal_info.phone_number,
+              phone_code: onboardingData.company_info.phone_code,
+              phone_number: onboardingData.personal_info.phone_number,
               address: onboardingData.personal_info.address,
             },
             user_id: userData.user.id,

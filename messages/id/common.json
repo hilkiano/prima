@@ -16,14 +16,16 @@
     "next": "Berikutnya",
     "previous": "Sebelumnya",
     "done": "Selesai",
-    "apply_filter": "Terapkan filter"
+    "apply_filter": "Terapkan filter",
+    "save": "Simpan"
   },
   "Alert": {
     "Notification": {
       "critical_title": "Telah terjadi kesalahan kritis!",
       "alert_title": "Ada yang tidak beres terjadi!",
       "info_title": "Pesan baru untuk Anda!"
-    }
+    },
+    "saved": "Data sudah berhasil disimpan."
   },
   "Navbar": {
     "Common": {
@@ -66,7 +68,8 @@
     "validation_max_char": "Jumlah karakter maksimal yang diperbolehkan adalah {max}.",
     "phone_code_label": "Kode",
     "phone_code_search_placeholder": "Cari berdasarkan negara",
-    "phone_code_nothing_found": "Tidak menemukan apapun"
+    "phone_code_nothing_found": "Tidak menemukan apapun",
+    "validation_username_exist": "Nama pengguna sudah terdaftar."
   },
   "DataTable": {
     "search": "Cari...",
@@ -96,6 +99,8 @@
     "page_reports": "Akses untuk melihat halaman Laporan",
     "page_settings_groups": "Akses untuk melihat halaman Pengaturan > Grup",
     "page_settings_membership_status": "Akses untuk melihat halaman Pengaturan > Status langganan",
-    "page_settings_users": "Akses untuk melihat halaman Pengaturan > Pengguna"
+    "page_settings_users": "Akses untuk melihat halaman Pengaturan > Pengguna",
+    "setting_profile_basic_information": "Akses untuk mengubah informasi dasar pengguna.",
+    "setting_profile_basic_security": "Akses untuk mengubah keamanan pengguna."
   }
 }

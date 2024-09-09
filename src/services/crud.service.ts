@@ -45,7 +45,7 @@ export async function updateFn<T>(requestData: TUpdate<T>) {
     },
   })
     .then((res) => res.json())
-    .then((res: JsonResponse<null>) => {
+    .then((res: JsonResponse<T>) => {
       if (!res.status) {
         const err = res as unknown;
         showError(res.i18n.alert, err as JsonResponse<null>);

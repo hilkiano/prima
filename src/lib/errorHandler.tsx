@@ -42,3 +42,14 @@ export const showError = (
     });
   }
 };
+
+export const showSuccess = (
+  messageBag: AlertMessage,
+  message: string | null
+) => {
+  notifications.show({
+    color: "green",
+    title: messageBag.saved,
+    message: message,
+  });
+};

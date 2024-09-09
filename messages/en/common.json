@@ -16,14 +16,16 @@
     "next": "Next",
     "previous": "Previous",
     "done": "Done",
-    "apply_filter": "Apply filter"
+    "apply_filter": "Apply filter",
+    "save": "Save"
   },
   "Alert": {
     "Notification": {
       "critical_title": "We have a critical error!",
       "alert_title": "Something wrong happened!",
       "info_title": "New message for you!"
-    }
+    },
+    "saved": "Data has been saved successfully."
   },
   "Navbar": {
     "Common": {
@@ -66,7 +68,8 @@
     "validation_max_char": "Maximum characters allowed is {max}.",
     "phone_code_label": "Code",
     "phone_code_search_placeholder": "Search by country",
-    "phone_code_nothing_found": "Nothing found"
+    "phone_code_nothing_found": "Nothing found",
+    "validation_username_exist": "Username is already taken."
   },
   "DataTable": {
     "search": "Search...",
@@ -96,6 +99,8 @@
     "page_reports": "Access to view Reports page",
     "page_settings_groups": "Access to view Settings > Groups page",
     "page_settings_membership_status": "Access to view Settings > Membership status page",
-    "page_settings_users": "Access to view Settings > Users page"
+    "page_settings_users": "Access to view Settings > Users page",
+    "setting_profile_basic_information": "Access to change user basic information",
+    "setting_profile_basic_security": "Access to change user security"
   }
 }
