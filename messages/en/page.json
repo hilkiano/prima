@@ -28,22 +28,22 @@
       "header": "Please complete all steps before using the application."
     },
     "PersonalInfo": {
-      "label_first_name": "First Name",
-      "label_last_name": "Last Name",
+      "label_first_name": "First name",
+      "label_last_name": "Last name",
       "label_gender": "Gender",
       "label_email": "Email",
       "label_phone_code": "Code",
-      "label_phone_number": "Phone Number",
+      "label_phone_number": "Phone number",
       "label_address": "Address",
       "option_gender_male": "Male",
       "option_gender_female": "Female",
       "option_gender_not_answered": "I'd rather not say"
     },
     "CompanyInfo": {
-      "label_name": "Company Name",
+      "label_name": "Company name",
       "label_email": "Email",
       "label_phone_code": "Code",
-      "label_phone_number": "Phone Number",
+      "label_phone_number": "Phone number",
       "label_address": "Address"
     },
     "Tnc": {
@@ -70,8 +70,8 @@
       "name": "Name",
       "description": "Description",
       "privileges": "Privileges",
-      "created_at": "Created At",
-      "updated_at": "Updated At",
+      "created_at": "Created at",
+      "updated_at": "Updated at",
       "users_count": "Users"
     },
     "Form": {
@@ -99,7 +99,11 @@
       "label_display_name": "Display name",
       "label_address": "Address",
       "label_phone_code": "Code",
-      "label_phone_number": "Phone Number"
+      "label_phone_number": "Phone number",
+      "label_profile_picture": "Profile picture",
+      "tooltip_remove_image": "Remove this image",
+      "tooltip_submit_image": "Use this image as my profile picture",
+      "tooltip_browse_image": "Browse for image"
     }
   }
 }

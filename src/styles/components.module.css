@@ -13,7 +13,7 @@
 
 /* SELECT */
 .selectInput {
-  @apply font-sans dark:bg-slate-800 border-2;
+  @apply font-sans dark:bg-slate-800 bg-slate-200/70 border-2;
 }
 
 .selectDropdown {
@@ -26,7 +26,7 @@
 
 /* TEXT INPUT */
 .textInputInput {
-  @apply dark:bg-slate-800 bg-slate-100 dark:data-[variant=default]:border-slate-700 dark:data-[error=true]:border-[#E03131] border-2 font-sans;
+  @apply dark:bg-slate-800 bg-slate-300/70 dark:data-[variant=default]:border-slate-700 dark:data-[error=true]:border-[#E03131] border-2 font-sans;
 }
 
 .textInputError {
@@ -35,7 +35,7 @@
 
 /* PASSWORD INPUT */
 .passwordInputInput {
-  @apply dark:bg-slate-800 dark:data-[variant=default]:border-slate-700 dark:data-[error=true]:border-[#E03131] border-2 font-sans;
+  @apply dark:bg-slate-800 bg-slate-300/70 dark:data-[variant=default]:border-slate-700 dark:data-[error=true]:border-[#E03131] border-2 font-sans;
 }
 
 .passwordInputError {
@@ -44,7 +44,7 @@
 
 /* MENU */
 .menuDropdown {
-  @apply dark:bg-slate-900 dark:border-slate-700 border-slate-200 border-2 rounded-lg;
+  @apply dark:bg-slate-900/70 bg-slate-100/70 backdrop-blur-lg dark:border-slate-700 border-slate-200 border-2 rounded-lg;
 }
 
 .menuItem {

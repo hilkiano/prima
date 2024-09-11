@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import React from "react";
 import ProfileBasicInformation from "./forms/ProfileBasicInformation";
 import { useUserContext } from "@/lib/userProvider";
+import ProfileAvatar from "./forms/ProfileAvatar";
 
 type TSettingsProfile = {
   name: string;
@@ -19,7 +20,12 @@ const settingsProfileContents: TSettingsProfile[] = [
     icon: <IconUser />,
     description: "basic_information_desc",
     privilege: "SETTING_PROFILE_BASIC_INFORMATION",
-    content: <ProfileBasicInformation className="p-2 pb-6" />,
+    content: (
+      <div className="flex gap-2 lg:gap-12 flex-col lg:flex-row p-2 pb-6">
+        <ProfileAvatar className="shrink-0 w-full md:w-fit mb-4" />
+        <ProfileBasicInformation className="w-full" />
+      </div>
+    ),
   },
   {
     name: "basic_security",
@@ -33,14 +39,16 @@ const settingsProfileContents: TSettingsProfile[] = [
 const SettingsProfile = React.forwardRef<HTMLDivElement, BoxProps>(
   ({ ...props }, ref) => {
     const t = useTranslations("Settings");
-    const {userData} = useUserContext();
+    const { userData } = useUserContext();
     return (
       <Box {...props}>
         <Accordion chevronPosition="right" variant="separated">
           {settingsProfileContents.map((setting) => {
             return (
               <Accordion.Item value={setting.name} key={setting.name}>
-                <Accordion.Control disabled={!userData?.privileges?.includes(setting.privilege)}>
+                <Accordion.Control
+                  disabled={!userData?.privileges?.includes(setting.privilege)}
+                >
                   <Group wrap="nowrap">
                     {setting.icon}
                     <div>

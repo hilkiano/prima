@@ -20,6 +20,7 @@ export function NavbarLink({
   initiallyOpened,
   link,
   links,
+  onClick,
 }: NavbarLinks) {
   const t = useTranslations("Navbar");
   const pathname = usePathname();
@@ -41,6 +42,7 @@ export function NavbarLink({
       className={classes.link}
       href={link.link}
       key={link.label}
+      onClick={onClick}
     >
       {t(link.label)}
     </Link>

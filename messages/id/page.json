@@ -28,22 +28,22 @@
       "header": "Harap selesaikan semua langkah sebelum menggunakan aplikasi."
     },
     "PersonalInfo": {
-      "label_first_name": "Nama Awal",
-      "label_last_name": "Nama Akhir",
-      "label_gender": "Jenis Kelamin",
+      "label_first_name": "Nama awal",
+      "label_last_name": "Nama akhir",
+      "label_gender": "Jenis kelamin",
       "label_email": "Email",
       "label_phone_code": "Kode",
-      "label_phone_number": "Nomor Telepon",
+      "label_phone_number": "Nomor telepon",
       "label_address": "Alamat",
       "option_gender_male": "Laki-laki",
       "option_gender_female": "Perempuan",
       "option_gender_not_answered": "Saya memilih tidak menjawab"
     },
     "CompanyInfo": {
-      "label_name": "Nama Perusahaan",
+      "label_name": "Nama perusahaan",
       "label_email": "Email",
       "label_phone_code": "Kode",
-      "label_phone_number": "Nomor Telepon",
+      "label_phone_number": "Nomor telepon",
       "label_address": "Alamat"
     },
     "Tnc": {
@@ -69,9 +69,9 @@
       "id": "ID",
       "name": "Nama",
       "description": "Deskripsi",
-      "privileges": "Hak Akses",
-      "created_at": "Dibuat Pada",
-      "updated_at": "Diperbarui Pada",
+      "privileges": "Hak akses",
+      "created_at": "Dibuat pada",
+      "updated_at": "Diperbarui pada",
       "users_count": "Pengguna"
     },
     "Form": {
@@ -99,7 +99,11 @@
       "label_display_name": "Nama tampilan",
       "label_address": "Alamat",
       "label_phone_code": "Kode",
-      "label_phone_number": "Nomor Telepon"
+      "label_phone_number": "Nomor telepon",
+      "label_profile_picture": "Foto profil",
+      "tooltip_remove_image": "Hapus gambar ini",
+      "tooltip_submit_image": "Gunakan gambar ini sebagai foto profil",
+      "tooltip_browse_image": "Telusuri gambar"
     }
   }
 }

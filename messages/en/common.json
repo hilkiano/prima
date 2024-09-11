@@ -69,7 +69,8 @@
     "phone_code_label": "Code",
     "phone_code_search_placeholder": "Search by country",
     "phone_code_nothing_found": "Nothing found",
-    "validation_username_exist": "Username is already taken."
+    "validation_username_exist": "Username is already taken.",
+    "validation_max_size_image": "Maximum image size is {max}."
   },
   "DataTable": {
     "search": "Search...",

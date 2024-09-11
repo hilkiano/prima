@@ -26,8 +26,8 @@ function SettingsPageContent({ query }: TSettingsPage) {
       messages={pick(messages, ["Form", "Settings", "Button"])}
     >
       <HydrationBoundary state={dehydrate(query)}>
-        <div className="flex flex-col sm:flex-row gap-4">
-          <SettingsSidebar className="w-[350px] shrink-0" />
+        <div className="flex flex-col lg:flex-row gap-4">
+          <SettingsSidebar className="w-full xs:w-[350px] shrink-0" />
           <SettingsContainer className="w-full" />
         </div>
       </HydrationBoundary>

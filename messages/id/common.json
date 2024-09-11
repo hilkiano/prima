@@ -69,7 +69,8 @@
     "phone_code_label": "Kode",
     "phone_code_search_placeholder": "Cari berdasarkan negara",
     "phone_code_nothing_found": "Tidak menemukan apapun",
-    "validation_username_exist": "Nama pengguna sudah terdaftar."
+    "validation_username_exist": "Nama pengguna sudah terdaftar.",
+    "validation_max_size_image": "Ukuran gambar maksimal adalah {max}."
   },
   "DataTable": {
     "search": "Cari...",

@@ -21,6 +21,7 @@ import {
   Switch,
   Combobox,
   InputBase,
+  Tooltip,
 } from "@mantine/core";
 import classes from "@/styles/components.module.css";
 import { IconSquareRoundedXFilled } from "@tabler/icons-react";

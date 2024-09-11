@@ -63,3 +63,41 @@ export async function getMessageBag(
     },
   };
 }
+
+export function formatFileSize(bytes: number): string {
+  if (bytes < 1024) {
+    return bytes + " bytes";
+  } else if (bytes < 1024 * 1024) {
+    const kilobytes = (bytes / 1024).toFixed(2);
+    return parseFloat(kilobytes) + "KB";
+  } else {
+    const megabytes = (bytes / (1024 * 1024)).toFixed(2);
+    return parseFloat(megabytes) + "MB";
+  }
+}
+
+export function dataURItoBlob(dataURI: string) {
+  const byteString = atob(dataURI.split(",")[1]);
+  const mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
+
+  const ab = new ArrayBuffer(byteString.length);
+  const ia = new Uint8Array(ab);
+  for (let i = 0; i < byteString.length; i++) {
+    ia[i] = byteString.charCodeAt(i);
+  }
+  return new Blob([ab], { type: mimeString });
+}
+
+export async function srcToFile(
+  src: string,
+  fileName: string,
+  mimeType: string
+) {
+  return fetch(src)
+    .then(function (res) {
+      return res.arrayBuffer();
+    })
+    .then(function (buf) {
+      return new File([buf], fileName, { type: mimeType });
+    });
+}

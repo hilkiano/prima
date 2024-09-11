@@ -107,7 +107,7 @@ const AppShell = React.forwardRef<HTMLDivElement, TAppShell & AppShellProps>(
             <LocaleToggle className="w-[60px]" locale={locale} />
             <ThemeToggle size="lg" />
             {hasAuth ? (
-              <Menu width={200}>
+              <Menu position="bottom-start" trapFocus={false} width={200}>
                 <Menu.Target>
                   <Avatar
                     src={userData?.user.avatar_url}

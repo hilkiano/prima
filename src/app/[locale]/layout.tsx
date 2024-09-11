@@ -8,6 +8,8 @@ import "@/styles/globals.css";
 import "@mantine/notifications/styles.css";
 import "@mantine/core/styles.layer.css";
 import "@/styles/layout.css";
+import "react-advanced-cropper/dist/style.css";
+import "react-advanced-cropper/dist/themes/compact.css";
 import { outfitFont } from "@/styles/fonts";
 
 import QueryProvider from "@/lib/queryProvider";

@@ -71,6 +71,7 @@ export type NavbarLinks = {
   link?: string;
   links?: { label: string; link: string; privilege?: string }[];
   privilege?: string;
+  onClick?: () => void;
 };
 
 export type ListResult<T> = {
