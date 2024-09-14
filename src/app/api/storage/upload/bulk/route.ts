@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
   const lang = cookieStore.get("NEXT_LOCALE");
   const jwt = cookieStore.get("jwt");
   const response = await axios
-    .post(`${process.env.NEXT_PUBLIC_API_URL}upload/bulk`, data, {
+    .post(`${process.env.NEXT_PUBLIC_API_URL}storage/upload/bulk`, data, {
       headers: {
         "x-app-locale": lang ? lang.value : "id",
         "x-token": jwt ? jwt.value : null,
@@ -26,6 +26,6 @@ export async function POST(request: NextRequest) {
 
   return Response.json(
     { ...response.data, i18n: messageBag },
-    { headers: response.headers }
+    { headers: response.headers, status: response.status }
   );
 }

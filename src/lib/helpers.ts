@@ -101,3 +101,26 @@ export async function srcToFile(
       return new File([buf], fileName, { type: mimeType });
     });
 }
+
+export async function updateUserData(
+  setUserData: (value: React.SetStateAction<Authenticated | null>) => void,
+  callback?: () => void
+) {
+  await fetch(`/api/auth/me`, {
+    method: "get",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((res: JsonResponse<Authenticated>) => {
+      setUserData(res.data);
+      if (callback) {
+        callback();
+      }
+    })
+    .catch((err: Error) => {
+      throw new Error(err.message, err);
+    });
+}

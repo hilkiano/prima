@@ -4,7 +4,7 @@
       "head": "Login Page",
       "subhead": "Please authenticate yourself with...",
       "divider": "Or continue with",
-      "email_label": "Email",
+      "email_label": "Email/username",
       "password_label": "Password",
       "email_min_validation": "Email must be filled.",
       "password_min_validation": "Password must be filled."
@@ -103,7 +103,10 @@
       "label_profile_picture": "Profile picture",
       "tooltip_remove_image": "Remove this image",
       "tooltip_submit_image": "Use this image as my profile picture",
-      "tooltip_browse_image": "Browse for image"
+      "tooltip_browse_image": "Browse for image",
+      "modal_cropper": "Adjust image",
+      "label_password": "Password",
+      "label_confirm_password": "Confirm password"
     }
   }
 }

@@ -4,7 +4,7 @@
       "head": "Halaman Login",
       "subhead": "Mohon otentikasi diri Anda dengan...",
       "divider": "Atau melanjutkan dengan",
-      "email_label": "Email",
+      "email_label": "Email/nama pengguna",
       "password_label": "Kata sandi",
       "email_min_validation": "Email harus diisi.",
       "password_min_validation": "Kata sandi harus diisi."
@@ -103,7 +103,10 @@
       "label_profile_picture": "Foto profil",
       "tooltip_remove_image": "Hapus gambar ini",
       "tooltip_submit_image": "Gunakan gambar ini sebagai foto profil",
-      "tooltip_browse_image": "Telusuri gambar"
+      "tooltip_browse_image": "Telusuri gambar",
+      "modal_cropper": "Sesuaikan gambar",
+      "label_password": "Kata sandi",
+      "label_confirm_password": "Konfirmasi kata sandi"
     }
   }
 }

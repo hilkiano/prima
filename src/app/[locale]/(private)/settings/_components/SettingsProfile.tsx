@@ -5,6 +5,7 @@ import React from "react";
 import ProfileBasicInformation from "./forms/ProfileBasicInformation";
 import { useUserContext } from "@/lib/userProvider";
 import ProfileAvatar from "./forms/ProfileAvatar";
+import ProfileSecurity from "./forms/ProfileSecurity";
 
 type TSettingsProfile = {
   name: string;
@@ -32,7 +33,7 @@ const settingsProfileContents: TSettingsProfile[] = [
     icon: <IconLock />,
     description: "basic_security_desc",
     privilege: "SETTING_PROFILE_BASIC_SECURITY",
-    content: <></>,
+    content: <ProfileSecurity className="w-full" />,
   },
 ];
 

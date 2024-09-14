@@ -19,6 +19,7 @@ import useProfileAvatar from "../../_hooks/profile_avatar.hooks";
 import { Controller } from "react-hook-form";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { srcToFile } from "@/lib/helpers";
+import Compressor from "compressorjs";
 
 const ProfileAvatar = React.forwardRef<HTMLDivElement, BoxProps>(
   ({ ...props }, ref) => {
@@ -33,6 +34,7 @@ const ProfileAvatar = React.forwardRef<HTMLDivElement, BoxProps>(
       setImage,
       cropperRef,
       onCrop,
+      maxFileSize,
     } = useProfileAvatar();
     const fileRef = React.useRef<HTMLButtonElement>(null);
     const [opened, { open, close }] = useDisclosure(false);
@@ -48,13 +50,23 @@ const ProfileAvatar = React.forwardRef<HTMLDivElement, BoxProps>(
               const formData = new FormData();
               const file = await srcToFile(
                 image,
-                `${userData?.user.id}.png`,
-                "image/png"
+                `${userData?.user.id}.webp`,
+                "image/webp"
               );
-              formData.append("directory", "avatar");
-              formData.append("files[0]", file);
 
-              mutationUpload.mutate(formData);
+              new Compressor(file, {
+                quality: 0.6,
+                success: (result) => {
+                  formData.append("directory", "avatar");
+                  formData.append(
+                    "files[0]",
+                    result,
+                    `${userData?.user.id}.webp`
+                  );
+
+                  mutationUpload.mutate(formData);
+                },
+              });
             }
           })}
           id="profpic-form"
@@ -71,7 +83,7 @@ const ProfileAvatar = React.forwardRef<HTMLDivElement, BoxProps>(
                   value={value}
                   onChange={(val) => {
                     onChange(val);
-                    if (val && val.size <= 1048576) {
+                    if (val && val.size <= maxFileSize) {
                       open();
                     }
                   }}
@@ -170,7 +182,7 @@ const ProfileAvatar = React.forwardRef<HTMLDivElement, BoxProps>(
           size="xl"
           centered
           fullScreen={isMobile}
-          title="Adjust image"
+          title={t("modal_cropper")}
           keepMounted={false}
         >
           {form.getValues("avatar") ? (

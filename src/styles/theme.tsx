@@ -90,6 +90,9 @@ export const theme = createTheme({
         input: classes.passwordInputInput,
         error: classes.passwordInputError,
       },
+      defaultProps: {
+        variant: "filled",
+      },
     }),
     Menu: Menu.extend({
       classNames: {

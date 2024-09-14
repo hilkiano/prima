@@ -30,7 +30,7 @@ export async function PUT(request: NextRequest) {
 
   return Response.json(
     { ...response.data, i18n: messageBag },
-    { headers: response.headers }
+    { headers: response.headers, status: response.status }
   );
 }
 
@@ -39,6 +39,7 @@ export async function PATCH(request: NextRequest) {
   const data = await request.json();
   const lang = cookieStore.get("NEXT_LOCALE");
   const jwt = cookieStore.get("jwt");
+
   const response = await axios
     .patch(
       `${process.env.NEXT_PUBLIC_API_URL}crud/update/${data.class}`,
@@ -60,7 +61,7 @@ export async function PATCH(request: NextRequest) {
 
   return Response.json(
     { ...response.data, i18n: messageBag },
-    { headers: response.headers }
+    { headers: response.headers, status: response.status }
   );
 }
 
@@ -87,7 +88,7 @@ export async function DELETE(request: NextRequest) {
 
   return Response.json(
     { ...response.data, i18n: messageBag },
-    { headers: response.headers }
+    { headers: response.headers, status: response.status }
   );
 }
 
@@ -117,6 +118,6 @@ export async function POST(request: NextRequest) {
 
   return Response.json(
     { ...response.data, i18n: messageBag },
-    { headers: response.headers }
+    { headers: response.headers, status: response.status }
   );
 }

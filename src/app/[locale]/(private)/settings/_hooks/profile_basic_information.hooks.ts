@@ -9,8 +9,8 @@ import { handleValidate } from "@/services/validate.service";
 import { useUserContext } from "@/lib/userProvider";
 import { useMutation } from "@tanstack/react-query";
 import { updateFn } from "@/services/crud.service";
-import { Authenticated, JsonResponse } from "@/types/common.types";
 import { showSuccess } from "@/lib/errorHandler";
+import { updateUserData } from "@/lib/helpers";
 
 export default function useProfileBasicInformation() {
   const tForm = useTranslations("Form");
@@ -89,26 +89,9 @@ export default function useProfileBasicInformation() {
     }) => updateFn(data),
     onSuccess: (res) => {
       showSuccess(res.i18n.alert, null);
-      updateUserData();
+      updateUserData(setUserData);
     },
   });
-
-  const updateUserData = async () => {
-    await fetch(`/api/auth/me`, {
-      method: "get",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((res: JsonResponse<Authenticated>) => {
-        setUserData(res.data);
-      })
-      .catch((err: Error) => {
-        throw new Error(err.message, err);
-      });
-  };
 
   return {
     mutation,

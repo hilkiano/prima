@@ -7,25 +7,24 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useUserContext } from "@/lib/userProvider";
 import { useMutation } from "@tanstack/react-query";
-import { Authenticated, JsonResponse } from "@/types/common.types";
 import { showSuccess } from "@/lib/errorHandler";
-import { bulkUpload } from "@/services/upload.service";
-import { formatFileSize } from "@/lib/helpers";
+import { bulkDelete, bulkUpload } from "@/services/storage.service";
+import { formatFileSize, updateUserData } from "@/lib/helpers";
 import { CropperRef } from "react-advanced-cropper";
 import { updateFn } from "@/services/crud.service";
 
 export default function useProfileAvatar() {
   const tForm = useTranslations("Form");
-  const t = useTranslations("Settings.Profile");
   const { userData, setUserData } = useUserContext();
+  const maxFileSize = 5242880;
 
   const schema = z.object({
     avatar: z.custom<File | null>().superRefine((file, ctx) => {
       if (file) {
-        if (file.size >= 1048576) {
+        if (file.size >= maxFileSize) {
           ctx.addIssue({
             message: tForm("validation_max_size_image", {
-              max: formatFileSize(1048576),
+              max: formatFileSize(maxFileSize),
             }),
             code: z.ZodIssueCode.custom,
           });
@@ -46,16 +45,27 @@ export default function useProfileAvatar() {
   const mutationUpload = useMutation({
     mutationFn: bulkUpload,
     onSuccess: (res) => {
-      mutationSave.mutate({
-        class: "User",
-        payload: {
+      if (userData) {
+        const oldAvatar = new URL(userData.user.avatar_url);
+        mutationDelete.mutate({
+          disk: "s3",
+          paths: [oldAvatar.pathname],
+        });
+        mutationSave.mutate({
+          class: "User",
           payload: {
-            id: userData?.user.id,
-            avatar_url: res.data[0][`${userData?.user.id}.png`],
+            payload: {
+              id: userData.user.id,
+              avatar_url: res.data[0][`${userData.user.id}.webp`],
+            },
           },
-        },
-      });
+        });
+      }
     },
+  });
+
+  const mutationDelete = useMutation({
+    mutationFn: bulkDelete,
   });
 
   const mutationSave = useMutation({
@@ -65,33 +75,18 @@ export default function useProfileAvatar() {
     }) => updateFn(data),
     onSuccess: (res) => {
       showSuccess(res.i18n.alert, null);
-      updateUserData();
+      updateUserData(setUserData, () => {
+        form.reset();
+        setImage(undefined);
+      });
     },
   });
 
-  const updateUserData = async () => {
-    await fetch(`/api/auth/me`, {
-      method: "get",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((res: JsonResponse<Authenticated>) => {
-        setUserData(res.data);
-        form.reset();
-        setImage(undefined);
-      })
-      .catch((err: Error) => {
-        throw new Error(err.message, err);
-      });
-  };
   const [image, setImage] = React.useState<string>();
   const cropperRef = React.useRef<CropperRef>(null);
   const onCrop = () => {
     if (cropperRef.current) {
-      setImage(cropperRef.current.getCanvas()?.toDataURL());
+      setImage(cropperRef.current.getCanvas()?.toDataURL("image/webp"));
     }
   };
 
@@ -103,5 +98,6 @@ export default function useProfileAvatar() {
     setImage,
     cropperRef,
     onCrop,
+    maxFileSize,
   };
 }

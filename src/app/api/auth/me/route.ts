@@ -24,6 +24,6 @@ export async function GET() {
 
   return Response.json(
     { ...response.data, i18n: messageBag },
-    { headers: response.headers }
+    { headers: response.headers, status: response.status }
   );
 }
