@@ -143,6 +143,12 @@ type Company = {
   phone_code: string;
   phone_number: string;
   address: string;
+  configs: Partial<{
+    currency: {
+      id: number;
+      is_alternate: boolean;
+    };
+  }> | null;
   created_at: Date;
   updated_at: Date;
   deleted_at: Date;
@@ -159,6 +165,12 @@ type Outlet = {
   phone_code: string;
   phone_number: string;
   address: string;
+  configs: Partial<{
+    currency: {
+      id: number;
+      is_alternate: boolean;
+    };
+  }> | null;
   is_main_outlet: boolean;
   created_at: Date;
   updated_at: Date;
@@ -199,6 +211,14 @@ type PhoneCode = {
   dial_code: string;
   emoji: string;
   code: string;
+  created_at: Date;
+  updated_at: Date;
+};
+
+type Currency = {
+  id: number;
+  currency: string;
+  alternate_symbol: string;
   created_at: Date;
   updated_at: Date;
 };

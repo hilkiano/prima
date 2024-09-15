@@ -92,9 +92,9 @@
     },
     "Profile": {
       "basic_information": "Basic information",
-      "basic_information_desc": "Change your basic information such as username, display name, address, etc.",
+      "basic_information_desc": "Change your basic information",
       "basic_security": "Security",
-      "basic_security_desc": "Create a password for your account.",
+      "basic_security_desc": "Update your password",
       "label_username": "Username",
       "label_display_name": "Display name",
       "label_address": "Address",
@@ -107,6 +107,28 @@
       "modal_cropper": "Adjust image",
       "label_password": "Password",
       "label_confirm_password": "Confirm password"
-    }
+    },
+    "Company": {
+      "basic_information": "Basic information",
+      "basic_information_desc": "Change company basic information",
+      "currency": "Currency",
+      "currency_desc": "Set default currency globally",
+      "label_name": "Company name",
+      "label_email": "Email",
+      "label_address": "Address",
+      "label_phone_number": "Phone number",
+      "label_alt_currency": "Use alternate symbol"
+    },
+    "Outlet": {
+      "basic_information": "Basic information",
+      "basic_information_desc": "Change outlet basic information",
+      "currency": "Currency",
+      "currency_desc": "Set default currency for this outlet",
+      "label_name": "Outlet name",
+      "label_email": "Email",
+      "label_address": "Address",
+      "label_phone_number": "Phone number"
+    },
+    "select_category": "Please select category."
   }
 }

@@ -92,9 +92,9 @@
     },
     "Profile": {
       "basic_information": "Informasi dasar",
-      "basic_information_desc": "Ubah informasi dasar seperti nama pengguna, nama tampilan, alamat, dll.",
+      "basic_information_desc": "Ubah informasi dasar Anda",
       "basic_security": "Keamanan",
-      "basic_security_desc": "Buat kata sandi untuk akun Anda.",
+      "basic_security_desc": "Ubah kata sandi Anda",
       "label_username": "Nama pengguna",
       "label_display_name": "Nama tampilan",
       "label_address": "Alamat",
@@ -107,6 +107,28 @@
       "modal_cropper": "Sesuaikan gambar",
       "label_password": "Kata sandi",
       "label_confirm_password": "Konfirmasi kata sandi"
-    }
+    },
+    "Company": {
+      "basic_information": "Informasi dasar",
+      "basic_information_desc": "Ubah informasi perusahaan",
+      "currency": "Mata uang",
+      "currency_desc": "Atur standar mata uang secara global",
+      "label_name": "Nama perusahaan",
+      "label_email": "Email",
+      "label_address": "Alamata",
+      "label_phone_number": "Nomor telepon",
+      "label_alt_currency": "Gunakan simbol alternatif"
+    },
+    "Outlet": {
+      "basic_information": "Informasi dasar",
+      "basic_information_desc": "Ubah informasi gerai",
+      "currency": "Mata uang",
+      "currency_desc": "Atur standar mata uang untuk gerai ini",
+      "label_name": "Nama gerai",
+      "label_email": "Email",
+      "label_address": "Alamata",
+      "label_phone_number": "Nomor telepon"
+    },
+    "select_category": "Silakan pilih kategori."
   }
 }

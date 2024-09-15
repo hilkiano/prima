@@ -96,6 +96,15 @@
     "data_create_group": "Access to create a new group",
     "data_update_group": "Access to update an existing group",
     "data_delete_group": "Access to delete or restore a group",
+    "data_create_user": "Access to create a new user",
+    "data_update_user": "Access to update an existing user",
+    "data_delete_user": "Access to delete or restore a user",
+    "data_create_company": "Access to create a new company",
+    "data_update_company": "Access to update an existing company",
+    "data_delete_company": "Access to delete or restore a company",
+    "data_create_outlet": "Access to create a new outlet",
+    "data_update_outlet": "Access to update an existing outlet",
+    "data_delete_outlet": "Access to delete or restore a outlet",
     "page_customers": "Access to view Customers page",
     "page_outlets": "Access to view Outlets page",
     "page_products_add_product": "Access to view Products > Add product page",
@@ -106,6 +115,10 @@
     "page_settings_membership_status": "Access to view Settings > Membership status page",
     "page_settings_users": "Access to view Settings > Users page",
     "setting_profile_basic_information": "Access to change user basic information",
-    "setting_profile_basic_security": "Access to change user security"
+    "setting_profile_basic_security": "Access to change user security",
+    "setting_company_basic_information": "Access to change company basic information",
+    "setting_company_currency": "Access to change default currency globally",
+    "setting_outlet_basic_information": "Access to change outlet basic information",
+    "setting_outlet_currency": "Access to change default currency per outlet"
   }
 }

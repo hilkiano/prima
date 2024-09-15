@@ -13,7 +13,7 @@
 
 /* SELECT */
 .selectInput {
-  @apply font-sans dark:bg-slate-800 bg-slate-200/70 border-2;
+  @apply font-sans dark:bg-slate-800 bg-slate-300/70 border-2;
 }
 
 .selectDropdown {
@@ -127,7 +127,7 @@
 
 /* NOTIFICATION */
 .notificationRoot {
-  @apply dark:bg-slate-700/70 bg-slate-50/70 backdrop-blur-lg;
+  @apply dark:bg-slate-700/70 bg-slate-200/70 backdrop-blur-lg;
 }
 
 /* COMBOBOX */

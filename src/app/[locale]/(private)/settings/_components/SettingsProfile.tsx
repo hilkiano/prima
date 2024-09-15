@@ -44,26 +44,28 @@ const SettingsProfile = React.forwardRef<HTMLDivElement, BoxProps>(
     return (
       <Box {...props}>
         <Accordion chevronPosition="right" variant="separated">
-          {settingsProfileContents.map((setting) => {
-            return (
-              <Accordion.Item value={setting.name} key={setting.name}>
-                <Accordion.Control
-                  disabled={!userData?.privileges?.includes(setting.privilege)}
-                >
-                  <Group wrap="nowrap">
-                    {setting.icon}
-                    <div>
-                      <Text>{t(`Profile.${setting.name}`)}</Text>
-                      <Text size="sm" c="dimmed" fw={400}>
-                        {t(`Profile.${setting.description}`)}
-                      </Text>
-                    </div>
-                  </Group>
-                </Accordion.Control>
-                <Accordion.Panel>{setting.content}</Accordion.Panel>
-              </Accordion.Item>
-            );
-          })}
+          {settingsProfileContents
+            .filter((setting) =>
+              userData?.privileges.includes(setting.privilege)
+            )
+            .map((setting) => {
+              return (
+                <Accordion.Item value={setting.name} key={setting.name}>
+                  <Accordion.Control>
+                    <Group wrap="nowrap">
+                      {setting.icon}
+                      <div>
+                        <Text>{t(`Profile.${setting.name}`)}</Text>
+                        <Text size="sm" c="dimmed" fw={400}>
+                          {t(`Profile.${setting.description}`)}
+                        </Text>
+                      </div>
+                    </Group>
+                  </Accordion.Control>
+                  <Accordion.Panel>{setting.content}</Accordion.Panel>
+                </Accordion.Item>
+              );
+            })}
         </Accordion>
       </Box>
     );
