@@ -8,23 +8,23 @@ import {
 } from "@mantine/core";
 import { useTranslations } from "next-intl";
 import React from "react";
-import useCompanyBasicInformation from "../../_hooks/company_basic_information.hooks";
 import { Controller } from "react-hook-form";
 import PhoneCodeSelector from "@/components/PhoneCodeSelector";
 import { IconCheck } from "@tabler/icons-react";
+import useOutletBasicInformation from "../../_hooks/outlet_basic_information.hooks";
 
-const CompanyBasicInformation = React.forwardRef<HTMLDivElement, BoxProps>(
+const OutletBasicInformation = React.forwardRef<HTMLDivElement, BoxProps>(
   ({ ...props }, ref) => {
-    const { mutation, form } = useCompanyBasicInformation();
+    const { mutation, form } = useOutletBasicInformation();
     const tButton = useTranslations("Button");
-    const t = useTranslations("Settings.Company");
+    const t = useTranslations("Settings.Outlet");
     return (
       <Box {...props}>
         <form
           noValidate
           onSubmit={form.handleSubmit((data) => {
             mutation.mutate({
-              class: "Company",
+              class: "Outlet",
               payload: {
                 payload: data,
               },
@@ -123,5 +123,5 @@ const CompanyBasicInformation = React.forwardRef<HTMLDivElement, BoxProps>(
   }
 );
 
-CompanyBasicInformation.displayName = "CompanyBasicInformation";
-export default CompanyBasicInformation;
+OutletBasicInformation.displayName = "OutletBasicInformation";
+export default OutletBasicInformation;

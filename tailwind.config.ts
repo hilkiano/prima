@@ -5,6 +5,7 @@ const config: Config = {
   corePlugins: {
     preflight: false,
   },
+  important: true,
   darkMode: ["class", '[data-mantine-color-scheme="dark"]'],
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",

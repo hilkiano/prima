@@ -1,12 +1,16 @@
 import { useUserContext } from "@/lib/userProvider";
 import { Accordion, Box, BoxProps, Group, Text } from "@mantine/core";
-import { IconBuildings, IconCash } from "@tabler/icons-react";
+import {
+  IconBuildings,
+  IconBuildingStore,
+  IconCash,
+} from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import React from "react";
-import CompanyBasicInformation from "./forms/CompanyBasicInformation";
-import CompanyCurrency from "./forms/CompanyCurrency";
+import OutletCurrency from "./forms/OutletCurrency";
+import OutletBasicInformation from "./forms/OutletBasicInformation";
 
-type TSettingsCompany = {
+type TSettingsOutlet = {
   name: string;
   icon: React.ReactNode;
   description: string;
@@ -14,24 +18,24 @@ type TSettingsCompany = {
   content: React.ReactNode;
 };
 
-const settingsCompanyContents: TSettingsCompany[] = [
+const settingsOutletContents: TSettingsOutlet[] = [
   {
     name: "basic_information",
-    icon: <IconBuildings />,
+    icon: <IconBuildingStore />,
     description: "basic_information_desc",
-    privilege: "SETTING_COMPANY_BASIC_INFORMATION",
-    content: <CompanyBasicInformation className="p-2 pb-6" />,
+    privilege: "SETTING_OUTLET_BASIC_INFORMATION",
+    content: <OutletBasicInformation className="p-2 pb-6" />,
   },
   {
     name: "currency",
     icon: <IconCash />,
     description: "currency_desc",
-    privilege: "SETTING_COMPANY_CURRENCY",
-    content: <CompanyCurrency className="p-2 pb-6" />,
+    privilege: "SETTING_OUTLET_CURRENCY",
+    content: <OutletCurrency className="p-2 pb-6" />,
   },
 ];
 
-const SettingsCompany = React.forwardRef<HTMLDivElement, BoxProps>(
+const SettingsOutlet = React.forwardRef<HTMLDivElement, BoxProps>(
   ({ ...props }, ref) => {
     const t = useTranslations("Settings");
     const { userData } = useUserContext();
@@ -39,7 +43,7 @@ const SettingsCompany = React.forwardRef<HTMLDivElement, BoxProps>(
     return (
       <Box {...props}>
         <Accordion chevronPosition="right" variant="separated">
-          {settingsCompanyContents
+          {settingsOutletContents
             .filter((setting) =>
               userData?.privileges.includes(setting.privilege)
             )
@@ -49,9 +53,9 @@ const SettingsCompany = React.forwardRef<HTMLDivElement, BoxProps>(
                   <Group wrap="nowrap">
                     {setting.icon}
                     <div>
-                      <Text>{t(`Company.${setting.name}`)}</Text>
+                      <Text>{t(`Outlet.${setting.name}`)}</Text>
                       <Text size="sm" c="dimmed" fw={400}>
-                        {t(`Company.${setting.description}`)}
+                        {t(`Outlet.${setting.description}`)}
                       </Text>
                     </div>
                   </Group>
@@ -65,5 +69,5 @@ const SettingsCompany = React.forwardRef<HTMLDivElement, BoxProps>(
   }
 );
 
-SettingsCompany.displayName = "SettingsCompany";
-export default SettingsCompany;
+SettingsOutlet.displayName = "SettingsOutlet";
+export default SettingsOutlet;

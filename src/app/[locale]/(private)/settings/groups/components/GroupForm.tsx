@@ -115,6 +115,9 @@ const PrivilegesAccordions: React.FC<{
                   }
                 }}
                 label={tPrivilege(privilege.desc_i18n)}
+                classNames={{
+                  root: "w-fit",
+                }}
               />
             ))}
           </div>

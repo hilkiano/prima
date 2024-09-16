@@ -64,6 +64,7 @@ const ProfileSecurity = React.forwardRef<HTMLDivElement, BoxProps>(
               leftSection={<IconCheck />}
               type="submit"
               loading={mutation.isPending}
+              className="w-full xs:w-auto"
             >
               {tButton("save")}
             </Button>

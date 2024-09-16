@@ -117,7 +117,7 @@
 
 /* SWITCH */
 .switchTrack {
-  @apply dark:bg-slate-900/50 dark:checked:bg-blue-500 border-2 flex-shrink-0;
+  @apply dark:bg-slate-700/80 bg-slate-300 border-2 dark:border-slate-700/80 border-slate-300 flex-shrink-0;
 }
 
 /* APPSHELL */

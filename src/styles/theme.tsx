@@ -212,6 +212,7 @@ export const theme = createTheme({
     }),
     Switch: Switch.extend({
       classNames: {
+        input: "peer",
         track: classes.switchTrack,
       },
     }),

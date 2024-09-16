@@ -127,7 +127,8 @@
       "label_name": "Outlet name",
       "label_email": "Email",
       "label_address": "Address",
-      "label_phone_number": "Phone number"
+      "label_phone_number": "Phone number",
+      "label_alt_currency": "Use alternate symbol"
     },
     "select_category": "Please select category."
   }

@@ -115,7 +115,7 @@
       "currency_desc": "Atur standar mata uang secara global",
       "label_name": "Nama perusahaan",
       "label_email": "Email",
-      "label_address": "Alamata",
+      "label_address": "Alamat",
       "label_phone_number": "Nomor telepon",
       "label_alt_currency": "Gunakan simbol alternatif"
     },
@@ -126,8 +126,9 @@
       "currency_desc": "Atur standar mata uang untuk gerai ini",
       "label_name": "Nama gerai",
       "label_email": "Email",
-      "label_address": "Alamata",
-      "label_phone_number": "Nomor telepon"
+      "label_address": "Alamat",
+      "label_phone_number": "Nomor telepon",
+      "label_alt_currency": "Gunakan simbol alternatif"
     },
     "select_category": "Silakan pilih kategori."
   }

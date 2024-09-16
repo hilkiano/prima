@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import SettingsProfile from "./SettingsProfile";
 import { useSearchParams } from "next/navigation";
 import SettingsCompany from "./SettingsCompany";
+import SettingsOutlet from "./SettingsOutlet";
 
 const SettingsContainer = React.forwardRef<HTMLDivElement, BoxProps>(
   ({ ...props }, ref) => {
@@ -27,6 +28,8 @@ const SettingsContainer = React.forwardRef<HTMLDivElement, BoxProps>(
               <SettingsProfile className="mt-4" />
             ) : submenuParam === "company" ? (
               <SettingsCompany className="mt-4" />
+            ) : submenuParam === "outlet" ? (
+              <SettingsOutlet className="mt-4" />
             ) : (
               <></>
             )}

@@ -1,17 +1,24 @@
 import CurrencySelector from "@/components/CurrencySelector";
-import { Box, BoxProps, Button, Switch, useMantineTheme } from "@mantine/core";
+import {
+  Box,
+  BoxProps,
+  Button,
+  Checkbox,
+  Switch,
+  useMantineTheme,
+} from "@mantine/core";
 import { IconCheck } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import React from "react";
-import useCompanyCurrency from "../../_hooks/company_currency.hooks";
 import { useUserContext } from "@/lib/userProvider";
+import useOutletCurrency from "../../_hooks/outlet_currency.hooks";
 import { useMediaQuery } from "@mantine/hooks";
 
-const CompanyCurrency = React.forwardRef<HTMLDivElement, BoxProps>(
+const OutletCurrency = React.forwardRef<HTMLDivElement, BoxProps>(
   ({ ...props }, ref) => {
-    const { mutation } = useCompanyCurrency();
+    const { mutation } = useOutletCurrency();
     const tButton = useTranslations("Button");
-    const t = useTranslations("Settings.Company");
+    const t = useTranslations("Settings.Outlet");
     const [value, setValue] = React.useState<string | null>(null);
     const [isAlternate, setIsAlternate] = React.useState<boolean>(false);
     const theme = useMantineTheme();
@@ -20,9 +27,9 @@ const CompanyCurrency = React.forwardRef<HTMLDivElement, BoxProps>(
     const { userData } = useUserContext();
 
     React.useEffect(() => {
-      if (userData?.company.configs?.currency) {
-        setValue(String(userData.company.configs.currency.id));
-        setIsAlternate(userData.company.configs.currency.is_alternate);
+      if (userData?.outlet.configs?.currency) {
+        setValue(String(userData.outlet.configs.currency.id));
+        setIsAlternate(userData.outlet.configs.currency.is_alternate);
       }
     }, [userData]);
 
@@ -54,12 +61,12 @@ const CompanyCurrency = React.forwardRef<HTMLDivElement, BoxProps>(
             <Button
               onClick={() => {
                 mutation.mutate({
-                  class: "Company",
+                  class: "Outlet",
                   payload: {
                     payload: {
-                      id: userData?.company.id,
+                      id: userData?.outlet.id,
                       configs: {
-                        ...userData?.company.configs,
+                        ...userData?.outlet.configs,
                         currency: {
                           id: parseInt(value!),
                           is_alternate: isAlternate,
@@ -85,5 +92,5 @@ const CompanyCurrency = React.forwardRef<HTMLDivElement, BoxProps>(
   }
 );
 
-CompanyCurrency.displayName = "CompanyCurrency";
-export default CompanyCurrency;
+OutletCurrency.displayName = "OutletCurrency";
+export default OutletCurrency;

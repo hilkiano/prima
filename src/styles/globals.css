@@ -23,5 +23,5 @@
 }
 
 .mantine-Switch-input:checked ~ .mantine-Switch-track {
-  @apply dark:bg-blue-500;
+  @apply bg-blue-500 border-blue-500;
 }

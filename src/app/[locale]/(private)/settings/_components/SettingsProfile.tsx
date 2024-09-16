@@ -33,7 +33,7 @@ const settingsProfileContents: TSettingsProfile[] = [
     icon: <IconLock />,
     description: "basic_security_desc",
     privilege: "SETTING_PROFILE_BASIC_SECURITY",
-    content: <ProfileSecurity className="w-full" />,
+    content: <ProfileSecurity className="p-2 pb-6" />,
   },
 ];
 
