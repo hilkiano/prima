@@ -11,11 +11,16 @@ import { z } from "zod";
 import { Avatar, ComboboxData } from "@mantine/core";
 import { useUserContext } from "@/lib/userProvider";
 import { FileWithPath } from "@mantine/dropzone";
-import { createFn } from "@/services/crud.service";
+import {
+  createFn,
+  forceDeleteFn,
+  TForceDeleteReq,
+} from "@/services/crud.service";
 import { cleanData, srcToFile } from "@/lib/helpers";
 import { bulkUpload } from "@/services/storage.service";
 import Compressor from "compressorjs";
 import { showNotification } from "@/lib/errorHandler";
+import { reject } from "lodash";
 
 type TCreateProduct = {
   class: string;
@@ -45,6 +50,14 @@ export default function useProductsForm() {
     React.useState<boolean>(false);
   const [totalMutation, setTotalMutation] = React.useState(0);
   const [progress, setProgress] = React.useState(0);
+  const [mutationStatus, setMutationStatus] = React.useState<
+    {
+      action: string;
+      id: string | null;
+      status: boolean;
+    }[]
+  >([]);
+  const [isError, setIsError] = React.useState(false);
 
   const productTypes = [
     {
@@ -338,13 +351,21 @@ export default function useProductsForm() {
     }) => createFn<TCreateProduct, Product>(data),
     onSuccess: async (data) => {
       let complete = 1;
+      setMutationStatus((prev) => [
+        ...prev,
+        {
+          action: "Product",
+          id: data.status ? data.data.id : null,
+          status: data.status,
+        },
+      ]);
       if (data.status) {
         setProgress(complete / totalMutation);
 
         const mutationPromises = form
           .getValues("variants")
           .map(async (variant, i) => {
-            return new Promise<boolean>(async (resolve) => {
+            return new Promise<boolean>(async (resolve, reject) => {
               if (variant.images.length > 0) {
                 const formData = await createFormData(
                   i,
@@ -352,9 +373,19 @@ export default function useProductsForm() {
                   variant.images
                 );
                 const uploadResult = await mutationUpload.mutateAsync(formData);
+                setMutationStatus((prev) => [
+                  ...prev,
+                  {
+                    action: "Pictures",
+                    id: null,
+                    status: uploadResult.status,
+                  },
+                ]);
                 if (uploadResult.status) {
                   complete = complete + 1;
                   setProgress(complete / totalMutation);
+                } else {
+                  reject(false);
                 }
                 const urls = Object.values(uploadResult.data);
                 const variantResult = await mutationVariant.mutateAsync({
@@ -369,6 +400,14 @@ export default function useProductsForm() {
                     }),
                   },
                 });
+                setMutationStatus((prev) => [
+                  ...prev,
+                  {
+                    action: "ProductVariant",
+                    id: variantResult.status ? variantResult.data.id : null,
+                    status: variantResult.status,
+                  },
+                ]);
                 if (variantResult.status) {
                   complete = complete + 1;
                   setProgress(complete / totalMutation);
@@ -376,7 +415,7 @@ export default function useProductsForm() {
                     class: "ProductBatch",
                     payload: {
                       payload: cleanData({
-                        product_variant_id: data.data.id,
+                        product_variant_id: variantResult.data.id,
                         base_capital_price: variant.base_capital_price
                           ? parseInt(
                               variant.base_capital_price.replace(/\D+/g, "")
@@ -393,12 +432,24 @@ export default function useProductsForm() {
                       }),
                     },
                   });
+                  setMutationStatus((prev) => [
+                    ...prev,
+                    {
+                      action: "ProductBatch",
+                      id: batchResult.status ? batchResult.data.id : null,
+                      status: batchResult.status,
+                    },
+                  ]);
 
                   if (batchResult.status) {
                     complete = complete + 1;
                     setProgress(complete / totalMutation);
                     resolve(true);
+                  } else {
+                    reject(false);
                   }
+                } else {
+                  reject(false);
                 }
               } else {
                 const variantResult = await mutationVariant.mutateAsync({
@@ -412,6 +463,14 @@ export default function useProductsForm() {
                     }),
                   },
                 });
+                setMutationStatus((prev) => [
+                  ...prev,
+                  {
+                    action: "ProductVariant",
+                    id: variantResult.status ? variantResult.data.id : null,
+                    status: variantResult.status,
+                  },
+                ]);
                 if (variantResult.status) {
                   complete = complete + 1;
                   setProgress(complete / totalMutation);
@@ -419,7 +478,7 @@ export default function useProductsForm() {
                     class: "ProductBatch",
                     payload: {
                       payload: cleanData({
-                        product_variant_id: data.data.id,
+                        product_variant_id: variantResult.data.id,
                         base_capital_price: variant.base_capital_price
                           ? parseInt(
                               variant.base_capital_price.replace(/\D+/g, "")
@@ -436,50 +495,93 @@ export default function useProductsForm() {
                       }),
                     },
                   });
-
+                  setMutationStatus((prev) => [
+                    ...prev,
+                    {
+                      action: "ProductBatch",
+                      id: batchResult.status ? batchResult.data.id : null,
+                      status: batchResult.status,
+                    },
+                  ]);
                   if (batchResult.status) {
                     complete = complete + 1;
                     setProgress(complete / totalMutation);
                     resolve(true);
+                  } else {
+                    reject(false);
                   }
+                } else {
+                  reject(false);
                 }
               }
             });
           });
 
-        await Promise.all(mutationPromises).then(() => {
-          let imageUrl: string | null = null;
-          if (form.getValues("variants")[0].images.length > 0) {
-            imageUrl = URL.createObjectURL(
-              form.getValues("variants")[0].images[0]
+        await Promise.all(mutationPromises)
+          .then((res) => {
+            let imageUrl: string | null = null;
+            if (form.getValues("variants")[0].images.length > 0) {
+              imageUrl = URL.createObjectURL(
+                form.getValues("variants")[0].images[0]
+              );
+            }
+
+            showNotification(
+              "green",
+              t("Add.title_success_create"),
+              t.rich("Add.message_success_create", {
+                bold: (chunks) => <span className="font-bold">{chunks}</span>,
+                name: form.getValues("name"),
+              }),
+              imageUrl ? (
+                <Avatar
+                  radius="md"
+                  size="md"
+                  src={imageUrl}
+                  alt={form.getValues("name")}
+                />
+              ) : undefined
             );
-          }
 
-          showNotification(
-            "green",
-            t("Add.title_success_create"),
-            t.rich("Add.message_success_create", {
-              bold: (chunks) => <span className="font-bold">{chunks}</span>,
-              name: form.getValues("name"),
-            }),
-            imageUrl ? (
-              <Avatar
-                radius="md"
-                size="md"
-                src={imageUrl}
-                alt={form.getValues("name")}
-              />
-            ) : undefined
-          );
-
-          form.reset();
-        });
+            form.reset();
+          })
+          .catch((err) => {
+            setIsError(true);
+          });
       }
     },
   });
 
+  const rollbackMutation = () => {
+    const payload: TForceDeleteReq = {
+      model: [],
+    };
+    mutationStatus
+      .filter(
+        (mutation) =>
+          mutation.status !== false && mutation.action !== "Pictures"
+      )
+      .map((mutation) =>
+        payload.model.push({
+          class: mutation.action,
+          id: mutation.id ? mutation.id : 0,
+        })
+      );
+
+    mutationForceDelete.mutate(payload);
+  };
+
   const mutationUpload = useMutation({
     mutationFn: bulkUpload,
+  });
+
+  const mutationForceDelete = useMutation({
+    mutationFn: forceDeleteFn,
+    onSuccess: (res) => {
+      setProgress(0);
+      setMutationStatus([]);
+      setIsError(false);
+    },
   });
 
   return {
@@ -497,5 +599,9 @@ export default function useProductsForm() {
     setTotalMutation,
     progress,
     setProgress,
+    setMutationStatus,
+    isError,
+    setIsError,
+    rollbackMutation,
   };
 }

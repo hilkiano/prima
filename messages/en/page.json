@@ -168,7 +168,10 @@
       "validation_image_size": "File {name} size is over {size}",
       "description_images": "Maximum images per variant is 6 images. Each image must be less than 3MB in size.",
       "title_success_create": "Product has been added!",
-      "message_success_create": "<bold>{name}</bold> has been added and ready for new transaction!"
+      "message_success_create": "<bold>{name}</bold> has been added and ready for new transaction!",
+      "progress_complete_body": "Saving completed",
+      "progress_failed_body": "Saving failed",
+      "progress_loading_body": "Saving..."
     },
     "type_physical": "Physical",
     "type_virtual": "Virtual",

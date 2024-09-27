@@ -60,6 +60,10 @@ const ProductsAddForm = React.forwardRef<HTMLDivElement, BoxProps>(
       setTotalMutation,
       progress,
       setProgress,
+      setMutationStatus,
+      isError,
+      setIsError,
+      rollbackMutation,
     } = useProductsForm();
     const [opened, { open, close }] = useDisclosure(false);
     const [progressOpened, { open: progressOpen, close: progressClose }] =
@@ -575,23 +579,32 @@ const ProductsAddForm = React.forwardRef<HTMLDivElement, BoxProps>(
 
         <ProgressDialog
           value={Math.round(progress * 100)}
+          error={isError}
           opened={progressOpened}
           onClose={progressClose}
           body={
             <div>
               {Math.round(progress * 100) < 100 ? (
-                <h3>Saving...</h3>
+                <h3>💾 {t("progress_loading_body")}</h3>
               ) : (
-                <h3>Saving completed.</h3>
+                <h3>✅ {t("progress_complete_body")}</h3>
               )}
             </div>
           }
+          errorBody={<h3>❌ {t("progress_failed_body")}</h3>}
           closeBtnText={tButton("close")}
           closeFn={() => {
-            progressClose();
-            setTimeout(() => {
-              setProgress(0);
-            }, 500);
+            if (isError) {
+              rollbackMutation();
+              progressClose();
+            } else {
+              progressClose();
+              setTimeout(() => {
+                setProgress(0);
+                setMutationStatus([]);
+                setIsError(false);
+              }, 500);
+            }
           }}
         />
       </Box>

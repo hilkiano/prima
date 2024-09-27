@@ -11,7 +11,7 @@ type TUpdate<T> = {
   payload: Partial<T>;
 };
 
-type TForceDeleteReq = {
+export type TForceDeleteReq = {
   model: {
     class: string;
     id: string | number;

@@ -168,7 +168,10 @@
       "validation_image_size": "Ukuran file {name} melebihi {size}",
       "description_images": "Gambar maksimal per varian adalah 6 gambar. \nSetiap gambar harus berukuran kurang dari 3 MB.",
       "title_success_create": "Produk telah ditambahkan!",
-      "message_success_create": "<bold>{name}</bold> telah ditambahkan dan siap untuk transaksi baru!"
+      "message_success_create": "<bold>{name}</bold> telah ditambahkan dan siap untuk transaksi baru!",
+      "progress_complete_body": "Penyimpanan selesai",
+      "progress_failed_body": "Gagal menyimpan",
+      "progress_loading_body": "Menyimpan..."
     },
     "type_physical": "Fisik",
     "type_virtual": "Virtual",

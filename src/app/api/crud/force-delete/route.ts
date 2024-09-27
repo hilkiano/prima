@@ -15,7 +15,7 @@ export async function DELETE(request: NextRequest) {
         "x-app-locale": lang ? lang.value : "id",
         "x-token": jwt ? jwt.value : null,
       },
-      data: data.payload,
+      data: data,
     })
     .then((res) => res)
     .catch((res) => res.response);
