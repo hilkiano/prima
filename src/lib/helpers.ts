@@ -124,3 +124,13 @@ export async function updateUserData(
       throw new Error(err.message, err);
     });
 }
+
+export function cleanData<T>(data: T) {
+  for (let key in data) {
+    if (data[key] === undefined) {
+      delete data[key];
+    }
+  }
+
+  return data;
+}

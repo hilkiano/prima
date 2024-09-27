@@ -8,6 +8,7 @@ type TList = {
   sort_direction?: string;
   with_trashed?: "true" | "false";
   relations?: string;
+  outlet_only?: "true" | "false";
 };
 
 export async function getList(params: TList) {

@@ -6,6 +6,11 @@ import { updateFn } from "@/services/crud.service";
 import { showSuccess } from "@/lib/errorHandler";
 import { updateUserData } from "@/lib/helpers";
 
+type TCrudCompany = {
+  class: string;
+  payload: Partial<Company>;
+};
+
 export default function useCompanyCurrency() {
   const { setUserData } = useUserContext();
 
@@ -13,7 +18,7 @@ export default function useCompanyCurrency() {
     mutationFn: (data: {
       class: "Company";
       payload: { payload: Partial<Company> };
-    }) => updateFn(data),
+    }) => updateFn<TCrudCompany, Company>(data),
     onSuccess: (res) => {
       showSuccess(res.i18n.alert, null);
       updateUserData(setUserData);

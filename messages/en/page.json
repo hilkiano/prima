@@ -131,5 +131,48 @@
       "label_alt_currency": "Use alternate symbol"
     },
     "select_category": "Please select category."
+  },
+  "Products": {
+    "Add": {
+      "header": "Add product",
+      "btn_import": "Bulk import",
+      "label_type": "Product type",
+      "label_name": "Product name",
+      "description_name": "The name <bold>cannot be changed</bold> after this product is sold.",
+      "label_details": "Details",
+      "description_details": "Product details contains a detailed explanation of your product.",
+      "label_category": "Category",
+      "nothing_category": "No category",
+      "tooltip_category": "Add new category",
+      "label_category_type": "Product type",
+      "description_category_type": "If selected, this category will appear only for this product type.",
+      "label_category_name": "Category name",
+      "description_category_name": "Category names should not be too long and should consist of only one word.",
+      "variant_default": "Main variant",
+      "label_label": "Label",
+      "label_specifications": "Specifications",
+      "description_specifications": "Describe specifications for this variant.",
+      "label_stock": "Product stock",
+      "label_price": "Base price",
+      "label_capital_price": "Unit capital price",
+      "label_selling_price": "Unit selling price",
+      "btn_add_variant": "Add Variant",
+      "label_expired_at": "Expired at",
+      "subtitle_variant": "Variant {no}",
+      "btn_remove": "Remove",
+      "description_label": "Keep labels short and unique from one another.",
+      "validation_selling_price": "Selling price cannot be lower than capital price.",
+      "validation_label": "Label must be unique",
+      "label_images": "Images",
+      "body_dropzone": "Click or drop images here",
+      "validation_image_size": "File {name} size is over {size}",
+      "description_images": "Maximum images per variant is 6 images. Each image must be less than 3MB in size.",
+      "title_success_create": "Product has been added!",
+      "message_success_create": "<bold>{name}</bold> has been added and ready for new transaction!"
+    },
+    "type_physical": "Physical",
+    "type_virtual": "Virtual",
+    "type_service": "Service",
+    "type_subscription": "Subscription"
   }
 }

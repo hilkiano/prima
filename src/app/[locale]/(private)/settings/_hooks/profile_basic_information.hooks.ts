@@ -12,6 +12,11 @@ import { updateFn } from "@/services/crud.service";
 import { showSuccess } from "@/lib/errorHandler";
 import { updateUserData } from "@/lib/helpers";
 
+type TCrudUser = {
+  class: string;
+  payload: Partial<User>;
+};
+
 export default function useProfileBasicInformation() {
   const tForm = useTranslations("Form");
   const t = useTranslations("Settings.Profile");
@@ -86,7 +91,7 @@ export default function useProfileBasicInformation() {
     mutationFn: (data: {
       class: "User";
       payload: { payload: Partial<User> };
-    }) => updateFn(data),
+    }) => updateFn<TCrudUser, User>(data),
     onSuccess: (res) => {
       showSuccess(res.i18n.alert, null);
       updateUserData(setUserData);

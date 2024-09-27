@@ -60,10 +60,7 @@ export function NavbarLink({
         <Group justify="space-between" gap={0}>
           <Box style={{ display: "flex", alignItems: "start" }}>
             <ThemeIcon variant="light" size={30}>
-              <i
-                className={`ti ti-${icon} text-lg`}
-                style={{ width: rem(18), height: rem(18) }}
-              ></i>
+              <i className={`ti ti-${icon} text-lg`}></i>
             </ThemeIcon>
             <Box ml="md" className="flex flex-wrap mt-1">
               {t(label)}

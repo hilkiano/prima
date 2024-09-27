@@ -17,7 +17,8 @@
     "previous": "Previous",
     "done": "Done",
     "apply_filter": "Apply filter",
-    "save": "Save"
+    "save": "Save",
+    "close": "Close"
   },
   "Alert": {
     "Notification": {
@@ -26,6 +27,9 @@
       "info_title": "New message for you!"
     },
     "saved": "Data has been saved successfully."
+  },
+  "Notification": {
+    "title_error": "Please check following errors"
   },
   "Navbar": {
     "Common": {
@@ -74,7 +78,9 @@
     "phone_code_search_placeholder": "Search by country",
     "phone_code_nothing_found": "Nothing found",
     "validation_username_exist": "Username is already taken.",
-    "validation_max_size_image": "Maximum image size is {max}."
+    "validation_max_size_image": "Maximum image size is {max}.",
+    "validation_max_image": "Too many files. The number of files allowed cannot be more than {count} files",
+    "required": "Required"
   },
   "DataTable": {
     "search": "Search...",
@@ -105,6 +111,18 @@
     "data_create_outlet": "Access to create a new outlet",
     "data_update_outlet": "Access to update an existing outlet",
     "data_delete_outlet": "Access to delete or restore a outlet",
+    "data_create_product_category": "Access to create a new product category",
+    "data_update_product_category": "Access to update an existing product category",
+    "data_delete_product_category": "Access to delete or restore a product category",
+    "data_create_product": "Access to create a new product",
+    "data_update_product": "Access to update an existing product",
+    "data_delete_product": "Access to delete or restore a product",
+    "data_create_product_variant": "Access to create a new product variant",
+    "data_update_product_variant": "Access to update an existing product variant",
+    "data_delete_product_variant": "Access to delete or restore a product variant",
+    "data_create_product_batch": "Access to create a new product batch",
+    "data_update_product_batch": "Access to update an existing product batch",
+    "data_delete_product_batch": "Access to delete or restore a product batch",
     "page_customers": "Access to view Customers page",
     "page_outlets": "Access to view Outlets page",
     "page_products_add_product": "Access to view Products > Add product page",

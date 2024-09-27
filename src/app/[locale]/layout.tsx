@@ -6,6 +6,8 @@ import { Notifications } from "@mantine/notifications";
 import { theme } from "@/styles/theme";
 import "@/styles/globals.css";
 import "@mantine/notifications/styles.css";
+import "@mantine/dates/styles.css";
+import "@mantine/dropzone/styles.css";
 import "@mantine/core/styles.layer.css";
 import "@/styles/layout.css";
 import "react-advanced-cropper/dist/style.css";

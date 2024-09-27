@@ -17,7 +17,8 @@
     "previous": "Sebelumnya",
     "done": "Selesai",
     "apply_filter": "Terapkan filter",
-    "save": "Simpan"
+    "save": "Simpan",
+    "close": "Tutup"
   },
   "Alert": {
     "Notification": {
@@ -26,6 +27,9 @@
       "info_title": "Pesan baru untuk Anda!"
     },
     "saved": "Data sudah berhasil disimpan."
+  },
+  "Notification": {
+    "title_error": "Harap periksa kesalahan berikut"
   },
   "Navbar": {
     "Common": {
@@ -74,7 +78,9 @@
     "phone_code_search_placeholder": "Cari berdasarkan negara",
     "phone_code_nothing_found": "Tidak menemukan apapun",
     "validation_username_exist": "Nama pengguna sudah terdaftar.",
-    "validation_max_size_image": "Ukuran gambar maksimal adalah {max}."
+    "validation_max_size_image": "Ukuran gambar maksimal adalah {max}",
+    "validation_max_image": "File terlalu banyak. Jumlah file yang diizinkan tidak boleh lebih dari {count} file",
+    "required": "Wajib"
   },
   "DataTable": {
     "search": "Cari...",
@@ -105,6 +111,18 @@
     "data_create_outlet": "Akses untuk membuat gerai baru",
     "data_update_outlet": "Akses untuk memperbarui gerai yang sudah ada",
     "data_delete_outlet": "Akses untuk menghapus atau memulihkan gerai",
+    "data_create_product_category": "Akses untuk membuat kategori produk baru",
+    "data_update_product_category": "Akses untuk memperbarui kategori produk yang sudah ada",
+    "data_delete_product_category": "Akses untuk menghapus atau memulihkan kategori produk",
+    "data_create_product": "Akses untuk membuat produk baru",
+    "data_update_product": "Akses untuk memperbarui produk yang sudah ada",
+    "data_delete_product": "Akses untuk menghapus atau memulihkan produk",
+    "data_create_product_variant": "Akses untuk membuat varian produk baru",
+    "data_update_product_variant": "Akses untuk memperbarui varian produk yang sudah ada",
+    "data_delete_product_variant": "Akses untuk menghapus atau memulihkan varian produk",
+    "data_create_product_batch": "Akses untuk membuat batch produk baru",
+    "data_update_product_batch": "Akses untuk memperbarui batch produk yang sudah ada",
+    "data_delete_product_batch": "Akses untuk menghapus atau memulihkan batch produk",
     "page_customers": "Akses untuk melihat halaman Pelanggan",
     "page_outlets": "Akses untuk melihat halaman Gerai",
     "page_products_add_product": "Akses untuk melihat halaman Produk > Tambahkan produk",

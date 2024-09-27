@@ -13,6 +13,11 @@ import { formatFileSize, updateUserData } from "@/lib/helpers";
 import { CropperRef } from "react-advanced-cropper";
 import { updateFn } from "@/services/crud.service";
 
+type TCrudUser = {
+  class: string;
+  payload: Partial<User>;
+};
+
 export default function useProfileAvatar() {
   const tForm = useTranslations("Form");
   const { userData, setUserData } = useUserContext();
@@ -72,7 +77,7 @@ export default function useProfileAvatar() {
     mutationFn: (data: {
       class: "User";
       payload: { payload: Partial<User> };
-    }) => updateFn(data),
+    }) => updateFn<TCrudUser, User>(data),
     onSuccess: (res) => {
       showSuccess(res.i18n.alert, null);
       updateUserData(setUserData, () => {

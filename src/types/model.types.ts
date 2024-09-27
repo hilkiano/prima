@@ -222,3 +222,71 @@ type Currency = {
   created_at: Date;
   updated_at: Date;
 };
+
+type Product = {
+  id: string;
+  name: string;
+  details: string;
+  type: string;
+  configs: any;
+  product_category_id: string;
+  company_id: string;
+  outlet_id: string;
+  created_at: Date;
+  updated_at: Date;
+  deleted_at: Date;
+  created_by: string;
+  updated_by: string;
+  deleted_by: string;
+};
+
+type ProductVariant = {
+  id: string;
+  sku: string;
+  label: string;
+  specifications: string;
+  product_id: string;
+  pictures_url:
+    | {
+        [key: string]: string;
+      }[]
+    | string[];
+  configs: any;
+  outlet_id: string;
+  created_at: Date;
+  updated_at: Date;
+  deleted_at: Date;
+  created_by: string;
+  updated_by: string;
+  deleted_by: string;
+};
+
+type ProductCategory = {
+  id: string;
+  name: string;
+  type: string;
+  company_id: string;
+  outlet_id: string;
+  created_at: Date;
+  updated_at: Date;
+  deleted_at: Date;
+  created_by: string;
+  updated_by: string;
+  deleted_by: string;
+};
+
+type ProductBatch = {
+  id: string;
+  base_capital_price: number;
+  base_selling_price: number;
+  stock: number;
+  product_variant_id: string;
+  outlet_id: string;
+  expired_at: Date;
+  created_at: Date;
+  updated_at: Date;
+  deleted_at: Date;
+  created_by: string;
+  updated_by: string;
+  deleted_by: string;
+};

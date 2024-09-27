@@ -6,6 +6,11 @@ import { updateFn } from "@/services/crud.service";
 import { showSuccess } from "@/lib/errorHandler";
 import { updateUserData } from "@/lib/helpers";
 
+type TCrudOutlet = {
+  class: string;
+  payload: Partial<Outlet>;
+};
+
 export default function useOutletCurrency() {
   const { setUserData } = useUserContext();
 
@@ -13,7 +18,7 @@ export default function useOutletCurrency() {
     mutationFn: (data: {
       class: "Outlet";
       payload: { payload: Partial<Outlet> };
-    }) => updateFn(data),
+    }) => updateFn<TCrudOutlet, Outlet>(data),
     onSuccess: (res) => {
       showSuccess(res.i18n.alert, null);
       updateUserData(setUserData);

@@ -17,11 +17,11 @@
 }
 
 .selectDropdown {
-  @apply dark:bg-slate-900 dark:border-slate-700 border-slate-300 border-2;
+  @apply dark:bg-slate-900/70 bg-slate-100/70 backdrop-blur-xl dark:border-slate-700 border-slate-200 border-2 rounded-lg;
 }
 
 .selectOption {
-  @apply font-sans dark:hover:bg-slate-800;
+  @apply font-sans dark:hover:bg-slate-800 hover:bg-slate-200;
 }
 
 /* TEXT INPUT */
@@ -44,15 +44,15 @@
 
 /* MENU */
 .menuDropdown {
-  @apply dark:bg-slate-900/70 bg-slate-100/70 backdrop-blur-lg dark:border-slate-700 border-slate-200 border-2 rounded-lg;
+  @apply dark:bg-slate-900/70 bg-slate-100/70 backdrop-blur-xl dark:border-slate-700 border-slate-200 border-2 rounded-lg;
 }
 
 .menuItem {
-  @apply dark:hover:bg-slate-800 dark:data-[color=red]:hover:bg-red-500 dark:data-[color=red]:hover:bg-opacity-15;
+  @apply dark:hover:bg-slate-800 hover:bg-slate-200 dark:data-[color=red]:hover:bg-red-500 dark:data-[color=red]:hover:bg-opacity-15;
 }
 
 .menuDivider {
-  @apply dark:border-t-slate-800;
+  @apply dark:border-t-slate-700 border-t-slate-300;
 }
 
 /* MODAL */
@@ -65,7 +65,7 @@
 }
 
 .modalTitle {
-  @apply text-2xl font-semibold;
+  @apply text-2xl font-semibold line-clamp-1;
 }
 
 .modalClose {
@@ -127,10 +127,47 @@
 
 /* NOTIFICATION */
 .notificationRoot {
-  @apply dark:bg-slate-700/70 bg-slate-200/70 backdrop-blur-lg;
+  @apply dark:bg-slate-900/70 bg-slate-200/70 border-2 dark:border-slate-700 border-slate-300 backdrop-blur-lg;
+}
+
+.notificationCloseBtn {
+  @apply hover:bg-transparent bg-transparent;
 }
 
 /* COMBOBOX */
 .comboBoxSearch {
   @apply font-sans dark:bg-slate-950/80 bg-slate-50;
+}
+
+/* DIVIDER */
+.dividerRoot {
+  @apply dark:data-[orientation=horizontal]:border-t-slate-700 data-[orientation=horizontal]:border-t-slate-300;
+}
+
+/* DATE INPUT */
+.dateInputInput {
+  @apply dark:bg-slate-800 bg-slate-300/70 dark:data-[variant=default]:border-slate-700 dark:data-[error=true]:border-[#E03131] border-2 font-sans;
+}
+
+.dateInputControl {
+  @apply hover:disabled:bg-none dark:hover:disabled:bg-none dark:hover:bg-slate-700 hover:bg-slate-50 !important;
+}
+
+/* POPOVER */
+.popoverDropdown {
+  @apply dark:bg-slate-900/30 bg-slate-100/30 backdrop-blur-xl border-2 dark:border-slate-700;
+}
+
+/* DROPZONE */
+.dropzoneRoot {
+  @apply dark:bg-slate-800 bg-slate-200 hover:bg-slate-300 dark:hover:bg-slate-900 border-2 border-slate-400 dark:border-slate-600 data-[reject=true]:bg-red-300/50 dark:data-[reject=true]:bg-red-400/50 dark:data-[reject=true]:border-red-500 data-[reject=true]:border-red-500 data-[accept=true]:bg-blue-300/50 dark:data-[accept=true]:bg-blue-400/50 dark:data-[accept=true]:border-blue-500 data-[accept=true]:border-blue-500;
+}
+
+.dropzoneInner {
+  @apply flex items-center justify-center h-full;
+}
+
+/* PROGRESS */
+.progressRoot {
+  @apply bg-slate-400/50 dark:bg-slate-600/50;
 }

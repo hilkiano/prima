@@ -15,6 +15,11 @@ import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+type TCrudGroup = {
+  class: string;
+  payload: Partial<Group>;
+};
+
 export default function useGroupsForm({
   closeCallback,
 }: {
@@ -51,7 +56,7 @@ export default function useGroupsForm({
     mutationFn: (data: {
       class: "Group";
       payload: { payload: Partial<Group> };
-    }) => createFn(data),
+    }) => createFn<TCrudGroup, Group>(data),
     onSuccess: (res) => {
       queryClient.invalidateQueries({ queryKey: ["groupList"] });
       form.reset();
@@ -63,7 +68,7 @@ export default function useGroupsForm({
     mutationFn: (data: {
       class: "Group";
       payload: { payload: Partial<Group> };
-    }) => updateFn(data),
+    }) => updateFn<TCrudGroup, Group>(data),
     onSuccess: (res) => {
       queryClient.invalidateQueries({ queryKey: ["groupList"] });
       form.reset();

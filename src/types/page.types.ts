@@ -4,7 +4,7 @@ import { UseFormReturn } from "react-hook-form";
 
 export type TGroupFormState = {
   mutationCreate: UseMutationResult<
-    JsonResponse<any>,
+    JsonResponse<Group>,
     Error,
     {
       class: "Group";
@@ -15,9 +15,7 @@ export type TGroupFormState = {
     unknown
   >;
   mutationUpdate: UseMutationResult<
-    JsonResponse<{
-      payload: Partial<Group>;
-    }>,
+    JsonResponse<Group>,
     Error,
     {
       class: "Group";

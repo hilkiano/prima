@@ -5,12 +5,16 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import isMobilePhone from "validator/es/lib/isMobilePhone";
-import { handleValidate } from "@/services/validate.service";
 import { useUserContext } from "@/lib/userProvider";
 import { useMutation } from "@tanstack/react-query";
 import { updateFn } from "@/services/crud.service";
 import { showSuccess } from "@/lib/errorHandler";
 import { updateUserData } from "@/lib/helpers";
+
+type TCrudOutlet = {
+  class: string;
+  payload: Partial<Outlet>;
+};
 
 export default function useOutletBasicInformation() {
   const tForm = useTranslations("Form");
@@ -68,7 +72,7 @@ export default function useOutletBasicInformation() {
     mutationFn: (data: {
       class: "Outlet";
       payload: { payload: Partial<Outlet> };
-    }) => updateFn(data),
+    }) => updateFn<TCrudOutlet, Outlet>(data),
     onSuccess: (res) => {
       showSuccess(res.i18n.alert, null);
       updateUserData(setUserData);

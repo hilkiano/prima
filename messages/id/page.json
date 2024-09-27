@@ -131,5 +131,48 @@
       "label_alt_currency": "Gunakan simbol alternatif"
     },
     "select_category": "Silakan pilih kategori."
+  },
+  "Products": {
+    "Add": {
+      "header": "Tambahkan produk",
+      "btn_import": "Impor massal",
+      "label_type": "Jenis produk",
+      "label_name": "Nama Produk",
+      "description_name": "Nama <bold>tidak dapat diubah</bold> setelah produk ini terjual.",
+      "label_details": "Detail",
+      "description_details": "Detail produk berisi penjelasan detail tentang produk Anda.",
+      "label_category": "Kategori",
+      "nothing_category": "Tidak ada kategori",
+      "tooltip_category": "Tambahkan kategori baru",
+      "label_category_type": "Tipe produk",
+      "description_category_type": "Jika dipilih, maka kategori ini akan muncul hanya untuk tipe produk ini.",
+      "label_category_name": "Nama kategori",
+      "description_category_name": "Nama kategori hendaknya tidak terlalu panjang dan hanya terdiri dari satu kata saja.",
+      "variant_default": "Varian umum",
+      "label_label": "Label",
+      "label_specifications": "Spesifikasi",
+      "description_specifications": "Jelaskan spesifikasi untuk varian ini.",
+      "label_stock": "Stok produk",
+      "label_price": "Harga awal",
+      "label_capital_price": "Harga modal satuan",
+      "label_selling_price": "Harga jual satuan",
+      "btn_add_variant": "Tambahkan Varian",
+      "label_expired_at": "Kedaluwarsa pada",
+      "subtitle_variant": "Varian {no}",
+      "btn_remove": "Hapuskan",
+      "description_label": "Buat label tetap pendek dan unik satu sama lain.",
+      "validation_selling_price": "Harga jual tidak boleh lebih rendah dari harga modal.",
+      "validation_label": "Label harus unik",
+      "label_images": "Gambar",
+      "body_dropzone": "Klik atau letakkan gambar di sini",
+      "validation_image_size": "Ukuran file {name} melebihi {size}",
+      "description_images": "Gambar maksimal per varian adalah 6 gambar. \nSetiap gambar harus berukuran kurang dari 3 MB.",
+      "title_success_create": "Produk telah ditambahkan!",
+      "message_success_create": "<bold>{name}</bold> telah ditambahkan dan siap untuk transaksi baru!"
+    },
+    "type_physical": "Fisik",
+    "type_virtual": "Virtual",
+    "type_service": "Jasa",
+    "type_subscription": "Langganan"
   }
 }

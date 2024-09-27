@@ -21,10 +21,14 @@ import {
   Switch,
   Combobox,
   InputBase,
-  Tooltip,
+  Popover,
+  Divider,
+  Progress,
 } from "@mantine/core";
 import classes from "@/styles/components.module.css";
 import { IconSquareRoundedXFilled } from "@tabler/icons-react";
+import { Calendar, DateInput } from "@mantine/dates";
+import { Dropzone } from "@mantine/dropzone";
 
 export const theme = createTheme({
   activeClassName: classes.active,
@@ -103,11 +107,16 @@ export const theme = createTheme({
     }),
     Notification: Notification.extend({
       defaultProps: {
-        radius: "lg",
-        withCloseButton: false,
+        radius: "md",
+        withBorder: true,
+        closeButtonProps: {
+          iconSize: 40,
+          icon: <IconSquareRoundedXFilled />,
+        },
       },
       classNames: {
         root: classes.notificationRoot,
+        closeButton: classes.notificationCloseBtn,
       },
     }),
     AppShell: AppShell.extend({
@@ -230,6 +239,49 @@ export const theme = createTheme({
       classNames: {
         input: classes.textInputInput,
         error: classes.textInputError,
+      },
+    }),
+    Divider: Divider.extend({
+      classNames: {
+        root: classes.dividerRoot,
+      },
+    }),
+    DateInput: DateInput.extend({
+      defaultProps: {
+        variant: "filled",
+      },
+      classNames: {
+        input: classes.dateInputInput,
+        day: classes.dateInputControl,
+        monthsListControl: classes.dateInputControl,
+        yearsListControl: classes.dateInputControl,
+        calendarHeaderControl: classes.dateInputControl,
+        calendarHeaderLevel: classes.dateInputControl,
+      },
+    }),
+    Calendar: Calendar.extend({
+      classNames: {
+        day: classes.dateInputControl,
+        monthsListControl: classes.dateInputControl,
+        yearsListControl: classes.dateInputControl,
+        calendarHeaderControl: classes.dateInputControl,
+        calendarHeaderLevel: classes.dateInputControl,
+      },
+    }),
+    Popover: Popover.extend({
+      classNames: {
+        dropdown: classes.popoverDropdown,
+      },
+    }),
+    Dropzone: Dropzone.extend({
+      classNames: {
+        root: classes.dropzoneRoot,
+        inner: classes.dropzoneInner,
+      },
+    }),
+    Progress: Progress.extend({
+      classNames: {
+        root: classes.progressRoot,
       },
     }),
   },
