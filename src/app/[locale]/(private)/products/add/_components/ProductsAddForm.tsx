@@ -54,7 +54,6 @@ const ProductsAddForm = React.forwardRef<HTMLDivElement, BoxProps>(
       filterCategory,
       variantsArray,
       currency,
-      setCurrency,
       altCurrencyFormat,
       mutationProduct,
       setTotalMutation,
@@ -64,6 +63,7 @@ const ProductsAddForm = React.forwardRef<HTMLDivElement, BoxProps>(
       isError,
       setIsError,
       rollbackMutation,
+      currencyQuery,
     } = useProductsForm();
     const [opened, { open, close }] = useDisclosure(false);
     const [progressOpened, { open: progressOpen, close: progressClose }] =
@@ -351,18 +351,30 @@ const ProductsAddForm = React.forwardRef<HTMLDivElement, BoxProps>(
                 required
                 field={
                   <div className="flex flex-col lg:flex-row gap-4">
-                    <Select
-                      label="Currency"
-                      className="w-full sm:w-[100px]"
-                      data={productCurrencies}
-                      value={currency}
-                      onChange={(val) => {
-                        val ? setCurrency(val) : undefined;
-                        form.setValue(`variants.${id}.base_capital_price`, "");
-                        form.setValue(`variants.${id}.base_selling_price`, "");
-                      }}
-                      allowDeselect={false}
+                    <Controller
+                      name={`variants.${id}.currency_id`}
+                      control={form.control}
+                      render={({ field: { onChange, value } }) => (
+                        <Select
+                          label="Currency"
+                          className="w-full sm:w-[100px]"
+                          data={productCurrencies}
+                          defaultValue={String(currency)}
+                          value={String(value)}
+                          onChange={(val) => {
+                            onChange(Number(val));
+                            form.resetField(
+                              `variants.${id}.base_capital_price`
+                            );
+                            form.resetField(
+                              `variants.${id}.base_selling_price`
+                            );
+                          }}
+                          allowDeselect={false}
+                        />
+                      )}
                     />
+
                     <Controller
                       name={`variants.${id}.base_capital_price`}
                       control={form.control}
@@ -381,7 +393,17 @@ const ProductsAddForm = React.forwardRef<HTMLDivElement, BoxProps>(
                           locales={locale}
                           variant="filled"
                           format="currency"
-                          currency={currency}
+                          currency={
+                            currencyQuery.data
+                              ? currencyQuery.data.data.rows.find(
+                                  (currency) =>
+                                    currency.id ===
+                                    Number(
+                                      form.watch(`variants.${id}.currency_id`)
+                                    )
+                                )?.currency
+                              : "IDR"
+                          }
                           currencyDisplay={
                             altCurrencyFormat ? "symbol" : "code"
                           }
@@ -407,7 +429,17 @@ const ProductsAddForm = React.forwardRef<HTMLDivElement, BoxProps>(
                           locales={locale}
                           variant="filled"
                           format="currency"
-                          currency={currency}
+                          currency={
+                            currencyQuery.data
+                              ? currencyQuery.data.data.rows.find(
+                                  (currency) =>
+                                    currency.id ===
+                                    Number(
+                                      form.watch(`variants.${id}.currency_id`)
+                                    )
+                                )?.currency
+                              : "IDR"
+                          }
                           currencyDisplay={
                             altCurrencyFormat ? "symbol" : "code"
                           }
@@ -551,6 +583,7 @@ const ProductsAddForm = React.forwardRef<HTMLDivElement, BoxProps>(
                   specifications: "",
                   base_capital_price: "",
                   base_selling_price: "",
+                  currency_id: currency,
                   stock: "",
                   expired_at: undefined,
                   images: [],
@@ -566,9 +599,6 @@ const ProductsAddForm = React.forwardRef<HTMLDivElement, BoxProps>(
               size="lg"
             >
               {tButton("save")}
-            </Button>
-            <Button size="lg" onClick={progressOpen}>
-              Progress
             </Button>
           </div>
         </form>

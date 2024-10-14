@@ -61,7 +61,7 @@
 }
 
 .modalContent {
-  @apply dark:bg-slate-900/70 bg-slate-50/70 border-2 border-solid border-slate-300 dark:border-slate-800 data-[full-screen=true]:rounded-none rounded-2xl p-2;
+  @apply dark:bg-slate-900/70 bg-white/70 border-2 border-solid border-slate-300 dark:border-slate-800 data-[full-screen=true]:rounded-none rounded-2xl p-2;
 }
 
 .modalTitle {
@@ -98,7 +98,7 @@
 }
 
 .tableTbody {
-  @apply bg-slate-200 dark:bg-slate-700 bg-opacity-20 dark:bg-opacity-20 [&>tr]:border-slate-200 [&>tr]:dark:border-slate-700;
+  @apply bg-slate-200 dark:bg-slate-700 bg-opacity-20 dark:bg-opacity-20 [&>tr]:border-slate-400/40 [&>tr]:dark:border-slate-700;
 }
 
 /* SKELETON */

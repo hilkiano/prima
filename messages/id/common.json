@@ -18,7 +18,8 @@
     "done": "Selesai",
     "apply_filter": "Terapkan filter",
     "save": "Simpan",
-    "close": "Tutup"
+    "close": "Tutup",
+    "back": "Kembali"
   },
   "Alert": {
     "Notification": {
@@ -46,6 +47,7 @@
     "Submenu": {
       "products_overview": "Tinjauan umum",
       "products_add": "Tambahkan produk",
+      "products_import": "Impor massal",
       "products_discounts": "Diskon produk",
       "settings_main": "Pengaturan umum",
       "settings_users": "Pengguna",

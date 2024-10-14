@@ -18,7 +18,8 @@
     "done": "Done",
     "apply_filter": "Apply filter",
     "save": "Save",
-    "close": "Close"
+    "close": "Close",
+    "back": "Back"
   },
   "Alert": {
     "Notification": {
@@ -46,6 +47,7 @@
     "Submenu": {
       "products_overview": "Overview",
       "products_add": "Add product",
+      "products_import": "Bulk import",
       "products_discounts": "Discounts",
       "settings_main": "Main settings",
       "settings_users": "Users",

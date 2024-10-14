@@ -38,7 +38,7 @@ const ProgressDialog = React.forwardRef<
               <Progress.Label className="text-lg">{value}%</Progress.Label>
             </Progress.Section>
           </Progress.Root>
-          <Button className="mt-4" fullWidth onClick={closeFn}>
+          <Button className="mt-6 self-end" onClick={closeFn}>
             {closeBtnText}
           </Button>
         </div>

@@ -1,56 +1,60 @@
 {
-    "Meta": {
-        "Login": {
-            "title": "Login",
-            "description": "Login dengan akun Anda untuk menggunakan aplikasi."
-        },
-        "Dashboard": {
-            "title": "Dasbor",
-            "description": "Selamat datang di Prima."
-        },
-        "Outlets": {
-            "title": "Gerai",
-            "description": "Selamat datang di Prima."
-        },
-        "Products": {
-            "title": "Tinjauan Umum Produk",
-            "description": "Selamat datang di Prima."
-        },
-        "Products_Add": {
-            "title": "Tambahkan Produk",
-            "description": "Selamat datang di Prima."
-        },
-        "Products_Discounts": {
-            "title": "Diskon Produk",
-            "description": "Selamat datang di Prima."
-        },
-        "Customers": {
-            "title": "Pelanggan",
-            "description": "Selamat datang di Prima."
-        },
-        "Reports": {
-            "title": "Laporan",
-            "description": "Selamat datang di Prima."
-        },
-        "Settings": {
-            "title": "Pengaturan Umum",
-            "description": "Selamat datang di Prima."
-        },
-        "Settings_Users": {
-            "title": "Pengguna",
-            "description": "Selamat datang di Prima."
-        },
-        "Settings_Groups": {
-            "title": "Grup",
-            "description": "Selamat datang di Prima."
-        },
-        "Settings_Membership": {
-            "title": "Status Langganan",
-            "description": "Selamat datang di Prima."
-        },
-        "Onboarding": {
-            "title": "Selamat datang di Prima",
-            "description": "Selamat datang di Prima."
-        }
+  "Meta": {
+    "Login": {
+      "title": "Login",
+      "description": "Login dengan akun Anda untuk menggunakan aplikasi."
+    },
+    "Dashboard": {
+      "title": "Dasbor",
+      "description": "Selamat datang di Prima."
+    },
+    "Outlets": {
+      "title": "Gerai",
+      "description": "Selamat datang di Prima."
+    },
+    "Products": {
+      "title": "Tinjauan Umum Produk",
+      "description": "Selamat datang di Prima."
+    },
+    "Products_Add": {
+      "title": "Tambahkan Produk",
+      "description": "Selamat datang di Prima."
+    },
+    "Products_Import": {
+      "title": "Impor Produk",
+      "description": "Selamat datang di Prima."
+    },
+    "Products_Discounts": {
+      "title": "Diskon Produk",
+      "description": "Selamat datang di Prima."
+    },
+    "Customers": {
+      "title": "Pelanggan",
+      "description": "Selamat datang di Prima."
+    },
+    "Reports": {
+      "title": "Laporan",
+      "description": "Selamat datang di Prima."
+    },
+    "Settings": {
+      "title": "Pengaturan Umum",
+      "description": "Selamat datang di Prima."
+    },
+    "Settings_Users": {
+      "title": "Pengguna",
+      "description": "Selamat datang di Prima."
+    },
+    "Settings_Groups": {
+      "title": "Grup",
+      "description": "Selamat datang di Prima."
+    },
+    "Settings_Membership": {
+      "title": "Status Langganan",
+      "description": "Selamat datang di Prima."
+    },
+    "Onboarding": {
+      "title": "Selamat datang di Prima",
+      "description": "Selamat datang di Prima."
     }
+  }
 }

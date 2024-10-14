@@ -1,7 +1,8 @@
 "use client";
 
+import { Link } from "@/lib/navigation";
 import { Box, BoxProps, Button, Text } from "@mantine/core";
-import { IconFileTypeCsv } from "@tabler/icons-react";
+import { IconPackage } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import React from "react";
 
@@ -16,7 +17,9 @@ const ProductsAddHeader = React.forwardRef<HTMLDivElement, BoxProps>(
             {t("header")}
           </Text>
           <Button
-            leftSection={<IconFileTypeCsv />}
+            component={Link}
+            href="/products/add/import"
+            leftSection={<IconPackage />}
             variant="gradient"
             size="md"
             className="xs:w-auto w-full"

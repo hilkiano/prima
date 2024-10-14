@@ -97,3 +97,12 @@ export type DataTableState = {
   withTrashed: boolean;
   setWithTrashed: React.Dispatch<React.SetStateAction<boolean>>;
 };
+
+export type ImportEventProgress = {
+  file: string;
+  message: string;
+  progress: number;
+  details: any;
+  is_done: boolean;
+  is_error: boolean;
+};

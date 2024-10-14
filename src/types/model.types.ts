@@ -253,6 +253,7 @@ type ProductVariant = {
     | string[];
   configs: any;
   outlet_id: string;
+  currency_id: number;
   created_at: Date;
   updated_at: Date;
   deleted_at: Date;

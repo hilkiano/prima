@@ -20,6 +20,10 @@
             "title": "Add Product",
             "description": "Welcome to Prima."
         },
+        "Products_Import": {
+            "title": "Import Product",
+            "description": "Welcome to Prima."
+        },
         "Products_Discounts": {
             "title": "Products Discount",
             "description": "Welcome to Prima."

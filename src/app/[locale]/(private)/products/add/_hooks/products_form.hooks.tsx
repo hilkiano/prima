@@ -20,7 +20,6 @@ import { cleanData, srcToFile } from "@/lib/helpers";
 import { bulkUpload } from "@/services/storage.service";
 import Compressor from "compressorjs";
 import { showNotification } from "@/lib/errorHandler";
-import { reject } from "lodash";
 
 type TCreateProduct = {
   class: string;
@@ -45,9 +44,20 @@ export default function useProductsForm() {
   const [productCurrencies, setProductCurrencies] =
     React.useState<ComboboxData>([]);
   const { userData } = useUserContext();
-  const [currency, setCurrency] = React.useState<string>("IDR");
-  const [altCurrencyFormat, setAltCurrencyFormat] =
-    React.useState<boolean>(false);
+  const [currency, setCurrency] = React.useState<number>(
+    userData?.outlet.configs?.currency
+      ? userData?.outlet.configs?.currency.id
+      : userData?.company.configs?.currency
+      ? userData?.company.configs?.currency.id
+      : 1
+  );
+  const [altCurrencyFormat, setAltCurrencyFormat] = React.useState<boolean>(
+    userData?.outlet.configs?.currency
+      ? userData?.outlet.configs?.currency.is_alternate
+      : userData?.company.configs?.currency
+      ? userData?.company.configs?.currency.is_alternate
+      : false
+  );
   const [totalMutation, setTotalMutation] = React.useState(0);
   const [progress, setProgress] = React.useState(0);
   const [mutationStatus, setMutationStatus] = React.useState<
@@ -157,6 +167,7 @@ export default function useProductsForm() {
           id: z.string(),
           label: z.string().max(50, tForm("validation_max_char", { max: 50 })),
           specifications: z.string(),
+          currency_id: z.number(),
           base_capital_price: z.string(),
           base_selling_price: z.string().min(1, tForm("validation_required")),
           stock: z.string().min(1, tForm("validation_required")),
@@ -165,11 +176,11 @@ export default function useProductsForm() {
         })
         .superRefine((refine, ctx) => {
           // Selling price
-          const sPrice = parseInt(
-            refine.base_selling_price.replace(/[.,]/g, "")
+          const sPrice = parseFloat(
+            refine.base_selling_price.replace(/[^\d.]/g, "").replace(/\./g, "")
           );
-          const cPrice = parseInt(
-            refine.base_capital_price.replace(/[.,]/g, "")
+          const cPrice = parseFloat(
+            refine.base_capital_price.replace(/[^\d.]/g, "").replace(/\./g, "")
           );
           if (cPrice >= sPrice) {
             if (refine.base_selling_price) {
@@ -229,6 +240,7 @@ export default function useProductsForm() {
           specifications: "",
           base_capital_price: "",
           base_selling_price: "",
+          currency_id: currency,
           stock: "",
           expired_at: undefined,
           images: [],
@@ -265,28 +277,10 @@ export default function useProductsForm() {
         currencyQuery.data?.data.rows.map((row) => {
           return {
             label: row.currency,
-            value: row.currency,
+            value: String(row.id),
           };
         })
       );
-
-      if (userData?.outlet.configs?.currency) {
-        const defaultOutletCurrency = currencyQuery.data.data.rows.find(
-          (row) => row.id === userData.outlet.configs?.currency?.id
-        );
-        if (defaultOutletCurrency) {
-          setCurrency(defaultOutletCurrency.currency);
-          setAltCurrencyFormat(userData.outlet.configs.currency.is_alternate);
-        }
-      } else if (userData?.company.configs?.currency) {
-        const defaultCompanyCurrency = currencyQuery.data.data.rows.find(
-          (row) => row.id === userData.company.configs?.currency?.id
-        );
-        if (defaultCompanyCurrency) {
-          setCurrency(defaultCompanyCurrency.currency);
-          setAltCurrencyFormat(userData.company.configs.currency.is_alternate);
-        }
-      }
     }
   }, [categoryQuery.data, currencyQuery.data, userData, form]);
 
@@ -396,6 +390,7 @@ export default function useProductsForm() {
                       label: variant.label,
                       specifications: variant.specifications,
                       outlet_id: userData?.outlet.id,
+                      currency_id: variant.currency_id,
                       pictures_url: urls,
                     }),
                   },
@@ -460,6 +455,7 @@ export default function useProductsForm() {
                       label: variant.label,
                       specifications: variant.specifications,
                       outlet_id: userData?.outlet.id,
+                      currency_id: variant.currency_id,
                     }),
                   },
                 });
@@ -603,5 +599,6 @@ export default function useProductsForm() {
     isError,
     setIsError,
     rollbackMutation,
+    currencyQuery,
   };
 }

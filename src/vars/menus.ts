@@ -25,6 +25,11 @@ export const menus: NavbarLinks[] = [
         privilege: "PAGE_PRODUCTS_ADD_PRODUCT",
       },
       {
+        label: "Submenu.products_import",
+        link: "/products/add/import",
+        privilege: "PAGE_PRODUCTS_ADD_PRODUCT",
+      },
+      {
         label: "Submenu.products_discounts",
         link: "/products/discounts",
         privilege: "PAGE_PRODUCTS_DISCOUNT",
