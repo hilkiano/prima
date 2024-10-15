@@ -52,16 +52,19 @@ export default function useProfileAvatar() {
     onSuccess: (res) => {
       if (userData) {
         const oldAvatar = new URL(userData.user.avatar_url);
-        mutationDelete.mutate({
-          disk: "s3",
-          paths: [oldAvatar.pathname],
-        });
+        if (oldAvatar.host.includes("prima-app-bucket")) {
+          mutationDelete.mutate({
+            disk: "s3",
+            paths: [oldAvatar.pathname],
+          });
+        }
+
         mutationSave.mutate({
           class: "User",
           payload: {
             payload: {
               id: userData.user.id,
-              avatar_url: res.data[0][`${userData.user.id}.webp`],
+              avatar_url: res.data[`${userData.user.id}.webp`],
             },
           },
         });

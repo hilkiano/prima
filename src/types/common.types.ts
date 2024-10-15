@@ -67,9 +67,15 @@ export type NotificationMessage = {
 export type NavbarLinks = {
   icon: string;
   label: string;
+  activeScope?: string[];
   initiallyOpened?: boolean;
   link?: string;
-  links?: { label: string; link: string; privilege?: string }[];
+  links?: {
+    label: string;
+    link: string;
+    privilege?: string;
+    activeScope?: string[];
+  }[];
   privilege?: string;
   onClick?: () => void;
 };
@@ -102,7 +108,12 @@ export type ImportEventProgress = {
   file: string;
   message: string;
   progress: number;
-  details: any;
+  details: {
+    data:
+      | { [key: string]: number[] }[]
+      | { errors: string[]; product_name: string }[];
+    message: string;
+  };
   is_done: boolean;
   is_error: boolean;
 };

@@ -609,7 +609,7 @@ const ProductsAddForm = React.forwardRef<HTMLDivElement, BoxProps>(
 
         <ProgressDialog
           value={Math.round(progress * 100)}
-          error={isError}
+          isError={isError}
           opened={progressOpened}
           onClose={progressClose}
           body={
@@ -621,7 +621,6 @@ const ProductsAddForm = React.forwardRef<HTMLDivElement, BoxProps>(
               )}
             </div>
           }
-          errorBody={<h3>❌ {t("progress_failed_body")}</h3>}
           closeBtnText={tButton("close")}
           closeFn={() => {
             if (isError) {

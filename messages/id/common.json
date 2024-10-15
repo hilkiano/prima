@@ -19,7 +19,9 @@
     "apply_filter": "Terapkan filter",
     "save": "Simpan",
     "close": "Tutup",
-    "back": "Kembali"
+    "back": "Kembali",
+    "hide_details": "Sembunyikan detail",
+    "show_details": "Tampilkan detail"
   },
   "Alert": {
     "Notification": {
@@ -48,6 +50,7 @@
       "products_overview": "Tinjauan umum",
       "products_add": "Tambahkan produk",
       "products_import": "Impor massal",
+      "products_stock": "Kelola stok",
       "products_discounts": "Diskon produk",
       "settings_main": "Pengaturan umum",
       "settings_users": "Pengguna",

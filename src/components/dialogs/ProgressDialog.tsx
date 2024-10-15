@@ -5,10 +5,11 @@ type TProgressDialog = {
   title?: string;
   value: number;
   body: React.ReactNode;
+  isError: boolean;
+  details?: React.ReactNode;
   closeFn: () => void;
   closeBtnText: string;
-  error?: boolean;
-  errorBody?: React.ReactNode;
+  closable?: boolean;
 };
 
 const ProgressDialog = React.forwardRef<
@@ -16,7 +17,17 @@ const ProgressDialog = React.forwardRef<
   ModalProps & TProgressDialog
 >(
   (
-    { title, body, closeFn, closeBtnText, value, error, errorBody, ...props },
+    {
+      title,
+      body,
+      closeFn,
+      closeBtnText,
+      value,
+      isError,
+      details,
+      closable,
+      ...props
+    },
     ref
   ) => {
     return (
@@ -26,19 +37,26 @@ const ProgressDialog = React.forwardRef<
         title={title ?? undefined}
         withCloseButton={false}
         centered
+        closeOnClickOutside={closable ?? true}
+        closeOnEscape={closable ?? true}
       >
         <div className="flex flex-col gap-2 items-center">
-          {error ? errorBody : body}
+          {body}
           <Progress.Root className="w-full" size="xl" radius="xl">
             <Progress.Section
               value={value}
-              color={value === 100 ? "green" : error ? "red" : "blue"}
+              color={value === 100 ? "green" : isError ? "red" : "blue"}
               animated={value === 100 ? false : true}
             >
               <Progress.Label className="text-lg">{value}%</Progress.Label>
             </Progress.Section>
           </Progress.Root>
-          <Button className="mt-6 self-end" onClick={closeFn}>
+          <Button
+            variant="filled"
+            disabled={closable === false ? value !== 100 : false}
+            className="mt-6 self-end"
+            onClick={closeFn}
+          >
             {closeBtnText}
           </Button>
         </div>

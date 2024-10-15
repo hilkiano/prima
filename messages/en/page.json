@@ -203,6 +203,7 @@
         "field_category": "Category",
         "description_category": "The product category. You may leave it blank.",
         "example_category": "Food",
+        "field_variants": "Variants",
         "field_label": "Label",
         "description_label": "The product variant label. The label has to be minimum 8 characters and maximum 255 characters. You are REQUIRED to fill this column IF you decided to add more than one variant.",
         "example_label": "With Almond",
@@ -225,10 +226,29 @@
       "import_error": "Import failed! Please check the details.",
       "import_no_rename": "Please do not rename the template file.",
       "import_wrong_header": "Please do not change the template header/column.",
-      "import_duplicate_name": "We detected a duplicate product name.",
+      "import_duplicate_name": "We detected a duplicate product name:",
+      "import_duplicate_detail": "👉 {name} at row {row}",
+      "import_validation_errors": "Please correct all the following validation errors:",
       "import_validating": "Validating...",
+      "import_prepare_inserting": "Validation completed. Preparing all data to be inserted into database.",
       "import_inserting": "Inserting to database...",
-      "import_success": "Import completed!"
+      "import_success": "Import completed!",
+      "import_success_details": "{processed} of {total, plural, =0 {products} =1 {product} other {# products}} has been inserted into database.",
+      "Errors": {
+        "err_required": "The {attribute} field is required.",
+        "err_string": "The {attribute} field must be a string.",
+        "err_min": "The {attribute} field must be at least {value} characters.",
+        "err_max": "The {attribute} field must not be greater than {value} characters.",
+        "err_enum": "The {attribute} field is invalid. Please use one of these values: {value}.",
+        "err_array": "The {attribute} field must be an array.",
+        "err_variant_required": "Variant #{position}: The {attribute} field is required.",
+        "err_variant_string": "Variant #{position}: The {attribute} field must be a string.",
+        "err_variant_numeric": "Variant #{position}: The {attribute} field must be a number.",
+        "err_variant_date": "Variant #{position}: The {attribute} field must be a valid date.",
+        "err_variant_max": "Variant #{position}: The {attribute} field must not be greater than {value} characters.",
+        "err_variant_gt": "Variant #{position}: The {attribute} must be greater than capital price.",
+        "err_variant_enum": "Variant #{position}: The {attribute} is invalid. Please use one of these values: {value}."
+      }
     }
   }
 }

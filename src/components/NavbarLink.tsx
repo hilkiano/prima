@@ -38,7 +38,7 @@ export function NavbarLink({
 
   const items = (hasLinks ? filteredLinks : []).map((link) => (
     <Link
-      data-active={pathname === link.link}
+      data-active={link.activeScope?.includes(pathname)}
       className={classes.link}
       href={link.link}
       key={link.label}

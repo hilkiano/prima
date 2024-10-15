@@ -203,6 +203,7 @@
         "field_category": "Kategori",
         "description_category": "Kategori produk. \nAnda boleh membiarkannya kosong.",
         "example_category": "Makanan",
+        "field_variants": "Varian",
         "field_label": "Label",
         "description_label": "Label varian produk. \nLabel harus minimal 8 karakter dan maksimal 255 karakter. \nAnda WAJIB mengisi kolom ini JIKA Anda memutuskan untuk menambahkan lebih dari satu varian.",
         "example_label": "Dengan Almond",
@@ -225,10 +226,29 @@
       "import_error": "Impor gagal! Harap cek detail.",
       "import_no_rename": "Mohon untuk tidak mengubah nama file template.",
       "import_wrong_header": "Mohon untuk tidak mengubah header/kolom template.",
-      "import_duplicate_name": "Kami mendeteksi adanya duplikasi nama produk",
+      "import_duplicate_name": "Kami mendeteksi adanya duplikasi nama produk:",
+      "import_duplicate_detail": "👉 {name} pada baris {row}",
+      "import_validation_errors": "Mohon perbaiki semua kesalahan validasi berikut:",
       "import_validating": "Memvalidasi...",
+      "import_prepare_inserting": "Validasi selesai. Menyiapkan semua data untuk dimasukkan ke dalam database.",
       "import_inserting": "Memasukan ke database...",
-      "import_success": "Impor selesai!"
+      "import_success": "Impor selesai!",
+      "import_success_details": "{processed} dari {total, plural, =0 {produk} =1 {produk} other {# produk}} telah dimasukkan ke dalam database.",
+      "Errors": {
+        "err_required": "Kolom {attribute} diperlukan.",
+        "err_string": "Kolom {attribute} harus berupa string.",
+        "err_min": "Kolom {attribute} minimal berisi {value} karakter.",
+        "err_max": "Kolom {attribute} maksimal berisi {value} karakter.",
+        "err_enum": "Kolom {attribute} tidak benar. Mohon gunakan salah satu dari berikut ini: {value}.",
+        "err_array": "Kolom {attribute} harus berupa array.",
+        "err_variant_required": "Varian #{position}: {attribute} diperlukan.",
+        "err_variant_string": "Varian #{position}: {attribute} harus berupa string.",
+        "err_variant_numeric": "Varian #{position}: {attribute} harus berupa angka.",
+        "err_variant_date": "Varian #{position}: {attribute} harus berupa tanggal yang valid.",
+        "err_variant_max": "Varian #{position}: {attribute} maksimal berisi {value} karakter.",
+        "err_variant_gt": "Varian #{position}: {attribute} harus lebih tinggi dari harga modal.",
+        "err_variant_enum": "Varian #{position}: {attribute} tidak benar. Mohon gunakan salah satu dari berikut ini: {value}."
+      }
     }
   }
 }

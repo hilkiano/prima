@@ -19,7 +19,9 @@
     "apply_filter": "Apply filter",
     "save": "Save",
     "close": "Close",
-    "back": "Back"
+    "back": "Back",
+    "hide_details": "Hide details",
+    "show_details": "Show details"
   },
   "Alert": {
     "Notification": {
@@ -48,6 +50,7 @@
       "products_overview": "Overview",
       "products_add": "Add product",
       "products_import": "Bulk import",
+      "products_stock": "Manage stock",
       "products_discounts": "Discounts",
       "settings_main": "Main settings",
       "settings_users": "Users",

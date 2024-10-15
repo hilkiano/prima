@@ -1,12 +1,11 @@
 import { NavbarLinks } from "@/types/common.types";
 
 export const menus: NavbarLinks[] = [
-  { label: "Menu.dashboard", icon: "dashboard", link: "/dashboard" },
   {
-    label: "Menu.outlets",
-    icon: "building-store",
-    link: "/outlets",
-    privilege: "PAGE_OUTLETS",
+    label: "Menu.dashboard",
+    icon: "dashboard",
+    link: "/dashboard",
+    activeScope: ["/dashboard"],
   },
   {
     label: "Menu.products",
@@ -18,56 +17,55 @@ export const menus: NavbarLinks[] = [
         label: "Submenu.products_overview",
         link: "/products",
         privilege: "PAGE_PRODUCTS_OVERVIEW",
+        activeScope: ["/products"],
       },
       {
         label: "Submenu.products_add",
         link: "/products/add",
         privilege: "PAGE_PRODUCTS_ADD_PRODUCT",
+        activeScope: ["/products/add", "/products/add/import"],
       },
       {
-        label: "Submenu.products_import",
+        label: "Submenu.products_stock",
         link: "/products/add/import",
-        privilege: "PAGE_PRODUCTS_ADD_PRODUCT",
-      },
-      {
-        label: "Submenu.products_discounts",
-        link: "/products/discounts",
-        privilege: "PAGE_PRODUCTS_DISCOUNT",
+        activeScope: ["/products/stock"],
       },
     ],
-  },
-  {
-    label: "Menu.customers",
-    icon: "user-heart",
-    link: "/customers",
-    privilege: "PAGE_CUSTOMERS",
   },
   {
     label: "Menu.reports",
     icon: "report",
     link: "/reports",
     privilege: "PAGE_REPORTS",
+    activeScope: ["/reports"],
   },
   {
     label: "Menu.settings",
     icon: "settings",
     initiallyOpened: true,
     links: [
-      { label: "Submenu.settings_main", link: "/settings" },
+      {
+        label: "Submenu.settings_main",
+        link: "/settings",
+        activeScope: ["/settings"],
+      },
       {
         label: "Submenu.settings_users",
         link: "/settings/users",
         privilege: "PAGE_SETTINGS_USERS",
+        activeScope: ["/settings/users"],
       },
       {
         label: "Submenu.settings_groups",
         link: "/settings/groups",
         privilege: "PAGE_SETTINGS_GROUPS",
+        activeScope: ["/settings/groups"],
       },
       {
         label: "Submenu.settings_membership",
         link: "/settings/membership",
         privilege: "PAGE_SETTINGS_MEMBERSHIP_STATUS",
+        activeScope: ["/settings/membership"],
       },
     ],
   },

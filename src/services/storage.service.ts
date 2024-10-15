@@ -20,7 +20,7 @@ export async function bulkUpload(formData: FormData) {
     body: formData,
   })
     .then((res) => res.json())
-    .then((res: JsonResponse<TBulkUploadResult[]>) => {
+    .then((res: JsonResponse<TBulkUploadResult>) => {
       if (!res.status && res.code !== 422) {
         const err = res as unknown;
         showError(res.i18n.alert, err as JsonResponse<null>);
