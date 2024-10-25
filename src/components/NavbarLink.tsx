@@ -7,7 +7,7 @@ import {
   UnstyledButton,
   rem,
 } from "@mantine/core";
-import { Link, usePathname } from "@/lib/navigation";
+import { Link, usePathname } from "@/i18n/routing";
 import { IconChevronRight } from "@tabler/icons-react";
 import classes from "../styles/NavbarLinksGroup.module.css";
 import { useTranslations } from "next-intl";

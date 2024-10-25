@@ -17,7 +17,7 @@
 }
 
 .selectDropdown {
-  @apply dark:bg-slate-900/70 bg-slate-100/70 backdrop-blur-xl dark:border-slate-700 border-slate-200 border-2 rounded-lg;
+  @apply dark:bg-slate-900/80 bg-white backdrop-blur-xl dark:border-slate-700 border-slate-200 border-2 rounded-lg;
 }
 
 .selectOption {
@@ -44,7 +44,7 @@
 
 /* MENU */
 .menuDropdown {
-  @apply dark:bg-slate-900/70 bg-slate-100/70 backdrop-blur-xl dark:border-slate-700 border-slate-200 border-2 rounded-lg;
+  @apply dark:bg-slate-900/80 bg-white backdrop-blur-xl dark:border-slate-700 border-slate-200 border-2 rounded-lg;
 }
 
 .menuItem {
@@ -61,7 +61,7 @@
 }
 
 .modalContent {
-  @apply dark:bg-slate-900/70 bg-white/70 border-2 border-solid border-slate-300 dark:border-slate-800 data-[full-screen=true]:rounded-none rounded-2xl p-2;
+  @apply dark:bg-slate-900/70 bg-slate-50/70 border-2 border-solid border-slate-300 dark:border-slate-800 data-[full-screen=true]:rounded-none rounded-2xl p-2;
 }
 
 .modalTitle {
@@ -74,7 +74,7 @@
 
 /* CHECKBOX */
 .checkboxInput {
-  @apply dark:bg-slate-800 dark:checked:bg-blue-500 border-2;
+  @apply dark:bg-slate-800 dark:checked:bg-blue-500 bg-slate-300 checked:bg-blue-500 border-2;
 }
 
 /* CODE */
@@ -155,7 +155,7 @@
 
 /* POPOVER */
 .popoverDropdown {
-  @apply dark:bg-slate-900/30 bg-slate-100/30 backdrop-blur-xl border-2 dark:border-slate-700;
+  @apply dark:bg-slate-900/80 bg-slate-50/80 backdrop-blur-xl border-2 dark:border-slate-700;
 }
 
 /* DROPZONE */

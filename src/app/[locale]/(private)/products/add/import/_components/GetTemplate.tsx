@@ -1,26 +1,28 @@
 "use client";
 
 import {
-  Text,
   Box,
   BoxProps,
-  ActionIcon,
-  Tooltip,
   Modal,
   Table,
   TableData,
+  Button,
+  useMantineTheme,
 } from "@mantine/core";
 import { useTranslations } from "next-intl";
 import React from "react";
-import { IconHelpCircleFilled } from "@tabler/icons-react";
-import { useDisclosure } from "@mantine/hooks";
-import { Link } from "@/lib/navigation";
+import { IconDownload, IconHelpCircle } from "@tabler/icons-react";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
+import { Link } from "@/i18n/routing";
 import TemplateDropzone from "./TemplateDropzone";
+import ImportGuide from "./ImportGuide";
 
 const GetTemplate = React.forwardRef<HTMLDivElement, BoxProps>(
   ({ ...props }, ref) => {
     const t = useTranslations("Products.Import");
     const [opened, { open, close }] = useDisclosure(false);
+    const theme = useMantineTheme();
+    const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`);
 
     const validationTableData: TableData = {
       head: [
@@ -59,16 +61,7 @@ const GetTemplate = React.forwardRef<HTMLDivElement, BoxProps>(
           t("Validation.description_specifications"),
           t("Validation.example_specifications"),
         ],
-        [
-          t("Validation.field_stock"),
-          t("Validation.description_stock"),
-          "2500",
-        ],
-        [
-          t("Validation.field_currency"),
-          t("Validation.description_currency"),
-          "IDR",
-        ],
+        [t("Validation.field_outlet"), t("Validation.description_outlet"), ""],
         [
           t("Validation.field_capital_price"),
           t("Validation.description_capital_price"),
@@ -80,81 +73,74 @@ const GetTemplate = React.forwardRef<HTMLDivElement, BoxProps>(
           "20000",
         ],
         [
+          t("Validation.field_stock"),
+          t("Validation.description_stock"),
+          "2500",
+        ],
+        [
+          t("Validation.field_currency"),
+          t("Validation.description_currency"),
+          "IDR",
+        ],
+        [
           t("Validation.field_expired_at"),
           t("Validation.description_expired_at"),
           "2024-12-20 14:10:57",
+        ],
+        [
+          t("Validation.field_is_infinite_stock"),
+          t("Validation.description_is_infinite_stock"),
+          "Y",
         ],
       ],
     };
 
     return (
       <Box {...props}>
-        <Text variant="gradient" className="text-lg sm:text-xl font-black">
-          {t("template_header")}
-        </Text>
-        {t.rich("template_body", {
-          link: (chunks) => (
-            <a href="/api/download/template?model=Product&type=import&format=csv">
-              {chunks}
-            </a>
-          ),
-        })}
-        <div className="p-4 mt-4 rounded-md bg-slate-300/50 dark:bg-slate-800/70">
-          <div className="flex items-center gap-2">
-            <Text variant="gradient" className="text-lg sm:text-xl font-black ">
-              {t("rules_header")}
-            </Text>
-            <Tooltip label={t("rules_tooltip")}>
-              <ActionIcon
-                size="sm"
-                variant="transparent"
-                type="button"
-                aria-label="show column rules"
+        <div className="p-4 md:p-6 rounded-lg border-3 border-solid border-slate-300 dark:border-slate-700">
+          <div className="flex flex-col gap-2">
+            <div>
+              <h1 className="text-xl md:text-3xl m-0 font-bold opacity-75">
+                👉 {t("template_header")}
+              </h1>
+              <p className="text-lg md:text-2xl m-0 font-semibold mt-2 opacity-75">
+                {t("template_body")}
+              </p>
+            </div>
+            <div className="flex flex-col xs:flex-row gap-4 justify-end items-center mt-6">
+              <Button
+                size={isMobile ? "md" : "lg"}
+                variant="light"
+                leftSection={<IconHelpCircle />}
+                fullWidth={isMobile}
                 onClick={open}
               >
-                <IconHelpCircleFilled />
-              </ActionIcon>
-            </Tooltip>
+                {t("btn_guide")}
+              </Button>
+              <Button
+                size={isMobile ? "md" : "lg"}
+                variant="gradient"
+                component="a"
+                leftSection={<IconDownload />}
+                href="/api/download/template?model=Product&type=import&format=xlsx"
+                fullWidth={isMobile}
+              >
+                {t("btn_template_download")}
+              </Button>
+            </div>
           </div>
-
-          <ul>
-            <li>
-              {t.rich("rules_1", {
-                emp: (chunks) => (
-                  <span className="font-black text-red-500 dark:text-red-600 italic">
-                    {chunks}
-                  </span>
-                ),
-              })}
-            </li>
-            <li>
-              {t.rich("rules_2", {
-                emp: (chunks) => (
-                  <span className="font-black text-red-500 dark:text-red-600 italic">
-                    {chunks}
-                  </span>
-                ),
-              })}
-            </li>
-            <li>{t("rules_3")}</li>
-            <li>
-              {t.rich("rules_4", {
-                link: (chunks) => <Link href="/products/add">{chunks}</Link>,
-              })}
-            </li>
-          </ul>
         </div>
         <TemplateDropzone />
-
         <Modal
           opened={opened}
           onClose={close}
-          title={t("Validation.modal_title")}
+          title={t("guide_title")}
           size="xl"
           classNames={{
             content: "pb-6",
           }}
         >
+          <ImportGuide className="mb-4" />
           <Table.ScrollContainer
             minWidth={700}
             className="relative overflow-x-auto shadow-md rounded-md [&>div]:pb-0"

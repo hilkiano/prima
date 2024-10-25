@@ -1,6 +1,6 @@
 "use client";
 
-import { Link } from "@/lib/navigation";
+import { Link } from "@/i18n/routing";
 import { Box, BoxProps, Button, Text } from "@mantine/core";
 import { IconPackage } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";

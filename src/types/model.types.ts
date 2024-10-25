@@ -231,7 +231,6 @@ type Product = {
   configs: any;
   product_category_id: string;
   company_id: string;
-  outlet_id: string;
   created_at: Date;
   updated_at: Date;
   deleted_at: Date;
@@ -252,8 +251,6 @@ type ProductVariant = {
       }[]
     | string[];
   configs: any;
-  outlet_id: string;
-  currency_id: number;
   created_at: Date;
   updated_at: Date;
   deleted_at: Date;
@@ -267,7 +264,6 @@ type ProductCategory = {
   name: string;
   type: string;
   company_id: string;
-  outlet_id: string;
   created_at: Date;
   updated_at: Date;
   deleted_at: Date;
@@ -281,8 +277,10 @@ type ProductBatch = {
   base_capital_price: number;
   base_selling_price: number;
   stock: number;
+  is_infinite_stock: boolean;
   product_variant_id: string;
   outlet_id: string;
+  currency_id: number;
   expired_at: Date;
   created_at: Date;
   updated_at: Date;

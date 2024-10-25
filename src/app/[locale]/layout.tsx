@@ -5,6 +5,7 @@ import { ModalsProvider } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
 import { theme } from "@/styles/theme";
 import "@/styles/globals.css";
+import "@mantine/carousel/styles.css";
 import "@mantine/notifications/styles.css";
 import "@mantine/dates/styles.css";
 import "@mantine/dropzone/styles.css";

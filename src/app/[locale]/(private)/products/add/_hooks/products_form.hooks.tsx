@@ -43,6 +43,7 @@ export default function useProductsForm() {
     React.useState<ComboboxData>([]);
   const [productCurrencies, setProductCurrencies] =
     React.useState<ComboboxData>([]);
+  const [outlets, setOutlets] = React.useState<ComboboxData>([]);
   const { userData } = useUserContext();
   const [currency, setCurrency] = React.useState<number>(
     userData?.outlet.configs?.currency
@@ -118,6 +119,21 @@ export default function useProductsForm() {
     refetchOnWindowFocus: false,
   });
 
+  const outletQuery = useQuery<JsonResponse<ListResult<Outlet[]>>>({
+    queryFn: async () => {
+      return getList({
+        model: "Outlet",
+        limit: "99999",
+        sort: "name",
+        sort_direction: "asc",
+      });
+    },
+    queryKey: ["outletList"],
+    refetchOnReconnect: false,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  });
+
   const filterCategory = (type: string) => {
     const filteredCategories =
       categoryQuery.data?.data.rows.filter(
@@ -167,31 +183,56 @@ export default function useProductsForm() {
           id: z.string(),
           label: z.string().max(50, tForm("validation_max_char", { max: 50 })),
           specifications: z.string(),
-          currency_id: z.number(),
-          base_capital_price: z.string(),
-          base_selling_price: z.string().min(1, tForm("validation_required")),
-          stock: z.string().min(1, tForm("validation_required")),
-          expired_at: z.date().nullish(),
           images: z.custom<FileWithPath[]>(),
+          batches: z
+            .array(
+              z
+                .object({
+                  outlet_id: z.string(),
+                  stock: z.string(),
+                  is_infinite_stock: z.boolean(),
+                  currency_id: z.number(),
+                  base_capital_price: z.string(),
+                  base_selling_price: z
+                    .string()
+                    .min(1, tForm("validation_required")),
+                  expired_at: z.date().nullish(),
+                })
+                .superRefine((refine, ctx) => {
+                  // Stock
+                  if (!refine.is_infinite_stock && refine.stock === "") {
+                    ctx.addIssue({
+                      path: ["stock"],
+                      message: tForm("validation_required"),
+                      code: z.ZodIssueCode.custom,
+                    });
+                  }
+
+                  // Selling price
+                  const sPrice = parseFloat(
+                    refine.base_selling_price
+                      .replace(/[^\d.]/g, "")
+                      .replace(/\./g, "")
+                  );
+                  const cPrice = parseFloat(
+                    refine.base_capital_price
+                      .replace(/[^\d.]/g, "")
+                      .replace(/\./g, "")
+                  );
+                  if (cPrice >= sPrice) {
+                    if (refine.base_selling_price) {
+                      ctx.addIssue({
+                        path: ["base_selling_price"],
+                        message: t("Add.validation_selling_price"),
+                        code: z.ZodIssueCode.custom,
+                      });
+                    }
+                  }
+                })
+            )
+            .min(1, tForm("validation_required")),
         })
         .superRefine((refine, ctx) => {
-          // Selling price
-          const sPrice = parseFloat(
-            refine.base_selling_price.replace(/[^\d.]/g, "").replace(/\./g, "")
-          );
-          const cPrice = parseFloat(
-            refine.base_capital_price.replace(/[^\d.]/g, "").replace(/\./g, "")
-          );
-          if (cPrice >= sPrice) {
-            if (refine.base_selling_price) {
-              ctx.addIssue({
-                path: ["base_selling_price"],
-                message: t("Add.validation_selling_price"),
-                code: z.ZodIssueCode.custom,
-              });
-            }
-          }
-
           // Label cannot be empty
           if (refine.label === "" && form.getValues("variants").length > 1) {
             ctx.addIssue({
@@ -238,12 +279,8 @@ export default function useProductsForm() {
           id: "",
           label: "",
           specifications: "",
-          base_capital_price: "",
-          base_selling_price: "",
-          currency_id: currency,
-          stock: "",
-          expired_at: undefined,
           images: [],
+          batches: [],
         },
       ],
     },
@@ -282,7 +319,24 @@ export default function useProductsForm() {
         })
       );
     }
-  }, [categoryQuery.data, currencyQuery.data, userData, form]);
+
+    if (outletQuery.data) {
+      setOutlets(
+        outletQuery.data.data.rows.map((row) => {
+          return {
+            label: row.name,
+            value: row.id,
+          };
+        })
+      );
+    }
+  }, [
+    categoryQuery.data,
+    currencyQuery.data,
+    outletQuery.data,
+    userData,
+    form,
+  ]);
 
   const mutationVariant = useMutation({
     mutationFn: (data: {
@@ -361,6 +415,7 @@ export default function useProductsForm() {
           .map(async (variant, i) => {
             return new Promise<boolean>(async (resolve, reject) => {
               if (variant.images.length > 0) {
+                // UPLOAD IMAGE
                 const formData = await createFormData(
                   i,
                   data.data.id,
@@ -382,6 +437,8 @@ export default function useProductsForm() {
                   reject(false);
                 }
                 const urls = Object.values(uploadResult.data);
+
+                // MUTATE VARIANT
                 const variantResult = await mutationVariant.mutateAsync({
                   class: "ProductVariant",
                   payload: {
@@ -389,8 +446,6 @@ export default function useProductsForm() {
                       product_id: data.data.id,
                       label: variant.label,
                       specifications: variant.specifications,
-                      outlet_id: userData?.outlet.id,
-                      currency_id: variant.currency_id,
                       pictures_url: urls,
                     }),
                   },
@@ -406,43 +461,59 @@ export default function useProductsForm() {
                 if (variantResult.status) {
                   complete = complete + 1;
                   setProgress(complete / totalMutation);
-                  const batchResult = await mutationBatch.mutateAsync({
-                    class: "ProductBatch",
-                    payload: {
-                      payload: cleanData({
-                        product_variant_id: variantResult.data.id,
-                        base_capital_price: variant.base_capital_price
-                          ? parseInt(
-                              variant.base_capital_price.replace(/\D+/g, "")
-                            )
-                          : undefined,
-                        base_selling_price: parseInt(
-                          variant.base_selling_price.replace(/\D+/g, "")
-                        ),
-                        stock: parseInt(variant.stock.replace(/\D+/g, "")),
-                        expired_at: variant.expired_at
-                          ? variant.expired_at
-                          : undefined,
-                        outlet_id: userData?.outlet.id,
-                      }),
-                    },
-                  });
-                  setMutationStatus((prev) => [
-                    ...prev,
-                    {
-                      action: "ProductBatch",
-                      id: batchResult.status ? batchResult.data.id : null,
-                      status: batchResult.status,
-                    },
-                  ]);
 
-                  if (batchResult.status) {
-                    complete = complete + 1;
-                    setProgress(complete / totalMutation);
-                    resolve(true);
-                  } else {
-                    reject(false);
-                  }
+                  const batchPromises = form
+                    .getValues(`variants.${i}.batches`)
+                    .map(async (batch, j) => {
+                      return new Promise<boolean>(async (resolve, reject) => {
+                        const batchResult = await mutationBatch.mutateAsync({
+                          class: "ProductBatch",
+                          payload: {
+                            payload: cleanData({
+                              product_variant_id: variantResult.data.id,
+                              base_capital_price: batch.base_capital_price
+                                ? parseInt(
+                                    batch.base_capital_price.replace(/\D+/g, "")
+                                  )
+                                : undefined,
+                              base_selling_price: parseInt(
+                                batch.base_selling_price.replace(/\D+/g, "")
+                              ),
+                              stock: parseInt(batch.stock.replace(/\D+/g, ""))
+                                ? parseInt(batch.stock.replace(/\D+/g, ""))
+                                : 0,
+                              is_infinite_stock: batch.is_infinite_stock,
+                              expired_at: batch.expired_at
+                                ? batch.expired_at
+                                : undefined,
+                              outlet_id: userData?.outlet.id,
+                              currency_id: batch.currency_id,
+                            }),
+                          },
+                        });
+                        setMutationStatus((prev) => [
+                          ...prev,
+                          {
+                            action: "ProductBatch",
+                            id: batchResult.status ? batchResult.data.id : null,
+                            status: batchResult.status,
+                          },
+                        ]);
+                        if (batchResult.status) {
+                          complete = complete + 1;
+                          setProgress(complete / totalMutation);
+                          resolve(true);
+                        } else {
+                          reject(false);
+                        }
+                      });
+                    });
+
+                  await Promise.all(batchPromises)
+                    .then((res) => {})
+                    .catch((err) => {
+                      reject(false);
+                    });
                 } else {
                   reject(false);
                 }
@@ -454,8 +525,6 @@ export default function useProductsForm() {
                       product_id: data.data.id,
                       label: variant.label,
                       specifications: variant.specifications,
-                      outlet_id: userData?.outlet.id,
-                      currency_id: variant.currency_id,
                     }),
                   },
                 });
@@ -470,42 +539,59 @@ export default function useProductsForm() {
                 if (variantResult.status) {
                   complete = complete + 1;
                   setProgress(complete / totalMutation);
-                  const batchResult = await mutationBatch.mutateAsync({
-                    class: "ProductBatch",
-                    payload: {
-                      payload: cleanData({
-                        product_variant_id: variantResult.data.id,
-                        base_capital_price: variant.base_capital_price
-                          ? parseInt(
-                              variant.base_capital_price.replace(/\D+/g, "")
-                            )
-                          : undefined,
-                        base_selling_price: parseInt(
-                          variant.base_selling_price.replace(/\D+/g, "")
-                        ),
-                        stock: parseInt(variant.stock.replace(/\D+/g, "")),
-                        expired_at: variant.expired_at
-                          ? variant.expired_at
-                          : undefined,
-                        outlet_id: userData?.outlet.id,
-                      }),
-                    },
-                  });
-                  setMutationStatus((prev) => [
-                    ...prev,
-                    {
-                      action: "ProductBatch",
-                      id: batchResult.status ? batchResult.data.id : null,
-                      status: batchResult.status,
-                    },
-                  ]);
-                  if (batchResult.status) {
-                    complete = complete + 1;
-                    setProgress(complete / totalMutation);
-                    resolve(true);
-                  } else {
-                    reject(false);
-                  }
+
+                  const batchPromises = form
+                    .getValues(`variants.${i}.batches`)
+                    .map(async (batch, j) => {
+                      return new Promise<boolean>(async (resolve, reject) => {
+                        const batchResult = await mutationBatch.mutateAsync({
+                          class: "ProductBatch",
+                          payload: {
+                            payload: cleanData({
+                              product_variant_id: variantResult.data.id,
+                              base_capital_price: batch.base_capital_price
+                                ? parseInt(
+                                    batch.base_capital_price.replace(/\D+/g, "")
+                                  )
+                                : undefined,
+                              base_selling_price: parseInt(
+                                batch.base_selling_price.replace(/\D+/g, "")
+                              ),
+                              stock: parseInt(batch.stock.replace(/\D+/g, ""))
+                                ? parseInt(batch.stock.replace(/\D+/g, ""))
+                                : 0,
+                              is_infinite_stock: batch.is_infinite_stock,
+                              expired_at: batch.expired_at
+                                ? batch.expired_at
+                                : undefined,
+                              outlet_id: userData?.outlet.id,
+                              currency_id: batch.currency_id,
+                            }),
+                          },
+                        });
+                        setMutationStatus((prev) => [
+                          ...prev,
+                          {
+                            action: "ProductBatch",
+                            id: batchResult.status ? batchResult.data.id : null,
+                            status: batchResult.status,
+                          },
+                        ]);
+                        if (batchResult.status) {
+                          complete = complete + 1;
+                          setProgress(complete / totalMutation);
+                          resolve(true);
+                        } else {
+                          reject(false);
+                        }
+                      });
+                    });
+
+                  await Promise.all(batchPromises)
+                    .then((res) => {})
+                    .catch((err) => {
+                      reject(false);
+                    });
                 } else {
                   reject(false);
                 }
@@ -585,6 +671,7 @@ export default function useProductsForm() {
     productTypes,
     productCategories,
     productCurrencies,
+    outlets,
     filterCategory,
     variantsArray,
     currency,

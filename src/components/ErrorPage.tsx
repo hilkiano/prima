@@ -2,15 +2,9 @@
 
 import React from "react";
 import { useTranslations } from "next-intl";
-import {
-  Button,
-  Center,
-  CenterProps,
-  Flex,
-  useMantineTheme,
-} from "@mantine/core";
+import { Button, Center, CenterProps, useMantineTheme } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import { Link } from "@/lib/navigation";
+import { Link } from "@/i18n/routing";
 
 type TErrorPage = {
   type: "404";

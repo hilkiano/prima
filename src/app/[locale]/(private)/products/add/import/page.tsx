@@ -27,7 +27,7 @@ function ProductsImportContent({ query }: TProductsImport) {
     >
       <HydrationBoundary state={dehydrate(query)}>
         <div className="flex flex-col gap-4">
-          <ProductsImportHeader className="flex flex-col gap-4 justify-between xs:items-start items-center" />
+          <ProductsImportHeader className="flex gap-4 items-center max-w-[1000px] w-full ml-auto mr-auto" />
           <ProductsImportContainer className="rounded-xl p-4 xs:p-8 bg-slate-100 dark:bg-slate-950/40 mt-4 max-w-[1000px] w-full ml-auto mr-auto" />
         </div>
       </HydrationBoundary>

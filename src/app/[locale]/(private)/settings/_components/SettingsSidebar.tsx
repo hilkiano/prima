@@ -4,7 +4,6 @@ import {
   Box,
   BoxProps,
   Combobox,
-  Group,
   InputBase,
   UnstyledButton,
   useCombobox,
@@ -12,14 +11,10 @@ import {
 } from "@mantine/core";
 import { useTranslations } from "next-intl";
 import React from "react";
-import { Link, useRouter } from "@/lib/navigation";
+import { Link, useRouter } from "@/i18n/routing";
 import { useSearchParams } from "next/navigation";
 import { useMediaQuery } from "@mantine/hooks";
-import {
-  IconArrowDownCircle,
-  IconCaretDown,
-  IconCaretDownFilled,
-} from "@tabler/icons-react";
+import { IconCaretDownFilled } from "@tabler/icons-react";
 
 type TCategoryItem = {
   icon: React.ReactNode;

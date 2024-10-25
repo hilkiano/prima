@@ -20,9 +20,10 @@ const LocaleToggle = React.forwardRef<
   const t = useTranslations("Language");
   const searchParams = useSearchParams();
   function onSelectChange(value: string) {
+    const locale = value as "en" | "id";
     startTransition(() => {
       router.replace(`${pathname}?${searchParams.toString()}`, {
-        locale: value,
+        locale: locale,
       });
     });
   }

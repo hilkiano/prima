@@ -1,25 +1,10 @@
 import { importTemplate } from "@/services/upload.service";
-import {
-  Box,
-  BoxProps,
-  Button,
-  Collapse,
-  Loader,
-  ScrollArea,
-  Text,
-} from "@mantine/core";
+import { Box, BoxProps, Loader, ScrollArea, Text } from "@mantine/core";
 import { Dropzone } from "@mantine/dropzone";
 import { IconFileUpload } from "@tabler/icons-react";
 import { useMutation } from "@tanstack/react-query";
-import { useTranslations } from "next-intl";
-import {
-  forwardRef,
-  JSXElementConstructor,
-  ReactElement,
-  ReactNodeArray,
-  useEffect,
-  useState,
-} from "react";
+import { useLocale, useTranslations } from "next-intl";
+import { forwardRef, useEffect, useState } from "react";
 import echo from "@/vars/echo";
 import { ImportEventProgress } from "@/types/common.types";
 import ProgressDialog from "@/components/dialogs/ProgressDialog";
@@ -27,6 +12,7 @@ import { useDisclosure } from "@mantine/hooks";
 
 const TemplateDropzone = forwardRef<HTMLDivElement, BoxProps>(
   ({ ...props }, ref) => {
+    const locale = useLocale();
     const tButton = useTranslations("Button");
     const t = useTranslations("Products.Import");
     const [fileName, setFileName] = useState<string>();
@@ -69,6 +55,34 @@ const TemplateDropzone = forwardRef<HTMLDivElement, BoxProps>(
       ));
     };
 
+    const CountDetails = ({
+      data,
+    }: {
+      data:
+        | { [key: string]: number[] }[]
+        | { errors: string[]; product_name: string }[];
+    }) => {
+      const countData = data as { [key: string]: number[] }[];
+      const strings: any[] = [];
+      for (const entry of Object.entries(countData)) {
+        strings.push(
+          `${t(entry[0])}: ${Intl.NumberFormat(locale).format(
+            Number(entry[1])
+          )}`
+        );
+      }
+
+      return (
+        <ul className="m-0 pl-8">
+          {strings.map((val: string, index: number) => (
+            <li key={index}>
+              <Text className="font-mono text-sm">{val}</Text>
+            </li>
+          ))}
+        </ul>
+      );
+    };
+
     const ValidationDetails = ({
       data,
     }: {
@@ -89,7 +103,8 @@ const TemplateDropzone = forwardRef<HTMLDivElement, BoxProps>(
           {row.errors.map((error, j) => (
             <Text key={j} className="font-mono text-xs">
               👉{" "}
-              {error.split("|")[0].includes("variant")
+              {error.split("|")[0].includes("variant") ||
+              error.split("|")[0].includes("batch")
                 ? t.rich(`Errors.${error.split("|")[0]}`, {
                     attribute: t(
                       `Validation.${error.split("|")[1]}`
@@ -154,6 +169,9 @@ const TemplateDropzone = forwardRef<HTMLDivElement, BoxProps>(
                             data={importProgress.details.data}
                           />
                         ) : importProgress.details.message ===
+                          "import_max_rows" ? (
+                          <CountDetails data={importProgress.details.data} />
+                        ) : importProgress.details.message ===
                           "import_validation_errors" ? (
                           <ValidationDetails
                             data={importProgress.details.data}
@@ -208,7 +226,10 @@ const TemplateDropzone = forwardRef<HTMLDivElement, BoxProps>(
             }, 250);
           }}
           className="h-32 mt-6"
-          accept={["text/csv"]}
+          accept={[
+            "application/vnd.ms-excel",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          ]}
           multiple={false}
         >
           <div className="flex flex-col items-center gap-4">

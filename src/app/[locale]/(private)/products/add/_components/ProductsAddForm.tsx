@@ -6,7 +6,6 @@ import {
   BoxProps,
   Button,
   Divider,
-  InputBase,
   Modal,
   Select,
   Textarea,
@@ -16,22 +15,21 @@ import {
   useMantineTheme,
   List,
 } from "@mantine/core";
+import { Carousel } from "@mantine/carousel";
 import { useLocale, useTranslations } from "next-intl";
-import React from "react";
+import React, { useState } from "react";
 import useProductsForm from "../_hooks/products_form.hooks";
 import { Controller } from "react-hook-form";
 import ProductsFormField from "./ProductsFormField";
 import {
-  IconCalendarDue,
   IconCircleMinus,
   IconDeviceFloppy,
+  IconPackage,
   IconPlus,
 } from "@tabler/icons-react";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import ProductsCategoryForm from "./ProductsCategoryForm";
 import { useUserContext } from "@/lib/userProvider";
-import { InputNumberFormat } from "@react-input/number-format";
-import { DateInput, DatesProvider } from "@mantine/dates";
 import { Dropzone, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 
 import "dayjs/locale/id";
@@ -39,6 +37,8 @@ import { showNotification } from "@/lib/errorHandler";
 import { cleanData, formatFileSize } from "@/lib/helpers";
 import ProductsImageThumbnail from "./ProductsImageThumbnail";
 import ProgressDialog from "@/components/dialogs/ProgressDialog";
+import ProductsBatchForm from "./ProductsBatchForm";
+import ProductBatchCard from "./ProductBatchCard";
 
 const ProductsAddForm = React.forwardRef<HTMLDivElement, BoxProps>(
   ({ ...props }, ref) => {
@@ -51,6 +51,7 @@ const ProductsAddForm = React.forwardRef<HTMLDivElement, BoxProps>(
       productTypes,
       productCategories,
       productCurrencies,
+      outlets,
       filterCategory,
       variantsArray,
       currency,
@@ -66,6 +67,15 @@ const ProductsAddForm = React.forwardRef<HTMLDivElement, BoxProps>(
       currencyQuery,
     } = useProductsForm();
     const [opened, { open, close }] = useDisclosure(false);
+    const [varId, setVarId] = useState<number>();
+    const [batchOpened, { open: batchOpen, close: batchClose }] =
+      useDisclosure(false);
+
+    const handleBatchOpen = (variant: number) => {
+      setVarId(variant);
+      batchOpen();
+    };
+
     const [progressOpened, { open: progressOpen, close: progressClose }] =
       useDisclosure(false);
     const theme = useMantineTheme();
@@ -85,7 +95,10 @@ const ProductsAddForm = React.forwardRef<HTMLDivElement, BoxProps>(
               if (variant.images.length > 0) {
                 mutation++;
               }
-              mutation = mutation + 2;
+              variant.batches.map((batch) => {
+                mutation++;
+              });
+              mutation++;
             });
 
             setTotalMutation(mutation);
@@ -101,7 +114,6 @@ const ProductsAddForm = React.forwardRef<HTMLDivElement, BoxProps>(
                     ? data.product_category_id
                     : undefined,
                   company_id: userData?.company.id,
-                  outlet_id: userData?.outlet.id,
                 }),
               },
             });
@@ -322,157 +334,6 @@ const ProductsAddForm = React.forwardRef<HTMLDivElement, BoxProps>(
                 <></>
               )}
               <Controller
-                name={`variants.${id}.stock`}
-                control={form.control}
-                render={({ field: { onChange, value } }) => (
-                  <ProductsFormField
-                    label={t("label_stock")}
-                    required
-                    field={
-                      <InputBase
-                        className="w-full sm:w-[150px]"
-                        error={
-                          form.formState.errors.variants?.[id]?.stock?.message
-                        }
-                        autoComplete="off"
-                        value={value}
-                        onChange={onChange}
-                        maxLength={50}
-                        component={InputNumberFormat}
-                        locales={locale}
-                        variant="filled"
-                      />
-                    }
-                  />
-                )}
-              />
-              <ProductsFormField
-                label={t("label_price")}
-                required
-                field={
-                  <div className="flex flex-col lg:flex-row gap-4">
-                    <Controller
-                      name={`variants.${id}.currency_id`}
-                      control={form.control}
-                      render={({ field: { onChange, value } }) => (
-                        <Select
-                          label="Currency"
-                          className="w-full sm:w-[100px]"
-                          data={productCurrencies}
-                          defaultValue={String(currency)}
-                          value={String(value)}
-                          onChange={(val) => {
-                            onChange(Number(val));
-                            form.resetField(
-                              `variants.${id}.base_capital_price`
-                            );
-                            form.resetField(
-                              `variants.${id}.base_selling_price`
-                            );
-                          }}
-                          allowDeselect={false}
-                        />
-                      )}
-                    />
-
-                    <Controller
-                      name={`variants.${id}.base_capital_price`}
-                      control={form.control}
-                      render={({ field: { onChange, value } }) => (
-                        <InputBase
-                          label={t("label_capital_price")}
-                          className="w-full sm:w-[200px]"
-                          error={
-                            form.formState.errors.variants?.[id]
-                              ?.base_capital_price?.message
-                          }
-                          autoComplete="off"
-                          value={value}
-                          onChange={onChange}
-                          component={InputNumberFormat}
-                          locales={locale}
-                          variant="filled"
-                          format="currency"
-                          currency={
-                            currencyQuery.data
-                              ? currencyQuery.data.data.rows.find(
-                                  (currency) =>
-                                    currency.id ===
-                                    Number(
-                                      form.watch(`variants.${id}.currency_id`)
-                                    )
-                                )?.currency
-                              : "IDR"
-                          }
-                          currencyDisplay={
-                            altCurrencyFormat ? "symbol" : "code"
-                          }
-                          maximumFractionDigits={0}
-                        />
-                      )}
-                    />
-                    <Controller
-                      name={`variants.${id}.base_selling_price`}
-                      control={form.control}
-                      render={({ field: { onChange, value } }) => (
-                        <InputBase
-                          label={t("label_selling_price")}
-                          className="w-full sm:w-[200px]"
-                          error={
-                            form.formState.errors.variants?.[id]
-                              ?.base_selling_price?.message
-                          }
-                          autoComplete="off"
-                          value={value}
-                          onChange={onChange}
-                          component={InputNumberFormat}
-                          locales={locale}
-                          variant="filled"
-                          format="currency"
-                          currency={
-                            currencyQuery.data
-                              ? currencyQuery.data.data.rows.find(
-                                  (currency) =>
-                                    currency.id ===
-                                    Number(
-                                      form.watch(`variants.${id}.currency_id`)
-                                    )
-                                )?.currency
-                              : "IDR"
-                          }
-                          currencyDisplay={
-                            altCurrencyFormat ? "symbol" : "code"
-                          }
-                          maximumFractionDigits={0}
-                        />
-                      )}
-                    />
-                  </div>
-                }
-              />
-              <Controller
-                name={`variants.${id}.expired_at`}
-                control={form.control}
-                render={({ field: { onChange, value } }) => (
-                  <ProductsFormField
-                    label={t("label_expired_at")}
-                    field={
-                      <DatesProvider settings={{ locale: locale }}>
-                        <DateInput
-                          leftSection={<IconCalendarDue />}
-                          clearable
-                          minDate={new Date()}
-                          variant="filled"
-                          value={value}
-                          onChange={onChange}
-                          valueFormat="DD MMMM YYYY"
-                        />
-                      </DatesProvider>
-                    }
-                  />
-                )}
-              />
-              <Controller
                 name={`variants.${id}.images`}
                 control={form.control}
                 render={({ field: { onChange, value } }) => (
@@ -538,7 +399,7 @@ const ProductsAddForm = React.forwardRef<HTMLDivElement, BoxProps>(
                         </Dropzone>
                         <div className="w-full mt-2 flex gap-4 flex-wrap">
                           {form
-                            .getValues(`variants.${id}.images`)
+                            .watch(`variants.${id}.images`)
                             ?.map((file, index) => {
                               const imageUrl = URL.createObjectURL(file);
                               return (
@@ -568,8 +429,72 @@ const ProductsAddForm = React.forwardRef<HTMLDivElement, BoxProps>(
                   />
                 )}
               />
+
+              <ProductsFormField
+                label={t("field_batch")}
+                required
+                description={t.rich("description_batch", {
+                  bold: (chunks) => <span className="font-bold">{chunks}</span>,
+                })}
+                field={
+                  <div className="flex flex-col mb-4 w-full">
+                    <div className="flex gap-4 self-start items-center">
+                      <Button
+                        variant="light"
+                        leftSection={<IconPackage />}
+                        onClick={() => {
+                          handleBatchOpen(id);
+                        }}
+                        type="button"
+                        color={
+                          form.formState.errors.variants?.[id]?.batches?.message
+                            ? "red"
+                            : undefined
+                        }
+                      >
+                        {t("btn_add_batch")}
+                      </Button>
+                      <Text className="opacity-70">
+                        Total: {form.getValues(`variants.${id}.batches`).length}
+                      </Text>
+                    </div>
+                    <Carousel
+                      slideSize={400}
+                      slideGap="lg"
+                      align="start"
+                      slidesToScroll={1}
+                      containScroll="trimSnaps"
+                      withControls={false}
+                      dragFree
+                      classNames={{
+                        viewport: "mt-6",
+                      }}
+                    >
+                      {form
+                        .getValues(`variants.${id}.batches`)
+                        .map((batch, batchId) => (
+                          <Carousel.Slide key={batchId}>
+                            <ProductBatchCard
+                              className="p-4 rounded-lg bg-slate-300/70 dark:bg-slate-800 h-[160px] relative select-none"
+                              batch={batch}
+                              batchId={batchId}
+                              outlets={outlets}
+                              productForm={form}
+                              varId={id}
+                              currency={currency}
+                              productCurrencies={productCurrencies}
+                              currencyQuery={currencyQuery}
+                              altCurrencyFormat={altCurrencyFormat}
+                            />
+                          </Carousel.Slide>
+                        ))}
+                    </Carousel>
+                  </div>
+                }
+              />
             </Box>
           ))}
+
           <div className="flex justify-end flex-col xs:flex-row gap-4 mt-6 mb-4">
             <Button
               variant="light"
@@ -581,12 +506,8 @@ const ProductsAddForm = React.forwardRef<HTMLDivElement, BoxProps>(
                   id: "",
                   label: "",
                   specifications: "",
-                  base_capital_price: "",
-                  base_selling_price: "",
-                  currency_id: currency,
-                  stock: "",
-                  expired_at: undefined,
                   images: [],
+                  batches: [],
                 });
               }}
             >
@@ -605,6 +526,27 @@ const ProductsAddForm = React.forwardRef<HTMLDivElement, BoxProps>(
 
         <Modal opened={opened} onClose={close} title={t("tooltip_category")}>
           <ProductsCategoryForm onFinish={close} />
+        </Modal>
+
+        <Modal
+          opened={batchOpened}
+          onClose={batchClose}
+          title={t("title_batch_form")}
+        >
+          <ProductsBatchForm
+            productForm={form}
+            varId={varId ? varId : 0}
+            currency={currency}
+            productCurrencies={productCurrencies}
+            currencyQuery={currencyQuery}
+            altCurrencyFormat={altCurrencyFormat}
+            locale={locale}
+            outlets={outlets}
+            onClose={() => {
+              setVarId(undefined);
+              batchClose();
+            }}
+          />
         </Modal>
 
         <ProgressDialog
@@ -627,6 +569,7 @@ const ProductsAddForm = React.forwardRef<HTMLDivElement, BoxProps>(
               rollbackMutation();
               progressClose();
             } else {
+              form.reset();
               progressClose();
               setTimeout(() => {
                 setProgress(0);

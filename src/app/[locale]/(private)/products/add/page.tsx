@@ -34,6 +34,17 @@ export default async function ProductsAdd() {
       }),
   });
 
+  await queryClient.prefetchQuery({
+    queryKey: ["outletList"],
+    queryFn: () =>
+      getList({
+        model: "Outlet",
+        limit: "99999",
+        sort: "name",
+        sort_direction: "asc",
+      }),
+  });
+
   return <ProductsAddContent query={queryClient} />;
 }
 
@@ -50,7 +61,7 @@ function ProductsAddContent({ query }: TProductsAdd) {
     >
       <HydrationBoundary state={dehydrate(query)}>
         <div className="flex flex-col gap-4">
-          <ProductsAddHeader className="w-full" />
+          <ProductsAddHeader className="max-w-[1000px] w-full ml-auto mr-auto" />
           <ProductsAddForm className="rounded-xl p-4 xs:p-8 bg-slate-100 dark:bg-slate-950/40 mt-4 max-w-[1000px] w-full ml-auto mr-auto" />
         </div>
       </HydrationBoundary>

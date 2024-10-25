@@ -171,7 +171,14 @@
       "message_success_create": "<bold>{name}</bold> has been added and ready for new transaction!",
       "progress_complete_body": "Saving completed",
       "progress_failed_body": "Saving failed",
-      "progress_loading_body": "Saving..."
+      "progress_loading_body": "Saving...",
+      "btn_add_batch": "Create batch",
+      "title_batch_form": "Batch form",
+      "field_batch": "Batch",
+      "description_batch": "<bold>One batch represents the product stock for this variant in one outlet.</bold> If this variant has an expiration time and is only stored in one outlet, it is recommended to create a separate batch even if it is the same outlet.",
+      "label_is_infinite_stock": "Always ready stock",
+      "label_currency": "Currency",
+      "label_outlet": "Outlet"
     },
     "type_physical": "Physical",
     "type_virtual": "Virtual",
@@ -179,14 +186,18 @@
     "type_subscription": "Subscription",
     "Import": {
       "header": "Bulk Import",
-      "template_header": "Get template",
-      "template_body": "Download the template <link>here</link> and fill it in with a spreadsheet application that supports CSV format.",
-      "rules_1": "<emp>DO NOT</emp> rename template file name.",
-      "rules_2": "<emp>DO NOT</emp> change column header inside template file.",
+      "template_header": "Get the template here",
+      "template_body": "Please download the template first and fill in as directed. Then simply drop the file into the dropzone below and wait until the process is finished.",
+      "btn_guide": "See the guide",
+      "btn_template_download": "Download template",
+      "guide_title": "Import guide",
+      "guide_caution": "Things to keep in mind",
+      "rules_1": "<emp>Do not</emp> rename the file.",
+      "rules_2": "<emp>Do not</emp> change the sheet title.",
+      "rules_3": "<emp>Do not</emp> change the column.",
+      "rules_4": "The maximum rows per sheet is <emp>{max}</emp>.",
       "rules_header": "Rules",
       "rules_tooltip": "Show column validation rules",
-      "rules_3": "Only supports 3 variants per product.",
-      "rules_4": "Cannot add product image via CSV import. Please use <link>add product</link> form.",
       "Validation": {
         "column_1": "Column",
         "column_2": "Rules",
@@ -217,9 +228,13 @@
         "field_capital_price": "Capital Price/Item",
         "description_capital_price": "The product variant base capital price per item. Value has to be positive numeric only. You may leave it blank.",
         "field_selling_price": "Selling Price/Item",
+        "field_outlet": "Outlet",
+        "description_outlet": "The batch is available on this outlet. You are REQUIRED to fill this column.",
         "description_selling_price": "The product variant base selling price per item. Value has to be positive numeric only. If the capital price/item is filled, this value has to be higher than capital price/item value. You are REQUIRED to fill this column.",
         "field_expired_at": "Expired At",
-        "description_expired_at": "The product variant expired date. Only acceptable formats are YYYY-MM-DD HH:mm:ss. You may leave it blank."
+        "description_expired_at": "The product variant expired date. Only acceptable formats are YYYY-MM-DD HH:mm:ss. You may leave it blank.",
+        "field_is_infinite_stock": "Always Ready Stock?",
+        "description_is_infinite_stock": "Determine if this variant batch is always on stock. Fill it with 'Y' if it is true."
       },
       "dropzone_body": "Upload filled templete here",
       "progress_wait": "Please wait...",
@@ -230,11 +245,20 @@
       "import_duplicate_detail": "👉 {name} at row {row}",
       "import_validation_errors": "Please correct all the following validation errors:",
       "import_validating": "Validating...",
+      "import_prepare_data": "Get data from file",
+      "import_max_rows": "Total rows in one or more sheets are over 2,000.",
+      "import_error_outlet": "Outlet is invalid",
+      "import_error_currency": "Currency is invalid",
+      "import_prepare_validating": "Preparing for data validation",
       "import_prepare_inserting": "Validation completed. Preparing all data to be inserted into database.",
       "import_inserting": "Inserting to database...",
       "import_success": "Import completed!",
-      "import_success_details": "{processed} of {total, plural, =0 {products} =1 {product} other {# products}} has been inserted into database.",
+      "import_success_details": "{processed} of {total, plural, =0 {# product} =1 {# product} other {# products}} has been inserted into database.",
+      "count_products": "Products total",
+      "count_variants": "Product variants total",
+      "count_batches": "Variant batches total",
       "Errors": {
+        "err_unique": "This {attribute} is already registered.",
         "err_required": "The {attribute} field is required.",
         "err_string": "The {attribute} field must be a string.",
         "err_min": "The {attribute} field must be at least {value} characters.",
@@ -247,8 +271,12 @@
         "err_variant_date": "Variant #{position}: The {attribute} field must be a valid date.",
         "err_variant_max": "Variant #{position}: The {attribute} field must not be greater than {value} characters.",
         "err_variant_gt": "Variant #{position}: The {attribute} must be greater than capital price.",
-        "err_variant_enum": "Variant #{position}: The {attribute} is invalid. Please use one of these values: {value}."
+        "err_variant_enum": "Variant #{position}: The {attribute} is invalid. Please use one of these values: {value}.",
+        "err_batch_invalid": "Batch #{position}: {attribute} is invalid."
       }
-    }
+    },
+    "header": "Products",
+    "subheader": "You can see all the products that have been registered in the system and change them according to your business needs.",
+    "btn_add": "Add product"
   }
 }

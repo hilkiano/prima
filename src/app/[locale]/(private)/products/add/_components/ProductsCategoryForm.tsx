@@ -32,7 +32,6 @@ const ProductsCategoryForm = React.forwardRef<
                 name: data.name,
                 type: data.type ? data.type : undefined,
                 company_id: userData?.company.id,
-                outlet_id: userData?.outlet.id,
               },
             },
           });

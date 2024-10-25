@@ -171,7 +171,14 @@
       "message_success_create": "<bold>{name}</bold> telah ditambahkan dan siap untuk transaksi baru!",
       "progress_complete_body": "Penyimpanan selesai",
       "progress_failed_body": "Gagal menyimpan",
-      "progress_loading_body": "Menyimpan..."
+      "progress_loading_body": "Menyimpan...",
+      "btn_add_batch": "Tambahkan batch",
+      "title_batch_form": "Formulir batch",
+      "field_batch": "Batch",
+      "description_batch": "<bold>Satu batch mewakili stok produk untuk varian ini dalam satu outlet.</bold> Jika varian ini memiliki waktu kadaluarsa dan hanya disimpan di satu outlet, disarankan untuk membuat batch yang terpisah meskipun outletnya sama.",
+      "label_is_infinite_stock": "Stok selalu ready",
+      "label_currency": "Mata uang",
+      "label_outlet": "Gerai"
     },
     "type_physical": "Fisik",
     "type_virtual": "Virtual",
@@ -179,14 +186,18 @@
     "type_subscription": "Langganan",
     "Import": {
       "header": "Impor Massal",
-      "template_header": "Dapatkan template",
-      "template_body": "Download template <link>disini</link> lalu isi dengan aplikasi spreadsheet yang mendukung format CSV.",
-      "rules_1": "<emp>JANGAN</emp> ganti nama file template.",
-      "rules_2": "<emp>JANGAN</emp> mengubah header kolom di dalam file template.",
+      "template_header": "Dapatkan template disini",
+      "template_body": "Silakan download template terlebih dahulu dan isi sesuai petunjuk. Kemudian cukup jatuhkan file ke dalam dropzone di bawah ini dan tunggu hingga prosesnya selesai.",
+      "btn_guide": "Lihat panduan",
+      "btn_template_download": "Download template",
+      "guide_title": "Panduan impor",
+      "guide_caution": "Hal yang perlu diingat",
+      "rules_1": "<emp>Dilarang</emp> mengubah nama file.",
+      "rules_2": "<emp>Dilarang</emp> mengubah judul lembar.",
+      "rules_3": "<emp>Dilarang</emp> mengubah kolom.",
+      "rules_4": "Jumlah maksimum per baris adalah <emp>{max}</emp>.",
       "rules_header": "Aturan",
       "rules_tooltip": "Tampilkan aturan validasi kolom",
-      "rules_3": "Hanya mendukung 3 varian per produk.",
-      "rules_4": "Tidak dapat menambahkan gambar produk melalui impor CSV. Silakan gunakan formulir <link>tambahkan produk</link>.",
       "Validation": {
         "column_1": "Kolom",
         "column_2": "Aturan",
@@ -217,9 +228,13 @@
         "field_capital_price": "Harga Modal/Item",
         "description_capital_price": "Harga modal dasar varian produk per item. \nNilai harus berupa angka positif saja. \nAnda boleh membiarkannya kosong.",
         "field_selling_price": "Harga Jual/Item",
+        "field_outlet": "Gerai",
+        "description_outlet": "Batch ini tersedia di gerai tersebut. \nAnda WAJIB mengisi kolom ini",
         "description_selling_price": "Varian produk berdasarkan harga jual per item. \nNilai harus berupa angka positif saja. \nJika harga modal/item diisi maka nilainya harus lebih tinggi dari nilai harga modal/item. \nAnda WAJIB mengisi kolom ini.",
         "description_expired_at": "Tanggal kadaluwarsa varian produk. \nHanya format yang dapat diterima adalah YYYY-MM-DD HH:mm:ss. \nAnda boleh membiarkannya kosong.",
-        "field_expired_at": "Kedaluwarsa Pada"
+        "field_expired_at": "Kedaluwarsa Pada",
+        "field_is_infinite_stock": "Selalu Siap Stok?",
+        "description_is_infinite_stock": "Tentukan apakah batch varian ini selalu tersedia. Isi dengan 'Y' jika benar."
       },
       "dropzone_body": "Upload template yang sudah diisi di sini",
       "progress_wait": "Harap tunggu...",
@@ -230,11 +245,20 @@
       "import_duplicate_detail": "👉 {name} pada baris {row}",
       "import_validation_errors": "Mohon perbaiki semua kesalahan validasi berikut:",
       "import_validating": "Memvalidasi...",
+      "import_error_outlet": "Gerai tidak sesuai",
+      "import_error_currency": "Mata uang tidak sesuai",
+      "import_prepare_data": "Mengambil data dari file",
+      "import_max_rows": "Total baris dalam satu lembar atau lebih melebihi 2.000.",
+      "import_prepare_validating": "Sedang bersiap untuk validasi data",
       "import_prepare_inserting": "Validasi selesai. Menyiapkan semua data untuk dimasukkan ke dalam database.",
       "import_inserting": "Memasukan ke database...",
       "import_success": "Impor selesai!",
-      "import_success_details": "{processed} dari {total, plural, =0 {produk} =1 {produk} other {# produk}} telah dimasukkan ke dalam database.",
+      "import_success_details": "{processed} dari {total, plural, =0 {# produk} =1 {# produk} other {# produk}} telah dimasukkan ke dalam database.",
+      "count_products": "Total produk",
+      "count_variants": "Total varian produk",
+      "count_batches": "Total batch varian",
       "Errors": {
+        "err_unique": "{attribute} ini sudah terdaftar.",
         "err_required": "Kolom {attribute} diperlukan.",
         "err_string": "Kolom {attribute} harus berupa string.",
         "err_min": "Kolom {attribute} minimal berisi {value} karakter.",
@@ -247,8 +271,12 @@
         "err_variant_date": "Varian #{position}: {attribute} harus berupa tanggal yang valid.",
         "err_variant_max": "Varian #{position}: {attribute} maksimal berisi {value} karakter.",
         "err_variant_gt": "Varian #{position}: {attribute} harus lebih tinggi dari harga modal.",
-        "err_variant_enum": "Varian #{position}: {attribute} tidak benar. Mohon gunakan salah satu dari berikut ini: {value}."
+        "err_variant_enum": "Varian #{position}: {attribute} tidak benar. Mohon gunakan salah satu dari berikut ini: {value}.",
+        "err_batch_invalid": "Batch #{position}: {attribute} tidak benar."
       }
-    }
+    },
+    "header": "Produk",
+    "subheader": "Anda dapat melihat keseluruhan produk yang telah terdaftar di sistem dan mengubahnya sesuai kebutuhan bisnis Anda.",
+    "btn_add": "Tambahkan produk"
   }
 }

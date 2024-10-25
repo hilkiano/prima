@@ -22,7 +22,7 @@ import { NavbarLink } from "./NavbarLink";
 import { useUserContext } from "@/lib/userProvider";
 import { handleLogout } from "@/services/auth.service";
 import { useMutation } from "@tanstack/react-query";
-import { Link, useRouter } from "@/lib/navigation";
+import { Link, useRouter } from "@/i18n/routing";
 
 type TAppShell = {
   children: React.ReactNode;

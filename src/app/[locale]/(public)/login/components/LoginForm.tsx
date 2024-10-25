@@ -5,7 +5,7 @@ import useLoginPage from "../hooks/loginPage.hooks";
 import { Controller } from "react-hook-form";
 import { Anchor, Button, PasswordInput, TextInput } from "@mantine/core";
 import { useTranslations } from "next-intl";
-import { Link } from "@/lib/navigation";
+import { Link } from "@/i18n/routing";
 
 type TLoginForm = {};
 

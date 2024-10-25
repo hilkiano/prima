@@ -2,6 +2,7 @@ import createMiddleware from "next-intl/middleware";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { Authenticated, JsonResponse } from "./types/common.types";
+import { routing } from "./i18n/routing";
 
 const locales = ["en", "id"];
 const publicPages = ["/login"];
@@ -14,11 +15,9 @@ const intlMiddleware = (
   const origin = url.origin;
   const pathname = url.pathname;
 
-  const handleI18nRouting = createMiddleware({
-    locales: ["en", "id"],
-    localePrefix: "as-needed",
-    defaultLocale: "en",
+  const handleI18nRouting = createMiddleware(routing, {
     alternateLinks: false,
+    localeDetection: false,
   });
   const response = handleI18nRouting(request);
 
@@ -108,5 +107,5 @@ export default async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|images/|favicon.ico).*)"],
+  matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
 };
