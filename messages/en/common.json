@@ -12,6 +12,7 @@
     "reset": "Reset",
     "cancel": "Cancel",
     "go_to_dashboard": "Go to Dashboard",
+    "go_back": "Go back",
     "get_started": "Get started",
     "next": "Next",
     "previous": "Previous",
@@ -21,7 +22,8 @@
     "close": "Close",
     "back": "Back",
     "hide_details": "Hide details",
-    "show_details": "Show details"
+    "show_details": "Show details",
+    "update": "Update"
   },
   "Alert": {
     "Notification": {
@@ -143,5 +145,37 @@
     "setting_company_currency": "Access to change default currency globally",
     "setting_outlet_basic_information": "Access to change outlet basic information",
     "setting_outlet_currency": "Access to change default currency per outlet"
+  },
+  "Data": {
+    "Table": {
+      "Columns": {
+        "Product": {
+          "id": "ID",
+          "name": "Name",
+          "type": "Type",
+          "details": "Details",
+          "category": "Category",
+          "total_variant": "Total variant",
+          "total_stock": "Total stock",
+          "created_at": "Created at",
+          "updated_at": "Updated at",
+          "created_by": "Created by",
+          "updated_by": "Updated by"
+        }
+      },
+      "column_visibility_toggle": "Toggle Column Visibility",
+      "toggle_all": "Toggle All"
+    },
+    "Action": {
+      "tooltip": "Show menu",
+      "view": "View details",
+      "update": "Update",
+      "disable": "Disable",
+      "enable": "Enable",
+      "delete": "Delete permanently"
+    },
+    "limit": "Limit",
+    "search": "Search...",
+    "not_found": "You searched for `{search}` and we could not found it."
   }
 }

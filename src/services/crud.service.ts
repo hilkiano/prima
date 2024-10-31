@@ -1,6 +1,12 @@
 import { showError } from "@/lib/errorHandler";
 import { JsonResponse } from "@/types/common.types";
 
+type TGet = {
+  class: string;
+  id: string | number;
+  relations?: string;
+};
+
 type TCreate<T> = {
   class: string;
   payload: Partial<T>;
@@ -27,6 +33,36 @@ type TForceDeleteRes = JsonResponse<
     result: string;
   }[]
 >;
+
+export async function getFn<T>(requestData: TGet) {
+  const dynamicPath = [
+    requestData.class,
+    requestData.id,
+    requestData.relations ?? "",
+  ].join("/");
+  const url = `/api/crud/${dynamicPath}`;
+
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((res: JsonResponse<T>) => {
+      if (!res.status) {
+        const err = res as unknown;
+        showError(res.i18n.alert, err as JsonResponse<null>);
+      }
+      return res;
+    })
+    .catch((err: Error) => {
+      throw new Error(err.message, err);
+    });
+
+  return response;
+}
 
 export async function createFn<T, K>(requestData: TCreate<T>) {
   const response = await fetch(`/api/crud`, {

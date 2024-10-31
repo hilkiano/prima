@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter } from "@/lib/navigation";
+import { usePathname, useRouter } from "@/i18n/routing";
 import { Select, SelectProps, Tooltip } from "@mantine/core";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";

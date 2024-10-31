@@ -237,6 +237,10 @@ type Product = {
   created_by: string;
   updated_by: string;
   deleted_by: string;
+  variants?: ProductVariant[];
+  category?: ProductCategory;
+  created_user?: User;
+  updated_user?: User;
 };
 
 type ProductVariant = {
@@ -257,6 +261,7 @@ type ProductVariant = {
   created_by: string;
   updated_by: string;
   deleted_by: string;
+  batches?: ProductBatch[];
 };
 
 type ProductCategory = {
@@ -288,4 +293,6 @@ type ProductBatch = {
   created_by: string;
   updated_by: string;
   deleted_by: string;
+  outlet?: Outlet;
+  currency?: Currency;
 };

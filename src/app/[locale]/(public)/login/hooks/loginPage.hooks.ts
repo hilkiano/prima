@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { handleLogin } from "@/services/auth.service";
-import { useRouter } from "@/lib/navigation";
+import { useRouter } from "@/i18n/routing";
 import { useUserContext } from "@/lib/userProvider";
 import { Authenticated, JsonResponse } from "@/types/common.types";
 

@@ -234,7 +234,8 @@
         "description_expired_at": "Tanggal kadaluwarsa varian produk. \nHanya format yang dapat diterima adalah YYYY-MM-DD HH:mm:ss. \nAnda boleh membiarkannya kosong.",
         "field_expired_at": "Kedaluwarsa Pada",
         "field_is_infinite_stock": "Selalu Siap Stok?",
-        "description_is_infinite_stock": "Tentukan apakah batch varian ini selalu tersedia. Isi dengan 'Y' jika benar."
+        "description_is_infinite_stock": "Tentukan apakah batch varian ini selalu tersedia. Isi dengan 'Y' jika benar.",
+        "field_batch": "Batch"
       },
       "dropzone_body": "Upload template yang sudah diisi di sini",
       "progress_wait": "Harap tunggu...",
@@ -251,7 +252,8 @@
       "import_max_rows": "Total baris dalam satu lembar atau lebih melebihi 2.000.",
       "import_prepare_validating": "Sedang bersiap untuk validasi data",
       "import_prepare_inserting": "Validasi selesai. Menyiapkan semua data untuk dimasukkan ke dalam database.",
-      "import_inserting": "Memasukan ke database...",
+      "import_inserting": "Memasukkan ke database...",
+      "import_inserting_error": "Ada kesalahan tiba-tiba saat memasukkan data",
       "import_success": "Impor selesai!",
       "import_success_details": "{processed} dari {total, plural, =0 {# produk} =1 {# produk} other {# produk}} telah dimasukkan ke dalam database.",
       "count_products": "Total produk",
@@ -268,15 +270,35 @@
         "err_variant_required": "Varian #{position}: {attribute} diperlukan.",
         "err_variant_string": "Varian #{position}: {attribute} harus berupa string.",
         "err_variant_numeric": "Varian #{position}: {attribute} harus berupa angka.",
-        "err_variant_date": "Varian #{position}: {attribute} harus berupa tanggal yang valid.",
         "err_variant_max": "Varian #{position}: {attribute} maksimal berisi {value} karakter.",
         "err_variant_gt": "Varian #{position}: {attribute} harus lebih tinggi dari harga modal.",
         "err_variant_enum": "Varian #{position}: {attribute} tidak benar. Mohon gunakan salah satu dari berikut ini: {value}.",
-        "err_batch_invalid": "Batch #{position}: {attribute} tidak benar."
+        "err_batch_required": "Batch #{position}: {attribute} diperlukan.",
+        "err_batch_invalid": "Batch #{position}: {attribute} tidak benar.",
+        "err_batch_date": "Batch #{position}: {attribute} harus berupa tanggal yang valid."
       }
     },
     "header": "Produk",
     "subheader": "Anda dapat melihat keseluruhan produk yang telah terdaftar di sistem dan mengubahnya sesuai kebutuhan bisnis Anda.",
-    "btn_add": "Tambahkan produk"
+    "btn_add": "Tambahkan produk",
+    "total_all": "Total produk",
+    "total_active": "Total produk yang aktif",
+    "total_inactive": "Total produk yang non aktif",
+    "tooltip_ready_stock": "{count, plural, =0 {Tidak ada gerai} =1 {Ada # gerai} other {Ada # gerai}} yang selalu siap stok",
+    "modal_disable_title": "Non Aktifkan Produk",
+    "modal_enable_title": "Aktifkan Produk",
+    "modal_disable_body": "Apakah Anda ingin menonaktifkan produk ini? \nProduk yang non aktif tidak akan dimasukkan dalam mesin pencari aplikasi dan Anda tidak dapat melakukan transaksi dengan produk tersebut.",
+    "modal_enable_body": "Apakah Anda ingin menonaktifkan produk ini? \nProduk yang aktif akan dimasukkan dalam mesin pencari aplikasi dan Anda dapat melakukan transaksi dengan produk tersebut.",
+    "active": "Aktif",
+    "created": "Dibuat",
+    "updated": "Diperbarui",
+    "date_metadata": "{date} oleh {user}",
+    "variant_subhead": "Varian #{number}",
+    "batch_price": "{currency} {price}",
+    "warning_active_title": "Peringatan",
+    "warning_active_message": "Anda harus menyisakan setidaknya satu {child} untuk {parent} ini.",
+    "product": "produk",
+    "variant": "varian",
+    "batch": "batch"
   }
 }

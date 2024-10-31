@@ -461,7 +461,6 @@ const ProductsAddForm = React.forwardRef<HTMLDivElement, BoxProps>(
                     <Carousel
                       slideSize={400}
                       slideGap="lg"
-                      align="start"
                       slidesToScroll={1}
                       containScroll="trimSnaps"
                       withControls={false}

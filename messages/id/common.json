@@ -12,6 +12,7 @@
     "reset": "Atur Ulang",
     "cancel": "Batalkan",
     "go_to_dashboard": "Pergi ke Dasbor",
+    "go_back": "Kembali",
     "get_started": "Ayo mulai",
     "next": "Berikutnya",
     "previous": "Sebelumnya",
@@ -21,7 +22,8 @@
     "close": "Tutup",
     "back": "Kembali",
     "hide_details": "Sembunyikan detail",
-    "show_details": "Tampilkan detail"
+    "show_details": "Tampilkan detail",
+    "update": "Perbarui"
   },
   "Alert": {
     "Notification": {
@@ -143,5 +145,37 @@
     "setting_company_currency": "Akses untuk mengubah mata uang secara global",
     "setting_outlet_basic_information": "Akses untuk mengubah informasi dasar gerai",
     "setting_outlet_currency": "Akses untuk mengubah mata uang per gerai"
+  },
+  "Data": {
+    "Table": {
+      "Columns": {
+        "Product": {
+          "id": "ID",
+          "name": "Nama",
+          "type": "Tipe",
+          "details": "Detail",
+          "category": "Kategori",
+          "total_variant": "Total varian",
+          "total_stock": "Total stok",
+          "created_at": "Dibuat pada",
+          "updated_at": "Diperbarui pada",
+          "created_by": "Dibuat oleh",
+          "updated_by": "Diperbarui oleh"
+        }
+      },
+      "column_visibility_toggle": "Ubah Visibilitas Kolom",
+      "toggle_all": "Ubah Semua"
+    },
+    "Action": {
+      "tooltip": "Lihat menu",
+      "view": "Lihat selengkapnya",
+      "update": "Perbarui",
+      "disable": "Non aktifkan",
+      "enable": "Aktifkan",
+      "delete": "Hapus selamanya"
+    },
+    "limit": "Limit",
+    "search": "Cari...",
+    "not_found": "Anda mencari `{search}` dan kami tidak dapat menemukannya."
   }
 }

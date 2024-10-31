@@ -4,7 +4,7 @@ import React from "react";
 import { useTranslations } from "next-intl";
 import { Button, Center, CenterProps, useMantineTheme } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import { Link } from "@/i18n/routing";
+import { Link, useRouter } from "@/i18n/routing";
 
 type TErrorPage = {
   type: "404";
@@ -267,6 +267,7 @@ const ErrorPage = React.forwardRef<CenterProps, TErrorPage>(
     const tButton = useTranslations("Button");
     const t = useTranslations("Error");
     const theme = useMantineTheme();
+    const router = useRouter();
     const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.md})`);
     return type === "404" ? (
       <Center
@@ -282,15 +283,26 @@ const ErrorPage = React.forwardRef<CenterProps, TErrorPage>(
           <h3 className="text-xl md:text-2xl font-light mt-0 text-center">
             {t("404_body")}
           </h3>
-          <Button
-            size={isMobile ? "sm" : "lg"}
-            variant="filled"
-            component={Link}
-            href={"/dashboard"}
-            leftSection={<i className="ti ti-dashboard"></i>}
-          >
-            {tButton("go_to_dashboard")}
-          </Button>
+          <div className="flex flex-col xs:flex-row gap-2 w-full justify-center px-4">
+            <Button
+              size={isMobile ? "sm" : "lg"}
+              variant="filled"
+              component={Link}
+              href={"/dashboard"}
+              leftSection={<i className="ti ti-dashboard"></i>}
+              className="w-full xs:w-auto"
+            >
+              {tButton("go_to_dashboard")}
+            </Button>
+            <Button
+              size={isMobile ? "sm" : "lg"}
+              variant="outline"
+              onClick={router.back}
+              className="w-full xs:w-auto"
+            >
+              {tButton("go_back")}
+            </Button>
+          </div>
         </div>
       </Center>
     ) : (

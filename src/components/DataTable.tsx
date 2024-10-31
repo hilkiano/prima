@@ -207,6 +207,7 @@ const DataTable = React.forwardRef<HTMLDivElement, TDataTable & TableProps>(
         left: [],
         right: ["action"],
       });
+
     const table = useReactTable({
       data,
       columns,

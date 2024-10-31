@@ -18,6 +18,7 @@ import { outfitFont } from "@/styles/fonts";
 import QueryProvider from "@/lib/queryProvider";
 import { useTranslations } from "next-intl";
 import { headers } from "next/headers";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import UserProvider from "@/lib/userProvider";
 import { Authenticated } from "@/types/common.types";
 
@@ -53,14 +54,16 @@ export default function RootLayout({
         />
       </head>
       <body className={`${outfitFont.variable} font-sans antialiased`}>
-        <UserProvider value={userData}>
-          <QueryProvider>
-            <MantineProvider theme={theme}>
-              <Notifications />
-              <ModalsProvider>{children}</ModalsProvider>
-            </MantineProvider>
-          </QueryProvider>
-        </UserProvider>
+        <NuqsAdapter>
+          <UserProvider value={userData}>
+            <QueryProvider>
+              <MantineProvider theme={theme}>
+                <Notifications />
+                <ModalsProvider>{children}</ModalsProvider>
+              </MantineProvider>
+            </QueryProvider>
+          </UserProvider>
+        </NuqsAdapter>
       </body>
     </html>
   );

@@ -166,7 +166,7 @@ const AppShell = React.forwardRef<HTMLDivElement, TAppShell & AppShellProps>(
           <MAppShell.Navbar p="md">
             <ScrollArea>
               {filteredMenus.map((item) => (
-                <NavbarLink {...item} key={item.label} />
+                <NavbarLink {...item} key={item.label} onClick={toggle} />
               ))}
             </ScrollArea>
           </MAppShell.Navbar>

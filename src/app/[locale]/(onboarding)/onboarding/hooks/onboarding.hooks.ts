@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "@/lib/navigation";
+import { useRouter } from "@/i18n/routing";
 import { useLocalStorage } from "@mantine/hooks";
 import { useMutation } from "@tanstack/react-query";
 import { handleNewSubscription } from "@/services/subscription.service";

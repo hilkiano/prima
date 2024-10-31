@@ -122,7 +122,7 @@ const GetTemplate = React.forwardRef<HTMLDivElement, BoxProps>(
                 variant="gradient"
                 component="a"
                 leftSection={<IconDownload />}
-                href="/api/download/template?model=Product&type=import&format=xlsx"
+                href="/api/download/template?model=Product&type=import&format=xlsx&with_example=true&example_count=1234"
                 fullWidth={isMobile}
               >
                 {t("btn_template_download")}
