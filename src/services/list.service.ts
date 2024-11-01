@@ -3,6 +3,7 @@ import { JsonResponse } from "@/types/common.types";
 
 type TList = {
   model: string;
+  page?: string;
   limit?: string;
   sort?: string;
   sort_direction?: string;

@@ -227,9 +227,9 @@ type Product = {
   id: string;
   name: string;
   details: string;
-  type: string;
+  type: "PHYSICAL" | "VIRTUAL" | "SERVICE" | "SUBSCRIPTION";
   configs: any;
-  product_category_id: string;
+  product_category_id: string | null;
   company_id: string;
   created_at: Date;
   updated_at: Date;

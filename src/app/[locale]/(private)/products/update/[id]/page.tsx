@@ -5,9 +5,13 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
+import axios from "axios";
 import pick from "lodash/pick";
 import { NextIntlClientProvider, useMessages } from "next-intl";
-import ProductContainer from "./_components/ProductContainer";
+import { cookies } from "next/headers";
+import ProductUpdateFormContainer from "./_components/ProductUpdateFormContainer";
+import ProductUpdateHeader from "./_components/ProductUpdateHeader";
+import { getList } from "@/services/list.service";
 
 export default async function Products({
   params,
@@ -31,6 +35,39 @@ export default async function Products({
       }),
   });
 
+  await queryClient.prefetchQuery({
+    queryKey: ["categoryList"],
+    queryFn: () =>
+      getList({
+        model: "ProductCategory",
+        limit: "99999",
+        sort: "name",
+        sort_direction: "asc",
+      }),
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ["outletList"],
+    queryFn: () =>
+      getList({
+        model: "Outlet",
+        limit: "99999",
+        sort: "name",
+        sort_direction: "asc",
+      }),
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ["currencyList"],
+    queryFn: () =>
+      getList({
+        model: "Currency",
+        limit: "99999",
+        sort: "id",
+        sort_direction: "asc",
+      }),
+  });
+
   return <ProductsContent query={queryClient} />;
 }
 
@@ -46,7 +83,8 @@ function ProductsContent({ query }: TProducts) {
       messages={pick(messages, ["Form", "Products", "Button", "Notification"])}
     >
       <HydrationBoundary state={dehydrate(query)}>
-        <ProductContainer className="max-w-[1000px] w-full ml-auto mr-auto flex flex-col gap-4" />
+        <ProductUpdateHeader className="max-w-[1000px] w-full ml-auto mr-auto flex flex-col gap-4" />
+        <ProductUpdateFormContainer className="rounded-xl p-4 xs:p-8 bg-slate-100 dark:bg-slate-950/40 mt-4 max-w-[1000px] w-full ml-auto mr-auto" />
       </HydrationBoundary>
     </NextIntlClientProvider>
   );

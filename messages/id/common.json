@@ -176,6 +176,11 @@
     },
     "limit": "Limit",
     "search": "Cari...",
-    "not_found": "Anda mencari `{search}` dan kami tidak dapat menemukannya."
+    "not_found": "Anda mencari `{search}` dan kami tidak dapat menemukannya.",
+    "aria_search": "tombol cari",
+    "aria_first": "halaman pertama",
+    "aria_previous": "halaman sebelumnya",
+    "aria_next": "halaman berikutnya",
+    "aria_last": "halaman terakhir"
   }
 }

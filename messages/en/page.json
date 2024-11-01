@@ -299,6 +299,10 @@
     "warning_active_message": "You must leave at least one active {child} for this {parent}.",
     "product": "product",
     "variant": "variant",
-    "batch": "batch"
+    "batch": "batch",
+    "Update": {
+      "header": "Update product: {product_name}",
+      "notification_success": "Data has been saved."
+    }
   }
 }

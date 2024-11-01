@@ -23,7 +23,7 @@ const ProductsDataContainer = forwardRef<HTMLDivElement, BoxProps>(
     const tButton = useTranslations("Button");
     const tData = useTranslations("Data");
     const t = useTranslations("Products");
-    const { dataQuery, filters, mutations } = useProductsData();
+    const { dataQuery, filters, mutations, queryParams } = useProductsData();
     const locale = useLocale();
 
     // Prepare column for table
@@ -300,6 +300,7 @@ const ProductsDataContainer = forwardRef<HTMLDivElement, BoxProps>(
           className="mt-4"
           dataQuery={dataQuery}
           filters={filters}
+          queryParams={queryParams}
           columns={columns}
           model="Product"
           withPaginator

@@ -17,6 +17,7 @@ import {
 import { UseQueryResult } from "@tanstack/react-query";
 import { PaginationState } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
+import { Options } from "nuqs";
 import React, { Dispatch, forwardRef, SetStateAction } from "react";
 
 type TPaginator = {
@@ -25,6 +26,18 @@ type TPaginator = {
   pagination: PaginationState;
   setPagination: Dispatch<SetStateAction<PaginationState>>;
   limitOptions?: string[];
+  queryParams: {
+    page: number;
+    setPage: (
+      value: number | ((old: number) => number | null) | null,
+      options?: Options
+    ) => Promise<URLSearchParams>;
+    limit: number;
+    setLimit: (
+      value: number | ((old: number) => number | null) | null,
+      options?: Options
+    ) => Promise<URLSearchParams>;
+  };
 };
 
 const Paginator = forwardRef<HTMLDivElement, BoxProps & TPaginator>(
@@ -35,6 +48,7 @@ const Paginator = forwardRef<HTMLDivElement, BoxProps & TPaginator>(
       pagination,
       setPagination,
       limitOptions,
+      queryParams,
       ...props
     },
     ref
@@ -61,10 +75,8 @@ const Paginator = forwardRef<HTMLDivElement, BoxProps & TPaginator>(
                 radius="xl"
                 withCheckIcon={false}
                 onChange={(val) => {
-                  setPagination({
-                    pageIndex: 0,
-                    pageSize: Number(val),
-                  });
+                  queryParams.setLimit(Number(val));
+                  queryParams.setPage(1);
                 }}
               />
             </div>
@@ -82,19 +94,45 @@ const Paginator = forwardRef<HTMLDivElement, BoxProps & TPaginator>(
               total={dataQuery.data ? dataQuery.data.data.page_count : 0}
             >
               <Group gap={7}>
-                <Pagination.Previous icon={IconChevronLeft} />
-                <Pagination.Next icon={IconChevronRight} />
+                <Pagination.Previous
+                  aria-label={t("aria_previous")}
+                  icon={IconChevronLeft}
+                />
+                <Pagination.Next
+                  aria-label={t("aria_next")}
+                  icon={IconChevronRight}
+                />
               </Group>
             </Pagination.Root>
           ) : (
             <Pagination
               onChange={(page) => {
-                setPagination({
-                  pageIndex: page - 1,
-                  pageSize: pagination.pageSize,
-                });
+                queryParams.setPage(page);
               }}
               total={dataQuery.data ? dataQuery.data.data.page_count : 0}
+              getControlProps={(control) => {
+                if (control === "first") {
+                  return {
+                    "aria-label": t("aria_first"),
+                  };
+                }
+                if (control === "last") {
+                  return {
+                    "aria-label": t("aria_last"),
+                  };
+                }
+                if (control === "next") {
+                  return {
+                    "aria-label": t("aria_next"),
+                  };
+                }
+                if (control === "previous") {
+                  return {
+                    "aria-label": t("aria_previous"),
+                  };
+                }
+                return {};
+              }}
               value={dataQuery.data?.data.page}
               nextIcon={IconChevronRight}
               previousIcon={IconChevronLeft}

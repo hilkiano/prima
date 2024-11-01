@@ -299,6 +299,9 @@
     "warning_active_message": "Anda harus menyisakan setidaknya satu {child} untuk {parent} ini.",
     "product": "produk",
     "variant": "varian",
-    "batch": "batch"
+    "batch": "batch",
+    "Update": {
+      "header": "Perbarui produk: {product_name}"
+    }
   }
 }

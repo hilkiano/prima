@@ -11,72 +11,84 @@ import { getFn } from "@/services/crud.service";
 import { JsonResponse } from "@/types/common.types";
 import ProductMetadata from "./ProductMetadata";
 import ProductVariants from "./ProductVariants";
+import { useParams } from "next/navigation";
 
-type TProductContainer = {
-  data: JsonResponse<Product>;
-};
+const ProductContainer = forwardRef<HTMLDivElement, BoxProps>(
+  ({ ...props }, ref) => {
+    const t = useTranslations("Button");
+    const router = useRouter();
+    const params = useParams();
 
-const ProductContainer = forwardRef<
-  HTMLDivElement,
-  BoxProps & TProductContainer
->(({ data, ...props }, ref) => {
-  const t = useTranslations("Button");
-  const router = useRouter();
+    const dataQuery = useQuery({
+      queryKey: ["productData", params.id],
+      queryFn: () =>
+        getFn<Product>({
+          class: "Product",
+          id: params.id as string,
+          relations:
+            "category&variants.batches.outlet&variants.batches.currency&createdUser&updatedUser",
+        }),
+      refetchOnReconnect: false,
+    });
 
-  const dataQuery = useQuery({
-    queryKey: ["productData"],
-    queryFn: () =>
-      getFn<Product>({
-        class: "Product",
-        id: data.data.id,
-        relations:
-          "category&variants.batches.outlet&variants.batches.currency&createdUser&updatedUser",
-      }),
-    initialData: data,
-    refetchOnReconnect: false,
-  });
+    return dataQuery.data ? (
+      <Box {...props}>
+        <div className="flex flex-col xs:flex-row justify-between items-center gap-4">
+          <Button
+            leftSection={<IconChevronLeft />}
+            variant="outline"
+            className="w-full xs:w-auto"
+            onClick={router.back}
+          >
+            {t("go_back")}
+          </Button>
+          <Button
+            leftSection={<IconEdit />}
+            variant="gradient"
+            onClick={() => {
+              if (!dataQuery.data.data.deleted_at) {
+                router.push(`/products/update/${dataQuery.data.data.id}`);
+              }
+            }}
+            className="w-full xs:w-auto"
+            disabled={!!dataQuery.data.data.deleted_at}
+          >
+            {t("update")}
+          </Button>
+        </div>
 
-  return (
-    <Box {...props}>
-      <div className="flex flex-col xs:flex-row justify-between items-center gap-4">
-        <Button
-          leftSection={<IconChevronLeft />}
-          variant="outline"
-          className="w-full xs:w-auto"
-          onClick={router.back}
-        >
-          {t("go_back")}
-        </Button>
-        <Button
-          leftSection={<IconEdit />}
-          variant="gradient"
-          onClick={() => {
-            if (!dataQuery.data.data.deleted_at) {
-              router.push(`/products/update/${dataQuery.data.data.id}`);
-            }
-          }}
-          className="w-full xs:w-auto"
-          disabled={!!dataQuery.data.data.deleted_at}
-        >
-          {t("update")}
-        </Button>
-      </div>
-
-      <ProductHead
-        className="rounded-lg p-4 mt-4 xs:p-6 dark:bg-slate-800 bg-slate-200 relative"
-        data={dataQuery.data?.data}
-      />
-      <ProductMetadata
-        className="rounded-lg p-4 mt-4 xs:p-6 dark:bg-slate-800 bg-slate-200 relative"
-        data={dataQuery.data.data}
-      />
-      <ProductVariants
-        className="rounded-lg p-4 mt-4 xs:p-6 dark:bg-slate-800 bg-slate-200 relative"
-        data={dataQuery.data.data}
-      />
-    </Box>
-  );
-});
+        <ProductHead
+          className="rounded-lg p-4 mt-4 xs:p-6 dark:bg-slate-800 bg-slate-200 relative"
+          data={dataQuery.data?.data}
+        />
+        <ProductMetadata
+          className="rounded-lg p-4 mt-4 xs:p-6 dark:bg-slate-800 bg-slate-200 relative"
+          data={dataQuery.data.data}
+        />
+        <ProductVariants
+          className="rounded-lg p-4 mt-4 xs:p-6 dark:bg-slate-800 bg-slate-200 relative"
+          data={dataQuery.data.data}
+        />
+      </Box>
+    ) : (
+      <Box {...props}>
+        <div className="flex flex-col xs:flex-row justify-between items-center gap-4">
+          <Button
+            leftSection={<IconChevronLeft />}
+            variant="outline"
+            className="w-full xs:w-auto"
+            onClick={router.back}
+          >
+            {t("go_back")}
+          </Button>
+        </div>
+        <div className="animate-pulse mt-4 rounded-lg dark:bg-slate-800 bg-slate-200 h-[280px]"></div>
+        <div className="animate-pulse mt-4 rounded-lg dark:bg-slate-800 bg-slate-200 h-[180px]"></div>
+        <div className="animate-pulse mt-4 rounded-lg dark:bg-slate-800 bg-slate-200 h-[480px]"></div>
+      </Box>
+    );
+  }
+);
 
 ProductContainer.displayName = "ProductContainer";
 export default ProductContainer;

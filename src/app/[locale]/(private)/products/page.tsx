@@ -10,7 +10,11 @@ import ProductsHeader from "./_components/ProductsHeader";
 import { getStatistic } from "@/services/statistic.service";
 import ProductsDataContainer from "./_components/ProductsDataContainer";
 
-export default async function Products() {
+export default async function Products({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({

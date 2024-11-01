@@ -25,6 +25,7 @@ import React, {
   Dispatch,
   forwardRef,
   SetStateAction,
+  useEffect,
   useMemo,
   useRef,
 } from "react";
@@ -35,7 +36,9 @@ import ColumnVisibilityToggle from "./ColumnVisibilityToggle";
 import SearchBar from "./SearchBar";
 import { IconSearch } from "@tabler/icons-react";
 import { NotFoundSvg } from "../Svgs";
-import { useMediaQuery } from "@mantine/hooks";
+import { useMediaQuery, useStateHistory } from "@mantine/hooks";
+import { Options } from "nuqs";
+import { filter } from "lodash";
 
 type TDataContainer = {
   dataQuery: UseQueryResult<JsonResponse<ListResult<any>>, Error>;
@@ -56,11 +59,34 @@ type TDataContainer = {
     limitOptions: string[];
   };
   columns: ColumnDef<any, any>[];
+  queryParams: {
+    page: number;
+    setPage: (
+      value: number | ((old: number) => number | null) | null,
+      options?: Options
+    ) => Promise<URLSearchParams>;
+    limit: number;
+    setLimit: (
+      value: number | ((old: number) => number | null) | null,
+      options?: Options
+    ) => Promise<URLSearchParams>;
+  };
   model: string;
 };
 
 const DataContainer = forwardRef<HTMLDivElement, BoxProps & TDataContainer>(
-  ({ dataQuery, withPaginator, filters, columns, model, ...props }, ref) => {
+  (
+    {
+      dataQuery,
+      withPaginator,
+      filters,
+      columns,
+      model,
+      queryParams,
+      ...props
+    },
+    ref
+  ) => {
     const t = useTranslations("Data");
     const theme = useMantineTheme();
     const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.md})`);
@@ -120,7 +146,11 @@ const DataContainer = forwardRef<HTMLDivElement, BoxProps & TDataContainer>(
               className="w-full xs:w-[260px]"
               onSearch={handleSearchClick}
               rightSection={
-                <ActionIcon radius="xl" onClick={handleSearchClick}>
+                <ActionIcon
+                  radius="xl"
+                  onClick={handleSearchClick}
+                  aria-label={t("aria_search")}
+                >
                   <IconSearch size={16} />
                 </ActionIcon>
               }
@@ -162,6 +192,7 @@ const DataContainer = forwardRef<HTMLDivElement, BoxProps & TDataContainer>(
               pagination={filters.pagination}
               setPagination={filters.setPagination}
               limitOptions={filters.limitOptions}
+              queryParams={queryParams}
             />
           ) : (
             <></>

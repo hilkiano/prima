@@ -64,7 +64,10 @@ const authMiddleware = async (request: NextRequest) => {
       if (!res.status) {
         if (res.code === 401) {
           const url = new URL(`/login`, request.url);
-          return NextResponse.redirect(url);
+          const response = NextResponse.redirect(url);
+          response.cookies.delete("jwt");
+
+          return response;
         } else {
           throw new Error(res.message, { cause: res });
         }
@@ -77,6 +80,7 @@ const authMiddleware = async (request: NextRequest) => {
       }
     })
     .catch((err: Error) => {
+      console.log(err);
       return NextResponse.json({
         error: "Backend error. Please check system log.",
         cause: err,

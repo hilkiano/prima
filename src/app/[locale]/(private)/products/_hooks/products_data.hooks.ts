@@ -17,16 +17,17 @@ export default function useProductsData() {
   const queryClient = useQueryClient();
 
   // Query parameters
-  const [globalFilter, setGlobalFilter] = useQueryState("filter", {
-    defaultValue: "",
-  });
-  const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
+  const [page, setPage] = useQueryState(
+    "page",
+    parseAsInteger.withDefault(1).withOptions({ history: "push" })
+  );
   const [limit, setLimit] = useQueryState(
     "limit",
-    parseAsInteger.withDefault(10)
+    parseAsInteger.withDefault(10).withOptions({ history: "push" })
   );
 
   // Data states
+  const [globalFilter, setGlobalFilter] = useState<string>("");
   const limitOptions: string[] = ["5", "10", "20"];
   const [globalFilterColumns, setGlobalFilterColumns] = useState<string>(
     globalFilter ? "id,name,type,details" : ""
@@ -77,6 +78,7 @@ export default function useProductsData() {
     onSuccess: (res) => {
       queryClient.invalidateQueries({ queryKey: ["productList"] });
       queryClient.invalidateQueries({ queryKey: ["productData"] });
+      queryClient.invalidateQueries({ queryKey: ["productStatistic"] });
     },
   });
 
@@ -88,13 +90,16 @@ export default function useProductsData() {
     onSuccess: (res) => {
       queryClient.invalidateQueries({ queryKey: ["productList"] });
       queryClient.invalidateQueries({ queryKey: ["productData"] });
+      queryClient.invalidateQueries({ queryKey: ["productStatistic"] });
     },
   });
 
   useEffect(() => {
-    setPage(pagination.pageIndex + 1);
-    setLimit(pagination.pageSize);
-  }, [pagination, setLimit, setPage]);
+    setPagination({
+      pageIndex: page - 1,
+      pageSize: limit,
+    });
+  }, [page, limit, setPagination]);
 
   return {
     dataQuery,
@@ -112,6 +117,12 @@ export default function useProductsData() {
       withTrashed,
       setWithTrashed,
       limitOptions,
+    },
+    queryParams: {
+      page,
+      setPage,
+      limit,
+      setLimit,
     },
     mutations: {
       mutationDisable,
