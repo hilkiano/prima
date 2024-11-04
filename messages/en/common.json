@@ -177,6 +177,7 @@
     "limit": "Limit",
     "search": "Search...",
     "not_found": "You searched for `{search}` and we could not found it.",
+    "no_data": "No data",
     "aria_search": "search button",
     "aria_first": "first page",
     "aria_previous": "previous page",

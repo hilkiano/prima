@@ -68,25 +68,6 @@ const ProductHead = forwardRef<HTMLDivElement, BoxProps & TProductHead>(
 
     return (
       <Box {...props}>
-        <Badge
-          size="lg"
-          radius="xl"
-          color={
-            data.type === "PHYSICAL"
-              ? "blue"
-              : data.type === "VIRTUAL"
-              ? "red"
-              : data.type === "SUBSCRIPTION"
-              ? "grape"
-              : data.type === "SERVICE"
-              ? "orange"
-              : "gray"
-          }
-          variant="light"
-          className="absolute top-4 right-4 xs:right-6"
-        >
-          {t(`type_${data.type.toLowerCase()}`)}
-        </Badge>
         <p className="absolute top-4 left-4 xs:left-6 opacity-30 m-0 italic">
           {data.id}
         </p>

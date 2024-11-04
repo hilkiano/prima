@@ -42,11 +42,6 @@ const GetTemplate = React.forwardRef<HTMLDivElement, BoxProps>(
           t("Validation.example_details"),
         ],
         [
-          t("Validation.field_type"),
-          t("Validation.description_type"),
-          "PHYSICAL",
-        ],
-        [
           t("Validation.field_category"),
           t("Validation.description_category"),
           t("Validation.example_category"),
@@ -87,11 +82,6 @@ const GetTemplate = React.forwardRef<HTMLDivElement, BoxProps>(
           t("Validation.description_expired_at"),
           "2024-12-20 14:10:57",
         ],
-        [
-          t("Validation.field_is_infinite_stock"),
-          t("Validation.description_is_infinite_stock"),
-          "Y",
-        ],
       ],
     };
 
@@ -122,7 +112,7 @@ const GetTemplate = React.forwardRef<HTMLDivElement, BoxProps>(
                 variant="gradient"
                 component="a"
                 leftSection={<IconDownload />}
-                href="/api/download/template?model=Product&type=import&format=xlsx&with_example=true&example_count=1234"
+                href="/api/download/template?model=Product&type=import&format=xlsx"
                 fullWidth={isMobile}
               >
                 {t("btn_template_download")}

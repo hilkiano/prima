@@ -1,3 +1,5 @@
+"use client";
+
 import { cleanData } from "@/lib/helpers";
 import {
   ActionIcon,
@@ -17,6 +19,10 @@ import useProductUpdate from "../_hooks/product_update.hooks";
 import ProductsCategoryForm from "../../../add/_components/ProductsCategoryForm";
 import { useDisclosure } from "@mantine/hooks";
 import { useUserContext } from "@/lib/userProvider";
+import { modals } from "@mantine/modals";
+import ProductVariantForm from "./ProductVariantForm";
+import { useQueryClient } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
 
 const ProductForm = forwardRef<
   HTMLFormElement,
@@ -26,7 +32,11 @@ const ProductForm = forwardRef<
   const t = useTranslations("Products");
   const { userData } = useUserContext();
   const [opened, { open, close }] = useDisclosure(false);
-  const { form, mutations, combobox, functions } = useProductUpdate();
+  const [vOpened, { open: openV, close: closeV }] = useDisclosure(false);
+  const queryClient = useQueryClient();
+  const params = useParams();
+
+  const { form, mutations, combobox } = useProductUpdate();
   return (
     <>
       <form
@@ -41,40 +51,12 @@ const ProductForm = forwardRef<
                 id: data.id,
                 name: data.name,
                 details: data.details ? data.details : undefined,
-                type: data.type,
                 product_category_id: data.product_category_id,
               }),
             },
           });
         })}
       >
-        <Controller
-          name="type"
-          control={form.control}
-          render={({ field: { onChange, value } }) => (
-            <ProductsFormField
-              required
-              label={t("Add.label_type")}
-              field={
-                <Select
-                  size="lg"
-                  className="w-full sm:w-[250px]"
-                  error={form.formState.errors.type?.message}
-                  data={combobox.productTypes}
-                  value={value}
-                  onChange={(val) => {
-                    onChange(val);
-                    if (val) {
-                      functions.filterCategory(val);
-                    }
-                  }}
-                  required
-                  allowDeselect={false}
-                />
-              }
-            />
-          )}
-        />
         <Controller
           name="name"
           control={form.control}
@@ -172,7 +154,7 @@ const ProductForm = forwardRef<
             leftSection={<IconPlus />}
             type="button"
             size="lg"
-            onClick={() => {}}
+            onClick={openV}
           >
             {t("Add.btn_add_variant")}
           </Button>
@@ -189,6 +171,24 @@ const ProductForm = forwardRef<
 
       <Modal opened={opened} onClose={close} title={t("Add.tooltip_category")}>
         <ProductsCategoryForm onFinish={close} />
+      </Modal>
+
+      <Modal
+        centered
+        opened={vOpened}
+        size="xl"
+        onClose={closeV}
+        title={t("Add.btn_add_variant")}
+      >
+        <ProductVariantForm
+          onFinish={() => {
+            closeV();
+            queryClient.invalidateQueries({ queryKey: ["productList"] });
+            queryClient.invalidateQueries({
+              queryKey: ["productData", params.id],
+            });
+          }}
+        />
       </Modal>
     </>
   );

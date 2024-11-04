@@ -302,7 +302,11 @@
     "batch": "batch",
     "Update": {
       "header": "Update product: {product_name}",
-      "notification_success": "Data has been saved."
+      "notification_success": "Data has been saved.",
+      "btn_remove": "Remove permanently",
+      "modal_remove_variant": "You are about to remove the variant <emp>{label}</emp>. Are you sure?",
+      "modal_remove_batch": "Are you sure?",
+      "notification_batch": "Please leave at least one batch per variant."
     }
   }
 }

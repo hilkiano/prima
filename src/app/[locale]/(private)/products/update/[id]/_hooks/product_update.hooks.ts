@@ -1,19 +1,29 @@
 "use client";
 
 import { useUserContext } from "@/lib/userProvider";
-import { getFn, updateFn } from "@/services/crud.service";
+import {
+  createFn,
+  forceDeleteFn,
+  getFn,
+  updateFn,
+} from "@/services/crud.service";
 import { getList } from "@/services/list.service";
+import { bulkDelete, bulkUpload } from "@/services/storage.service";
 import { JsonResponse, ListResult } from "@/types/common.types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ComboboxData } from "@mantine/core";
-import { FileWithPath } from "@mantine/dropzone";
 import { notifications } from "@mantine/notifications";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
+
+type TCreate<T> = {
+  class: string;
+  payload: Partial<T>;
+};
 
 type TUpdate<T> = {
   class: string;
@@ -106,38 +116,10 @@ export default function useProductUpdate() {
     refetchOnWindowFocus: false,
   });
 
-  // Types
-  const productTypes = [
-    {
-      label: t("type_physical"),
-      value: "PHYSICAL",
-    },
-    {
-      label: t("type_virtual"),
-      value: "VIRTUAL",
-    },
-    {
-      label: t("type_service"),
-      value: "SERVICE",
-    },
-    {
-      label: t("type_subscription"),
-      value: "SUBSCRIPTION",
-    },
-  ] as const;
-  type TProductType = (typeof productTypes)[number]["value"];
-  const productTypeEnum: [TProductType, ...TProductType[]] = [
-    productTypes[0].value,
-    ...productTypes.slice(1).map((p) => p.value),
-  ];
-
   // Form
   const labelMap = new Map();
   const schema = z.object({
     id: z.string(),
-    type: z.enum(productTypeEnum, {
-      required_error: tForm("validation_required"),
-    }),
     name: z
       .string()
       .min(8, tForm("validation_min_char", { min: 8 }))
@@ -150,7 +132,6 @@ export default function useProductUpdate() {
     resolver: zodResolver(schema),
     defaultValues: {
       id: "",
-      type: "PHYSICAL",
       name: "",
       details: "",
       product_category_id: null,
@@ -158,32 +139,36 @@ export default function useProductUpdate() {
     mode: "onTouched",
   });
 
-  // Functions
-  const filterCategory = (type: string) => {
-    const filteredCategories =
-      categoryQuery.data?.data.rows.filter(
-        (row) => row.type === type || row.type === null
-      ) ?? [];
-    const comboboxData = filteredCategories.map((row) => {
-      return {
-        label: row.name,
-        value: row.id,
-      };
-    });
-
-    if (
-      form.getValues("product_category_id") &&
-      !filteredCategories?.find(
-        (row) => row.id === form.getValues("product_category_id")
-      )
-    ) {
-      form.setValue("product_category_id", undefined);
-    }
-
-    setProductCategories(comboboxData);
-  };
-
   // Mutations
+  const createVariant = useMutation({
+    mutationFn: (data: {
+      class: "ProductVariant";
+      payload: { payload: Partial<ProductVariant> };
+    }) => createFn<TCreate<ProductVariant>, ProductVariant>(data),
+  });
+
+  const createBatch = useMutation({
+    mutationFn: (data: {
+      class: "ProductBatch";
+      payload: { payload: Partial<ProductBatch> };
+    }) => createFn<TCreate<ProductBatch>, ProductBatch>(data),
+  });
+
+  const uploadImages = useMutation({
+    mutationFn: bulkUpload,
+  });
+
+  const deleteImages = useMutation({
+    mutationFn: bulkDelete,
+  });
+
+  const forceDelete = useMutation({
+    mutationFn: forceDeleteFn,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["productData", params.id] });
+    },
+  });
+
   const updateProduct = useMutation({
     mutationFn: (data: {
       class: "Product";
@@ -192,7 +177,6 @@ export default function useProductUpdate() {
     onSuccess: (result) => {
       queryClient.invalidateQueries({ queryKey: ["productData", params.id] });
       notifications.show({
-        color: "blue",
         message: t("Update.notification_success"),
       });
     },
@@ -208,7 +192,6 @@ export default function useProductUpdate() {
     onSuccess: (result) => {
       queryClient.invalidateQueries({ queryKey: ["productData", params.id] });
       notifications.show({
-        color: "blue",
         message: t("Update.notification_success"),
       });
     },
@@ -224,7 +207,6 @@ export default function useProductUpdate() {
     onSuccess: (result) => {
       queryClient.invalidateQueries({ queryKey: ["productData", params.id] });
       notifications.show({
-        color: "blue",
         message: t("Update.notification_success"),
       });
     },
@@ -234,7 +216,6 @@ export default function useProductUpdate() {
   useEffect(() => {
     if (dataQuery.data) {
       form.setValue("id", dataQuery.data.data.id);
-      form.setValue("type", dataQuery.data.data.type);
       form.setValue("name", dataQuery.data.data.name);
       form.setValue("details", dataQuery.data.data.details ?? "");
       form.setValue(
@@ -248,16 +229,12 @@ export default function useProductUpdate() {
   useEffect(() => {
     if (categoryQuery.data) {
       setProductCategories(
-        categoryQuery.data?.data.rows
-          .filter(
-            (row) => row.type === form.getValues("type") || row.type === null
-          )
-          .map((row) => {
-            return {
-              label: row.name,
-              value: row.id,
-            };
-          })
+        categoryQuery.data?.data.rows.map((row) => {
+          return {
+            label: row.name,
+            value: row.id,
+          };
+        })
       );
     }
 
@@ -296,14 +273,15 @@ export default function useProductUpdate() {
     combobox: {
       productCategories,
       productCurrencies,
-      productTypes,
       outlets,
     },
     form,
-    functions: {
-      filterCategory,
-    },
     mutations: {
+      createVariant,
+      createBatch,
+      uploadImages,
+      deleteImages,
+      forceDelete,
       updateProduct,
       updateProductVariant,
       updateProductBatch,

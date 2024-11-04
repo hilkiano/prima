@@ -157,7 +157,8 @@ const DataContainer = forwardRef<HTMLDivElement, BoxProps & TDataContainer>(
             />
           </div>
 
-          {dataQuery.data?.data.rows.length === 0 ? (
+          {dataQuery.data?.data.rows.length === 0 &&
+          filters?.globalFilter !== "" ? (
             <Center className="my-12">
               <div className="max-w-[400px] flex flex-col items-center gap-4">
                 <NotFoundSvg
@@ -168,6 +169,19 @@ const DataContainer = forwardRef<HTMLDivElement, BoxProps & TDataContainer>(
                   {t("not_found", {
                     search: filters?.globalFilter,
                   })}
+                </h1>
+              </div>
+            </Center>
+          ) : dataQuery.data?.data.rows.length === 0 &&
+            filters?.globalFilter === "" ? (
+            <Center className="my-12">
+              <div className="max-w-[400px] flex flex-col items-center gap-4">
+                <NotFoundSvg
+                  width={isMobile ? 100 : 150}
+                  height={isMobile ? 100 : 150}
+                />
+                <h1 className="text-xl md:text-3xl m-0 opacity-50 text-center">
+                  {t("no_data")}
                 </h1>
               </div>
             </Center>

@@ -48,11 +48,9 @@ const ProductsAddForm = React.forwardRef<HTMLDivElement, BoxProps>(
     const t = useTranslations("Products.Add");
     const {
       form,
-      productTypes,
       productCategories,
       productCurrencies,
       outlets,
-      filterCategory,
       variantsArray,
       currency,
       altCurrencyFormat,
@@ -109,7 +107,6 @@ const ProductsAddForm = React.forwardRef<HTMLDivElement, BoxProps>(
                 payload: cleanData({
                   name: data.name,
                   details: data.details ? data.details : undefined,
-                  type: data.type,
                   product_category_id: data.product_category_id
                     ? data.product_category_id
                     : undefined,
@@ -122,33 +119,6 @@ const ProductsAddForm = React.forwardRef<HTMLDivElement, BoxProps>(
           })}
           className="flex flex-col gap-6"
         >
-          <Controller
-            name="type"
-            control={form.control}
-            render={({ field: { onChange, value } }) => (
-              <ProductsFormField
-                required
-                label={t("label_type")}
-                field={
-                  <Select
-                    size="lg"
-                    className="w-full sm:w-[250px]"
-                    error={form.formState.errors.type?.message}
-                    data={productTypes}
-                    value={value}
-                    onChange={(val) => {
-                      onChange(val);
-                      if (val) {
-                        filterCategory(val);
-                      }
-                    }}
-                    required
-                    allowDeselect={false}
-                  />
-                }
-              />
-            )}
-          />
           <Controller
             name="name"
             control={form.control}

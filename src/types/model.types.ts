@@ -227,7 +227,6 @@ type Product = {
   id: string;
   name: string;
   details: string;
-  type: "PHYSICAL" | "VIRTUAL" | "SERVICE" | "SUBSCRIPTION";
   configs: any;
   product_category_id: string | null;
   company_id: string;
@@ -267,7 +266,6 @@ type ProductVariant = {
 type ProductCategory = {
   id: string;
   name: string;
-  type: string;
   company_id: string;
   created_at: Date;
   updated_at: Date;
@@ -282,11 +280,10 @@ type ProductBatch = {
   base_capital_price: number;
   base_selling_price: number;
   stock: number;
-  is_infinite_stock: boolean;
   product_variant_id: string;
   outlet_id: string;
   currency_id: number;
-  expired_at: Date;
+  expired_at: Date | null;
   created_at: Date;
   updated_at: Date;
   deleted_at: Date;

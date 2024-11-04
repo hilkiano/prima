@@ -1,15 +1,19 @@
 "use client";
 
 import { Box, BoxProps, Divider } from "@mantine/core";
-import React, { forwardRef } from "react";
+import React, { forwardRef, useEffect } from "react";
 import useProductUpdate from "../_hooks/product_update.hooks";
 import { cleanData } from "@/lib/helpers";
 import ProductForm from "./ProductForm";
 import ProductVariantForm from "./ProductVariantForm";
+import { useQueryClient } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
 
 const ProductUpdateFormContainer = forwardRef<HTMLDivElement, BoxProps>(
   ({ ...props }, ref) => {
     const { form, dataQuery, mutations } = useProductUpdate();
+    const queryClient = useQueryClient();
+    const params = useParams();
 
     if (!dataQuery.data) {
       return (
@@ -29,6 +33,12 @@ const ProductUpdateFormContainer = forwardRef<HTMLDivElement, BoxProps>(
             data={variant}
             number={id + 1}
             singleVariant={dataQuery.data.data.variants?.length === 1}
+            onFinish={() => {
+              queryClient.invalidateQueries({ queryKey: ["productList"] });
+              queryClient.invalidateQueries({
+                queryKey: ["productData", params.id],
+              });
+            }}
           />
         ))}
       </Box>

@@ -17,6 +17,7 @@ import "dayjs/locale/id";
 import { useMediaQuery } from "@mantine/hooks";
 import useProductsData from "../../_hooks/products_data.hooks";
 import { notifications } from "@mantine/notifications";
+import ProductsImageThumbnail from "./ProductsImageThumbnail";
 
 type TProductVariants = {
   data: Product;
@@ -148,11 +149,7 @@ const ProductVariants = forwardRef<HTMLDivElement, BoxProps & TProductVariants>(
             <div className="flex gap-2 items-center">
               <Text className="text-sm opacity-60">{t("Add.label_stock")}</Text>
               <Text className="text-sm font-semibold">
-                {data.is_infinite_stock ? (
-                  <IconInfinity size={14} className="mt-1" />
-                ) : (
-                  data.stock
-                )}
+                {Intl.NumberFormat(locale).format(data.stock)}
               </Text>
             </div>
             <div className="flex gap-2 items-center">
@@ -216,27 +213,32 @@ const ProductVariants = forwardRef<HTMLDivElement, BoxProps & TProductVariants>(
             </Badge>
             <p className="m-0 font-bold text-sm uppercase">SKU</p>
             <p className="m-0 opacity-60 font-mono">{variant.sku}</p>
-            {data.variants!.length > 1 ? (
-              <>
-                <p className="m-0 font-bold text-sm uppercase">
-                  {t("Add.label_label")}
-                </p>
-                <p className="m-0 opacity-60">{variant.label ?? "-"}</p>
-                <p className="m-0 font-bold text-sm uppercase mt-2">
-                  {t("Add.label_specifications")}
-                </p>
-                <p className="m-0 opacity-60">
-                  {variant.specifications ?? "-"}
-                </p>
-              </>
-            ) : (
-              <></>
-            )}
+
+            <p className="m-0 font-bold text-sm uppercase mt-2">
+              {t("Add.label_label")}
+            </p>
+            <p className="m-0 opacity-60">{variant.label ?? "-"}</p>
+            <p className="m-0 font-bold text-sm uppercase mt-2">
+              {t("Add.label_specifications")}
+            </p>
+            <p className="m-0 opacity-60">{variant.specifications ?? "-"}</p>
 
             <p className="m-0 font-bold text-sm uppercase mt-2">
               {t("Add.label_images")}
             </p>
-            {variant.pictures_url ? <></> : <p className="m-0 opacity-60">-</p>}
+            {variant.pictures_url ? (
+              <div className="flex flex-row gap-4">
+                {variant.pictures_url.map((url, index) => (
+                  <ProductsImageThumbnail
+                    key={index + 100}
+                    image={url as string}
+                    className="w-24 h-24 my-4 opacity-60 hover:opacity-100 transition-opacity cursor-pointer relative"
+                  />
+                ))}
+              </div>
+            ) : (
+              <p className="m-0 opacity-60">-</p>
+            )}
             <p className="m-0 font-bold text-sm uppercase mt-2">
               {t("Add.field_batch")}
             </p>

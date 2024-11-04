@@ -70,25 +70,6 @@ export default function useProductsForm() {
   >([]);
   const [isError, setIsError] = React.useState(false);
 
-  const productTypes = [
-    {
-      label: t("type_physical"),
-      value: "PHYSICAL",
-    },
-    {
-      label: t("type_virtual"),
-      value: "VIRTUAL",
-    },
-    {
-      label: t("type_service"),
-      value: "SERVICE",
-    },
-    {
-      label: t("type_subscription"),
-      value: "SUBSCRIPTION",
-    },
-  ] as const;
-
   const categoryQuery = useQuery<JsonResponse<ListResult<ProductCategory[]>>>({
     queryFn: async () => {
       return getList({
@@ -134,43 +115,10 @@ export default function useProductsForm() {
     refetchOnWindowFocus: false,
   });
 
-  const filterCategory = (type: string) => {
-    const filteredCategories =
-      categoryQuery.data?.data.rows.filter(
-        (row) => row.type === type || row.type === null
-      ) ?? [];
-    const comboboxData = filteredCategories.map((row) => {
-      return {
-        label: row.name,
-        value: row.id,
-      };
-    });
-
-    if (
-      form.getValues("product_category_id") &&
-      !filteredCategories?.find(
-        (row) => row.id === form.getValues("product_category_id")
-      )
-    ) {
-      form.setValue("product_category_id", undefined);
-    }
-
-    setProductCategories(comboboxData);
-  };
-
-  type TProductType = (typeof productTypes)[number]["value"];
-  const productTypeEnum: [TProductType, ...TProductType[]] = [
-    productTypes[0].value,
-    ...productTypes.slice(1).map((p) => p.value),
-  ];
-
   const labelMap = new Map();
 
   const schema = z.object({
     id: z.string(),
-    type: z.enum(productTypeEnum, {
-      required_error: tForm("validation_required"),
-    }),
     name: z
       .string()
       .min(8, tForm("validation_min_char", { min: 8 }))
@@ -190,7 +138,6 @@ export default function useProductsForm() {
                 .object({
                   outlet_id: z.string(),
                   stock: z.string(),
-                  is_infinite_stock: z.boolean(),
                   currency_id: z.number(),
                   base_capital_price: z.string(),
                   base_selling_price: z
@@ -199,15 +146,6 @@ export default function useProductsForm() {
                   expired_at: z.date().nullish(),
                 })
                 .superRefine((refine, ctx) => {
-                  // Stock
-                  if (!refine.is_infinite_stock && refine.stock === "") {
-                    ctx.addIssue({
-                      path: ["stock"],
-                      message: tForm("validation_required"),
-                      code: z.ZodIssueCode.custom,
-                    });
-                  }
-
                   // Selling price
                   const sPrice = parseFloat(
                     refine.base_selling_price
@@ -270,7 +208,6 @@ export default function useProductsForm() {
     resolver: zodResolver(schema),
     defaultValues: {
       id: "",
-      type: "PHYSICAL",
       name: "",
       details: "",
       product_category_id: null,
@@ -296,16 +233,12 @@ export default function useProductsForm() {
   React.useEffect(() => {
     if (categoryQuery.data) {
       setProductCategories(
-        categoryQuery.data?.data.rows
-          .filter(
-            (row) => row.type === form.getValues("type") || row.type === null
-          )
-          .map((row) => {
-            return {
-              label: row.name,
-              value: row.id,
-            };
-          })
+        categoryQuery.data?.data.rows.map((row) => {
+          return {
+            label: row.name,
+            value: row.id,
+          };
+        })
       );
     }
 
@@ -482,7 +415,6 @@ export default function useProductsForm() {
                               stock: parseInt(batch.stock.replace(/\D+/g, ""))
                                 ? parseInt(batch.stock.replace(/\D+/g, ""))
                                 : 0,
-                              is_infinite_stock: batch.is_infinite_stock,
                               expired_at: batch.expired_at
                                 ? batch.expired_at
                                 : undefined,
@@ -560,7 +492,6 @@ export default function useProductsForm() {
                               stock: parseInt(batch.stock.replace(/\D+/g, ""))
                                 ? parseInt(batch.stock.replace(/\D+/g, ""))
                                 : 0,
-                              is_infinite_stock: batch.is_infinite_stock,
                               expired_at: batch.expired_at
                                 ? batch.expired_at
                                 : undefined,
@@ -668,11 +599,9 @@ export default function useProductsForm() {
 
   return {
     form,
-    productTypes,
     productCategories,
     productCurrencies,
     outlets,
-    filterCategory,
     variantsArray,
     currency,
     setCurrency,

@@ -101,86 +101,21 @@ const ProductsDataContainer = forwardRef<HTMLDivElement, BoxProps>(
           enableGlobalFilter: true,
           enableHiding: false,
         }),
-        columnHelper.accessor("type", {
-          cell: (info) => (
-            <Badge
-              size="lg"
-              radius="xl"
-              color={
-                info.getValue() === "PHYSICAL"
-                  ? "blue"
-                  : info.getValue() === "VIRTUAL"
-                  ? "red"
-                  : info.getValue() === "SUBSCRIPTION"
-                  ? "grape"
-                  : info.getValue() === "SERVICE"
-                  ? "orange"
-                  : "gray"
-              }
-              variant="light"
-            >
-              {t(`type_${info.getValue().toLowerCase()}`)}
-            </Badge>
-          ),
-          header: () => <span>{tData("Table.Columns.Product.type")}</span>,
-          id: "type",
-          size: 150,
-          enableSorting: true,
-          enableGlobalFilter: true,
-          enableHiding: true,
-        }),
         columnHelper.accessor("total_stock", {
           cell: (info) => {
-            let hasInfinite: boolean = false;
-            let totalInfinite: number = 0;
             const getStocks = info.row.original.variants!.map((variant) => {
               return variant.batches!.map((batch) => {
-                if (batch.is_infinite_stock) {
-                  hasInfinite = true;
-                  totalInfinite++;
-                }
-
-                return batch.is_infinite_stock ? 0 : batch.stock;
+                return batch.deleted_at ? 0 : batch.stock;
               });
             });
 
             const totalStock = sumMultiDimensionalArray(getStocks);
 
-            if (hasInfinite && totalStock === 0) {
-              return (
-                <Tooltip
-                  label={t("tooltip_ready_stock", { count: totalInfinite })}
-                >
-                  <IconInfinity color="red" />
-                </Tooltip>
-              );
-            } else if (hasInfinite && totalStock !== 0) {
-              return (
-                <div className="flex flex-row gap-2 items-center">
-                  <Tooltip
-                    label={t("tooltip_ready_stock", { count: totalInfinite })}
-                  >
-                    <IconInfinity color="red" />
-                  </Tooltip>
-
-                  <p className="m-0">
-                    {Intl.NumberFormat(locale).format(totalStock)}
-                  </p>
-                </div>
-              );
-            } else if (!hasInfinite && totalStock !== 0) {
-              return (
-                <p className="m-0">
-                  {Intl.NumberFormat(locale).format(totalStock)}
-                </p>
-              );
-            } else if (!hasInfinite && totalStock === 0) {
-              return (
-                <p className="m-0 text-red-500 font-bold">
-                  {Intl.NumberFormat(locale).format(totalStock)}
-                </p>
-              );
-            }
+            return (
+              <p className="m-0 font-bold">
+                {Intl.NumberFormat(locale).format(totalStock)}
+              </p>
+            );
           },
           header: () => (
             <span className="text-right">

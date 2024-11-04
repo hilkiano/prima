@@ -5,17 +5,14 @@ import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-export default function useProductsBatchForm(
-  currency: number,
-  data?: {
-    outlet_id: string;
-    stock: string;
-    currency_id: number;
-    base_capital_price: string;
-    base_selling_price: string;
-    expired_at?: Date | null | undefined;
-  }
-) {
+export default function useProductsBatchForm(data?: {
+  outlet_id: string;
+  stock: string;
+  currency_id: number;
+  base_capital_price: string;
+  base_selling_price: string;
+  expired_at?: Date | null | undefined;
+}) {
   const tForm = useTranslations("Form");
   const t = useTranslations("Products.Add");
 
@@ -53,7 +50,7 @@ export default function useProductsBatchForm(
       outlet_id: data ? data.outlet_id : "",
       base_capital_price: data ? data.base_capital_price : "",
       base_selling_price: data ? data.base_selling_price : "",
-      currency_id: data ? data.currency_id : currency,
+      currency_id: data ? data.currency_id : 1,
       stock: data ? data.stock : "",
       expired_at: data ? data.expired_at : null,
     },

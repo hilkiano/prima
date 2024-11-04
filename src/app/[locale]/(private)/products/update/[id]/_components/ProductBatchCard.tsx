@@ -10,10 +10,10 @@ import {
 import { IconBuildingStore, IconEdit, IconTrash } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import { useLocale, useTranslations } from "next-intl";
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 import "dayjs/locale/id";
 import { useFieldArray, UseFormReturn } from "react-hook-form";
-import ProductsBatchForm from "./ProductsBatchForm";
+import ProductBatchForm from "./ProductBatchForm";
 import { useDisclosure } from "@mantine/hooks";
 import { UseQueryResult } from "@tanstack/react-query";
 import { JsonResponse, ListResult } from "@/types/common.types";
@@ -35,6 +35,17 @@ type TProductBatchCard = {
   productCurrencies: ComboboxData;
   currencyQuery: UseQueryResult<JsonResponse<ListResult<Currency[]>>, Error>;
   altCurrencyFormat: boolean;
+  updateFn?: (data: TBatchForm) => Promise<void>;
+  deleteFn?: () => void;
+};
+
+type TBatchForm = {
+  base_capital_price: string;
+  base_selling_price: string;
+  stock: string;
+  outlet_id: string;
+  currency_id: number;
+  expired_at?: Date | null | undefined;
 };
 
 const ProductBatchCard = forwardRef<
@@ -52,6 +63,8 @@ const ProductBatchCard = forwardRef<
       productCurrencies,
       currencyQuery,
       altCurrencyFormat,
+      updateFn,
+      deleteFn,
       ...props
     },
     ref
@@ -65,12 +78,25 @@ const ProductBatchCard = forwardRef<
     const [opened, { open, close }] = useDisclosure(false);
     const locale = useLocale();
     const t = useTranslations("Products.Add");
+    const [loading, setLoading] = useState(false);
 
     const batchesArray = useFieldArray({
       control: productForm.control,
       keyName: "batch_id",
-      name: `variants.${varId}.batches`,
+      name: `batches`,
     });
+
+    const updateBatch = async (data: TBatchForm) => {
+      if (updateFn) {
+        setLoading(true);
+        await updateFn(data);
+        setLoading(false);
+        close();
+      } else {
+        batchesArray.update(batchId ? batchId : 0, data);
+        close();
+      }
+    };
 
     return (
       <>
@@ -91,7 +117,7 @@ const ProductBatchCard = forwardRef<
                 {t("label_capital_price")}
               </Text>
               <Text className="text-sm font-semibold">
-                {batch.base_capital_price}
+                {batch.base_capital_price ? batch.base_capital_price : "-"}
               </Text>
             </div>
             <div className="flex gap-2 items-center">
@@ -117,10 +143,12 @@ const ProductBatchCard = forwardRef<
             <ActionIcon size="sm" aria-label="edit batch button" onClick={open}>
               <IconEdit />
             </ActionIcon>
+
             <ActionIcon
               size="sm"
               aria-label="delete batch button"
-              onClick={() => batchesArray.remove(batchId)}
+              onClick={deleteFn ? deleteFn : () => batchesArray.remove(batchId)}
+              color={deleteFn ? "red" : "blue"}
             >
               <IconTrash />
             </ActionIcon>
@@ -131,20 +159,11 @@ const ProductBatchCard = forwardRef<
         </Paper>
 
         <Modal opened={opened} onClose={close} title={t("title_batch_form")}>
-          <ProductsBatchForm
-            productForm={productForm}
-            varId={varId ? varId : 0}
-            currency={currency}
-            productCurrencies={productCurrencies}
-            currencyQuery={currencyQuery}
-            altCurrencyFormat={altCurrencyFormat}
-            locale={locale}
-            outlets={outlets}
-            onClose={() => {
-              close();
-            }}
+          <ProductBatchForm
+            variantForm={productForm}
+            submitFn={updateBatch}
             data={batch}
-            batchId={batchId}
+            loading={loading}
           />
         </Modal>
       </>

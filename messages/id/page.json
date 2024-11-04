@@ -301,7 +301,12 @@
     "variant": "varian",
     "batch": "batch",
     "Update": {
-      "header": "Perbarui produk: {product_name}"
+      "header": "Perbarui produk: {product_name}",
+      "notification_success": "Data berhasil disimpan.",
+      "btn_remove": "Hapus selamanya",
+      "modal_remove_variant": "Anda mau menghapus variant <emp>{label}</emp>. Apakah Anda yakin?",
+      "modal_remove_batch": "Apakah Anda yakin?",
+      "notification_batch": "Harap tinggalkan setidaknya satu batch per varian."
     }
   }
 }

@@ -17,38 +17,8 @@ export default function useProductsCategoryForm(onFinish: () => void) {
   const t = useTranslations("Products");
   const queryClient = useQueryClient();
 
-  const productTypes = [
-    {
-      label: t("type_physical"),
-      value: "PHYSICAL",
-    },
-    {
-      label: t("type_virtual"),
-      value: "VIRTUAL",
-    },
-    {
-      label: t("type_service"),
-      value: "SERVICE",
-    },
-    {
-      label: t("type_subscription"),
-      value: "SUBSCRIPTION",
-    },
-  ] as const;
-
-  type TProductType = (typeof productTypes)[number]["value"];
-  const productTypeEnum: [TProductType, ...TProductType[]] = [
-    productTypes[0].value,
-    ...productTypes.slice(1).map((p) => p.value),
-  ];
-
   const schema = z.object({
     id: z.string(),
-    type: z
-      .enum(productTypeEnum, {
-        required_error: tForm("validation_required"),
-      })
-      .nullish(),
     name: z
       .string()
       .min(1, tForm("validation_required"))
@@ -72,14 +42,12 @@ export default function useProductsCategoryForm(onFinish: () => void) {
     resolver: zodResolver(schema),
     defaultValues: {
       id: "",
-      type: null,
       name: "",
     },
   });
 
   return {
     form,
-    productTypes,
     mutation,
   };
 }

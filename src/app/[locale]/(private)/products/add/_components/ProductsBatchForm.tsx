@@ -30,7 +30,6 @@ type TProductsBatchForm = {
   data?: {
     outlet_id: string;
     stock: string;
-    is_infinite_stock: boolean;
     currency_id: number;
     base_capital_price: string;
     base_selling_price: string;
@@ -108,7 +107,6 @@ const ProductsBatchForm = forwardRef<
             control={form.control}
             render={({ field: { onChange, value } }) => (
               <InputBase
-                disabled={form.watch("is_infinite_stock")}
                 required
                 label={t("label_stock")}
                 className="w-full"
@@ -120,24 +118,6 @@ const ProductsBatchForm = forwardRef<
                 component={InputNumberFormat}
                 locales={locale}
                 variant="filled"
-              />
-            )}
-          />
-          <Controller
-            name="is_infinite_stock"
-            control={form.control}
-            render={({ field: { onChange, value } }) => (
-              <Checkbox
-                label={t("label_is_infinite_stock")}
-                checked={value}
-                size="md"
-                error={form.formState.errors.is_infinite_stock?.message}
-                onChange={(e) => {
-                  onChange(e);
-                  if (e.target.checked) {
-                    form.setValue("stock", "");
-                  }
-                }}
               />
             )}
           />

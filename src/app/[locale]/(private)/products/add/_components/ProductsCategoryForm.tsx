@@ -14,7 +14,7 @@ const ProductsCategoryForm = React.forwardRef<
   HTMLDivElement,
   BoxProps & TProductsCategoryForm
 >(({ onFinish, ...props }, ref) => {
-  const { form, productTypes, mutation } = useProductsCategoryForm(onFinish);
+  const { form, mutation } = useProductsCategoryForm(onFinish);
   const { userData } = useUserContext();
   const tButton = useTranslations("Button");
   const t = useTranslations("Products.Add");
@@ -30,7 +30,6 @@ const ProductsCategoryForm = React.forwardRef<
             payload: {
               payload: {
                 name: data.name,
-                type: data.type ? data.type : undefined,
                 company_id: userData?.company.id,
               },
             },
@@ -38,21 +37,6 @@ const ProductsCategoryForm = React.forwardRef<
         })}
         className="flex flex-col gap-4"
       >
-        <Controller
-          name="type"
-          control={form.control}
-          render={({ field: { onChange, value } }) => (
-            <Select
-              className="w-full"
-              description={t("description_category_type")}
-              label={t("label_category_type")}
-              error={form.formState.errors.type?.message}
-              data={productTypes}
-              value={value}
-              onChange={onChange}
-            />
-          )}
-        />
         <Controller
           name="name"
           control={form.control}
