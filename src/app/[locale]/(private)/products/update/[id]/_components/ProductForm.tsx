@@ -19,7 +19,6 @@ import useProductUpdate from "../_hooks/product_update.hooks";
 import ProductsCategoryForm from "../../../add/_components/ProductsCategoryForm";
 import { useDisclosure } from "@mantine/hooks";
 import { useUserContext } from "@/lib/userProvider";
-import { modals } from "@mantine/modals";
 import ProductVariantForm from "./ProductVariantForm";
 import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
@@ -149,20 +148,26 @@ const ProductForm = forwardRef<
           )}
         />
         <div className="flex justify-end flex-col xs:flex-row gap-4 mt-6 mb-4">
-          <Button
-            variant="light"
-            leftSection={<IconPlus />}
-            type="button"
-            size="lg"
-            onClick={openV}
-          >
-            {t("Add.btn_add_variant")}
-          </Button>
+          {userData?.privileges.includes("DATA_CREATE_PRODUCT_VARIANT") ? (
+            <Button
+              variant="light"
+              leftSection={<IconPlus />}
+              type="button"
+              size="lg"
+              onClick={openV}
+            >
+              {t("Add.btn_add_variant")}
+            </Button>
+          ) : (
+            <></>
+          )}
+
           <Button
             variant="gradient"
             leftSection={<IconDeviceFloppy />}
             type="submit"
             size="lg"
+            disabled={!userData?.privileges.includes("DATA_UPDATE_PRODUCT")}
           >
             {tButton("save")}
           </Button>

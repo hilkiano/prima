@@ -24,9 +24,11 @@ const TemplateDropzone = forwardRef<HTMLDivElement, BoxProps>(
         echo
           .channel(`progress_${fileName}`)
           .listen(".ImportProgress", (event: ImportEventProgress) => {
-            console.log(event);
             setImportProgress(event);
           });
+      },
+      onSuccess: (res) => {
+        if (res.status) open();
       },
     });
 
@@ -222,7 +224,6 @@ const TemplateDropzone = forwardRef<HTMLDivElement, BoxProps>(
 
             setTimeout(() => {
               mutation.mutate(formData);
-              open();
             }, 250);
           }}
           className="h-32 mt-6"

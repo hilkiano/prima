@@ -23,7 +23,7 @@ const settingsProfileContents: TSettingsProfile[] = [
     privilege: "SETTING_PROFILE_BASIC_INFORMATION",
     content: (
       <div className="flex gap-2 lg:gap-12 flex-col lg:flex-row p-2 pb-6">
-        <ProfileAvatar className="shrink-0 w-full md:w-fit mb-4" />
+        <ProfileAvatar className="w-full md:w-fit mb-4" />
         <ProfileBasicInformation className="w-full" />
       </div>
     ),

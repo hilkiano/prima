@@ -8,16 +8,17 @@ import { forwardRef } from "react";
 import ProductHead from "./ProductHead";
 import { useQuery } from "@tanstack/react-query";
 import { getFn } from "@/services/crud.service";
-import { JsonResponse } from "@/types/common.types";
 import ProductMetadata from "./ProductMetadata";
 import ProductVariants from "./ProductVariants";
 import { useParams } from "next/navigation";
+import { useUserContext } from "@/lib/userProvider";
 
 const ProductContainer = forwardRef<HTMLDivElement, BoxProps>(
   ({ ...props }, ref) => {
     const t = useTranslations("Button");
     const router = useRouter();
     const params = useParams();
+    const { userData } = useUserContext();
 
     const dataQuery = useQuery({
       queryKey: ["productData", params.id],
@@ -42,19 +43,23 @@ const ProductContainer = forwardRef<HTMLDivElement, BoxProps>(
           >
             {t("go_back")}
           </Button>
-          <Button
-            leftSection={<IconEdit />}
-            variant="gradient"
-            onClick={() => {
-              if (!dataQuery.data.data.deleted_at) {
-                router.push(`/products/update/${dataQuery.data.data.id}`);
-              }
-            }}
-            className="w-full xs:w-auto"
-            disabled={!!dataQuery.data.data.deleted_at}
-          >
-            {t("update")}
-          </Button>
+          {userData?.privileges.includes("DATA_UPDATE_PRODUCT") ? (
+            <Button
+              leftSection={<IconEdit />}
+              variant="gradient"
+              onClick={() => {
+                if (!dataQuery.data.data.deleted_at) {
+                  router.push(`/products/update/${dataQuery.data.data.id}`);
+                }
+              }}
+              className="w-full xs:w-auto"
+              disabled={!!dataQuery.data.data.deleted_at}
+            >
+              {t("update")}
+            </Button>
+          ) : (
+            <></>
+          )}
         </div>
 
         <ProductHead

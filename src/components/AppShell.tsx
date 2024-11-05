@@ -12,6 +12,7 @@ import {
   useMantineTheme,
   Modal,
   Button,
+  Center,
 } from "@mantine/core";
 import { useDisclosure, useHeadroom, useMediaQuery } from "@mantine/hooks";
 import ThemeToggle from "./ThemeToggle";
@@ -22,7 +23,9 @@ import { NavbarLink } from "./NavbarLink";
 import { useUserContext } from "@/lib/userProvider";
 import { handleLogout } from "@/services/auth.service";
 import { useMutation } from "@tanstack/react-query";
-import { Link, useRouter } from "@/i18n/routing";
+import { Link, usePathname, useRouter } from "@/i18n/routing";
+import { findByScope } from "@/lib/helpers";
+import { ForbiddenSvg } from "./Svgs";
 
 type TAppShell = {
   children: React.ReactNode;
@@ -52,9 +55,11 @@ const AppShell = React.forwardRef<HTMLDivElement, TAppShell & AppShellProps>(
     const pinned = useHeadroom({ fixedAt: 120 });
     const locale = useLocale();
     const router = useRouter();
+    const pathname = usePathname();
     const tButton = useTranslations("Button");
     const theme = useMantineTheme();
     const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.md})`);
+    const tError = useTranslations("Error");
     const t = useTranslations("Navbar");
 
     const mutation = useMutation({
@@ -65,6 +70,16 @@ const AppShell = React.forwardRef<HTMLDivElement, TAppShell & AppShellProps>(
         }
       },
     });
+
+    let isForbidden: boolean = false;
+    const currentMenu = findByScope(menus, pathname);
+    if (currentMenu.length > 0) {
+      if (currentMenu[0].privilege) {
+        if (!userData?.privileges.includes(currentMenu[0].privilege)) {
+          isForbidden = true;
+        }
+      }
+    }
 
     const filteredMenus = menus.filter(
       (menu) =>
@@ -174,7 +189,26 @@ const AppShell = React.forwardRef<HTMLDivElement, TAppShell & AppShellProps>(
           <></>
         )}
 
-        <MAppShell.Main>{children}</MAppShell.Main>
+        <MAppShell.Main>
+          {isForbidden ? (
+            <Center className="h-auto  mt-10 md:mt-0">
+              <div className="flex flex-col items-center">
+                <ForbiddenSvg
+                  width={isMobile ? 350 : 600}
+                  height={isMobile ? 300 : 500}
+                />
+                <h1 className="text-3xl md:text-5xl mb-0">
+                  {tError("403_head")}
+                </h1>
+                <h3 className="text-xl md:text-2xl font-light mt-0 text-center">
+                  {tError("403_body")}
+                </h3>
+              </div>
+            </Center>
+          ) : (
+            children
+          )}
+        </MAppShell.Main>
       </MAppShell>
     );
   }

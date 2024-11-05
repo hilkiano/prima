@@ -8,7 +8,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
   return (
     <NextIntlClientProvider
-      messages={pick(messages, ["Language", "Navbar", "Button"])}
+      messages={pick(messages, ["Language", "Navbar", "Button", "Error"])}
     >
       <AppShell
         classNames={{

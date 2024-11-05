@@ -17,6 +17,7 @@ import {
 import { sumMultiDimensionalArray } from "@/lib/helpers";
 import { modals } from "@mantine/modals";
 import { Link } from "@/i18n/routing";
+import { useUserContext } from "@/lib/userProvider";
 
 const ProductsDataContainer = forwardRef<HTMLDivElement, BoxProps>(
   ({ ...props }, ref) => {
@@ -25,6 +26,7 @@ const ProductsDataContainer = forwardRef<HTMLDivElement, BoxProps>(
     const t = useTranslations("Products");
     const { dataQuery, filters, mutations, queryParams } = useProductsData();
     const locale = useLocale();
+    const { userData } = useUserContext();
 
     // Prepare column for table
     const columnHelper = createColumnHelper<
@@ -183,28 +185,36 @@ const ProductsDataContainer = forwardRef<HTMLDivElement, BoxProps>(
                     >
                       {tData("Action.view")}
                     </Menu.Item>
-                    <Menu.Item
-                      component={Link}
-                      href={`/products/update/${info.row.original.id}`}
-                      leftSection={<IconPencil size={20} />}
-                      disabled={!!info.row.original.deleted_at}
-                    >
-                      {tData("Action.update")}
-                    </Menu.Item>
-                    {!info.row.original.deleted_at ? (
+                    {userData?.privileges.includes("DATA_UPDATE_PRODUCT") ? (
                       <Menu.Item
-                        onClick={() => deleteFn(info.row.original)}
-                        leftSection={<IconTrash size={20} />}
+                        component={Link}
+                        href={`/products/update/${info.row.original.id}`}
+                        leftSection={<IconPencil size={20} />}
+                        disabled={!!info.row.original.deleted_at}
                       >
-                        {tData("Action.disable")}
+                        {tData("Action.update")}
                       </Menu.Item>
                     ) : (
-                      <Menu.Item
-                        onClick={() => restoreFn(info.row.original)}
-                        leftSection={<IconRestore size={20} />}
-                      >
-                        {tData("Action.enable")}
-                      </Menu.Item>
+                      <></>
+                    )}
+                    {userData?.privileges.includes("DATA_DELETE_PRODUCT") ? (
+                      !info.row.original.deleted_at ? (
+                        <Menu.Item
+                          onClick={() => deleteFn(info.row.original)}
+                          leftSection={<IconTrash size={20} />}
+                        >
+                          {tData("Action.disable")}
+                        </Menu.Item>
+                      ) : (
+                        <Menu.Item
+                          onClick={() => restoreFn(info.row.original)}
+                          leftSection={<IconRestore size={20} />}
+                        >
+                          {tData("Action.enable")}
+                        </Menu.Item>
+                      )
+                    ) : (
+                      <></>
                     )}
                   </Menu.Dropdown>
                 </Menu>
@@ -218,7 +228,15 @@ const ProductsDataContainer = forwardRef<HTMLDivElement, BoxProps>(
           enableHiding: false,
         }),
       ];
-    }, [columnHelper, locale, t, tData, tButton, mutations]);
+    }, [
+      columnHelper,
+      locale,
+      t,
+      tData,
+      tButton,
+      mutations,
+      userData?.privileges,
+    ]);
 
     useEffect(() => {
       const globalFilteredColumns = columns.filter(

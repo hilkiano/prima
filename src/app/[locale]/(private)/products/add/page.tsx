@@ -57,7 +57,13 @@ function ProductsAddContent({ query }: TProductsAdd) {
 
   return (
     <NextIntlClientProvider
-      messages={pick(messages, ["Form", "Products", "Button", "Notification"])}
+      messages={pick(messages, [
+        "Form",
+        "Products",
+        "Button",
+        "Notification",
+        "Error",
+      ])}
     >
       <HydrationBoundary state={dehydrate(query)}>
         <div className="flex flex-col gap-4">

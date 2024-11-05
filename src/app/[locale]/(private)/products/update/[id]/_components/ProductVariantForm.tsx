@@ -567,17 +567,22 @@ const ProductVariantForm = forwardRef<
           field={
             <div className="flex flex-col mb-4 w-full">
               <div className="flex gap-4 self-start items-center">
-                <Button
-                  variant="light"
-                  leftSection={<IconPackage />}
-                  type="button"
-                  color={
-                    form.formState.errors.batches?.message ? "red" : undefined
-                  }
-                  onClick={open}
-                >
-                  {t("Add.btn_add_batch")}
-                </Button>
+                {userData?.privileges.includes("DATA_CREATE_PRODUCT_BATCH") ? (
+                  <Button
+                    variant="light"
+                    leftSection={<IconPackage />}
+                    type="button"
+                    color={
+                      form.formState.errors.batches?.message ? "red" : undefined
+                    }
+                    onClick={open}
+                  >
+                    {t("Add.btn_add_batch")}
+                  </Button>
+                ) : (
+                  <></>
+                )}
+
                 <Text className="opacity-70">
                   Total: {form.getValues("batches").length}
                 </Text>
@@ -745,6 +750,9 @@ const ProductVariantForm = forwardRef<
               color="red"
               variant="filled"
               leftSection={<IconTrash />}
+              disabled={
+                !userData?.privileges.includes("DATA_DELETE_PRODUCT_VARIANT")
+              }
               type="button"
               size="md"
               onClick={() => {
@@ -797,6 +805,9 @@ const ProductVariantForm = forwardRef<
             type="submit"
             size="md"
             loading={loading}
+            disabled={
+              !userData?.privileges.includes("DATA_UPDATE_PRODUCT_VARIANT")
+            }
           >
             {tButton("save")}
           </Button>

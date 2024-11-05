@@ -2,6 +2,7 @@ import {
   Authenticated,
   GlobalMessage,
   JsonResponse,
+  NavbarLinks,
 } from "@/types/common.types";
 import {
   ColumnFiltersState,
@@ -167,4 +168,19 @@ export function sumMultiDimensionalArray(array: any) {
 
   sumArray(array);
   return total;
+}
+
+export function findByScope(
+  menuItems: NavbarLinks[],
+  scope: string
+): NavbarLinks[] {
+  return menuItems.reduce<NavbarLinks[]>((result, item) => {
+    if (item.activeScope && item.activeScope?.includes(scope)) {
+      result.push(item);
+    }
+    if (item.links) {
+      result.push(...findByScope(item.links as any, scope));
+    }
+    return result;
+  }, []);
 }

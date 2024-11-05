@@ -25,11 +25,6 @@ export const menus: NavbarLinks[] = [
         privilege: "PAGE_PRODUCTS_ADD_PRODUCT",
         activeScope: ["/products/add", "/products/add/import"],
       },
-      {
-        label: "Submenu.products_stock",
-        link: "/products/add/import",
-        activeScope: ["/products/stock"],
-      },
     ],
   },
   {

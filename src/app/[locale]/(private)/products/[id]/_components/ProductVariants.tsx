@@ -18,6 +18,7 @@ import { useMediaQuery } from "@mantine/hooks";
 import useProductsData from "../../_hooks/products_data.hooks";
 import { notifications } from "@mantine/notifications";
 import ProductsImageThumbnail from "./ProductsImageThumbnail";
+import { useUserContext } from "@/lib/userProvider";
 
 type TProductVariants = {
   data: Product;
@@ -29,6 +30,8 @@ const ProductVariants = forwardRef<HTMLDivElement, BoxProps & TProductVariants>(
     const locale = useLocale();
     const theme = useMantineTheme();
     const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`);
+
+    const { userData } = useUserContext();
 
     const { mutations } = useProductsData();
 
@@ -131,14 +134,19 @@ const ProductVariants = forwardRef<HTMLDivElement, BoxProps & TProductVariants>(
     }) => {
       return (
         <Paper className="p-4 rounded-lg bg-slate-300/70 dark:bg-slate-900/70 h-[160px] relative select-none">
-          <Switch
-            size="sm"
-            onChange={(val) => handleBatchCheck({ val, variant, data })}
-            checked={!data.deleted_at}
-            classNames={{
-              root: "w-fit self-end absolute top-4 right-4",
-            }}
-          />
+          {userData?.privileges.includes("DATA_DELETE_PRODUCT_BATCH") ? (
+            <Switch
+              size="sm"
+              onChange={(val) => handleBatchCheck({ val, variant, data })}
+              checked={!data.deleted_at}
+              classNames={{
+                root: "w-fit self-end absolute top-4 right-4",
+              }}
+            />
+          ) : (
+            <></>
+          )}
+
           <div className="flex gap-4 items-center mb-4 absolute top-4 left-4">
             <IconBuildingStore size={14} className="shrink-0" />
             <Text className="line-clamp-2 font-semibold text-sm">
@@ -259,15 +267,19 @@ const ProductVariants = forwardRef<HTMLDivElement, BoxProps & TProductVariants>(
                 </Carousel.Slide>
               ))}
             </Carousel>
-            <Switch
-              size={isMobile ? "sm" : "md"}
-              onChange={(val) => handleVariantCheck({ val, variant })}
-              checked={!variant.deleted_at}
-              classNames={{
-                root: "w-fit self-end mt-8",
-              }}
-              label={t("active")}
-            />
+            {userData?.privileges.includes("DATA_DELETE_PRODUCT_VARIANT") ? (
+              <Switch
+                size={isMobile ? "sm" : "md"}
+                onChange={(val) => handleVariantCheck({ val, variant })}
+                checked={!variant.deleted_at}
+                classNames={{
+                  root: "w-fit self-end mt-8",
+                }}
+                label={t("active")}
+              />
+            ) : (
+              <></>
+            )}
           </div>
         ))}
       </Box>

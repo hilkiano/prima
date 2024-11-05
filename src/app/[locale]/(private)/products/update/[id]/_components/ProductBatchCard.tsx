@@ -17,6 +17,7 @@ import ProductBatchForm from "./ProductBatchForm";
 import { useDisclosure } from "@mantine/hooks";
 import { UseQueryResult } from "@tanstack/react-query";
 import { JsonResponse, ListResult } from "@/types/common.types";
+import { useUserContext } from "@/lib/userProvider";
 
 type TProductBatchCard = {
   batch: {
@@ -79,6 +80,7 @@ const ProductBatchCard = forwardRef<
     const locale = useLocale();
     const t = useTranslations("Products.Add");
     const [loading, setLoading] = useState(false);
+    const { userData } = useUserContext();
 
     const batchesArray = useFieldArray({
       control: productForm.control,
@@ -140,18 +142,32 @@ const ProductBatchCard = forwardRef<
             </div>
           </div>
           <div className="flex absolute top-4 right-4 gap-2">
-            <ActionIcon size="sm" aria-label="edit batch button" onClick={open}>
-              <IconEdit />
-            </ActionIcon>
+            {userData?.privileges.includes("DATA_UPDATE_PRODUCT_BATCH") ? (
+              <ActionIcon
+                size="sm"
+                aria-label="edit batch button"
+                onClick={open}
+              >
+                <IconEdit />
+              </ActionIcon>
+            ) : (
+              <></>
+            )}
 
-            <ActionIcon
-              size="sm"
-              aria-label="delete batch button"
-              onClick={deleteFn ? deleteFn : () => batchesArray.remove(batchId)}
-              color={deleteFn ? "red" : "blue"}
-            >
-              <IconTrash />
-            </ActionIcon>
+            {userData?.privileges.includes("DATA_DELETE_PRODUCT_BATCH") ? (
+              <ActionIcon
+                size="sm"
+                aria-label="delete batch button"
+                onClick={
+                  deleteFn ? deleteFn : () => batchesArray.remove(batchId)
+                }
+                color={deleteFn ? "red" : "blue"}
+              >
+                <IconTrash />
+              </ActionIcon>
+            ) : (
+              <></>
+            )}
           </div>
           <Text className="opacity-25 text-5xl absolute bottom-2 right-2">
             #{batchId + 1}

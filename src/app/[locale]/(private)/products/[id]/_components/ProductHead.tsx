@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import React, { forwardRef } from "react";
 import useProductsData from "../../_hooks/products_data.hooks";
 import { modals } from "@mantine/modals";
+import { useUserContext } from "@/lib/userProvider";
 
 type TProductHead = {
   data: Product;
@@ -15,6 +16,7 @@ const ProductHead = forwardRef<HTMLDivElement, BoxProps & TProductHead>(
     const t = useTranslations("Products");
     const theme = useMantineTheme();
     const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`);
+    const { userData } = useUserContext();
 
     const { mutations } = useProductsData();
 
@@ -84,15 +86,19 @@ const ProductHead = forwardRef<HTMLDivElement, BoxProps & TProductHead>(
             )}
           </div>
 
-          <Switch
-            size={isMobile ? "sm" : "lg"}
-            onChange={(val) => handleCheck(val)}
-            checked={!data.deleted_at}
-            classNames={{
-              root: "w-fit self-end",
-            }}
-            label={t("active")}
-          />
+          {userData?.privileges.includes("DATA_DELETE_PRODUCT") ? (
+            <Switch
+              size={isMobile ? "sm" : "lg"}
+              onChange={(val) => handleCheck(val)}
+              checked={!data.deleted_at}
+              classNames={{
+                root: "w-fit self-end",
+              }}
+              label={t("active")}
+            />
+          ) : (
+            <></>
+          )}
         </div>
       </Box>
     );

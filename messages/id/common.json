@@ -68,6 +68,8 @@
   "Error": {
     "404_head": "404 Tidak Ditemukan",
     "404_body": "Halaman yang Anda cari tidak ada.",
+    "403_head": "403 Dilarang",
+    "403_body": "Anda dilarang mengakses halaman ini.",
     "general_error": "Terjadi sebuah kesalahan."
   },
   "Form": {

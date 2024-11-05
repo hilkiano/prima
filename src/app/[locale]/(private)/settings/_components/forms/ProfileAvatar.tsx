@@ -94,7 +94,7 @@ const ProfileAvatar = React.forwardRef<HTMLDivElement, BoxProps>(
                 <Avatar
                   src={image ? image : userData?.user.avatar_url}
                   alt={userData?.user.display_name}
-                  className="w-48 h-48 mt-2"
+                  className="w-32 h-32 mt-2"
                 />
                 {form.formState.errors?.avatar?.message ? (
                   <Input.Error className="absolute -bottom-5 left-0 font-bold text-nowrap">

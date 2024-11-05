@@ -8,11 +8,13 @@ import { forwardRef } from "react";
 import useProductsHeader from "../_hooks/products_header.hooks";
 import { Carousel } from "@mantine/carousel";
 import StatisticCard from "@/components/statistics/StatisticCard";
+import { useUserContext } from "@/lib/userProvider";
 
 const ProductsHeader = forwardRef<HTMLDivElement, BoxProps>(
   ({ ...props }, ref) => {
     const t = useTranslations("Products");
     const { statisticQuery } = useProductsHeader();
+    const { userData } = useUserContext();
 
     const Statistics = () => {
       if (statisticQuery.isLoading) {
@@ -57,16 +59,20 @@ const ProductsHeader = forwardRef<HTMLDivElement, BoxProps>(
             <Text className="text-lg opacity-75 mt-2 w-full sm:w-[450px]">
               {t("subheader")}
             </Text>
-            <Button
-              leftSection={<IconPlus />}
-              variant="gradient"
-              size="md"
-              component={Link}
-              href="/products/add"
-              className="self-start"
-            >
-              {t("btn_add")}
-            </Button>
+            {userData?.privileges.includes("PAGE_PRODUCTS_ADD_PRODUCT") ? (
+              <Button
+                leftSection={<IconPlus />}
+                variant="gradient"
+                size="md"
+                component={Link}
+                href="/products/add"
+                className="self-start"
+              >
+                {t("btn_add")}
+              </Button>
+            ) : (
+              <></>
+            )}
           </div>
           <Carousel
             slideSize={250}

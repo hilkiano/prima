@@ -68,6 +68,8 @@
   "Error": {
     "404_head": "404 Not Found",
     "404_body": "The page you are looking for is not exist.",
+    "403_head": "403 Forbidden",
+    "403_body": "You are forbidden to access this page.",
     "general_error": "An error occurred."
   },
   "Form": {
